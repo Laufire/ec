@@ -1,8 +1,7 @@
-============
 Installation
 ============
 
 At the command line::
 
-    $ easy_install private
+    $ python setup.py install
 

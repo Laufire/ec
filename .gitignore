@@ -42,5 +42,9 @@ output/*/index.html
 # Sphinx
 docs/_build
 
+# Standard
+.*
+
 # Exceptions
 !./.editorconfig
+!.git*

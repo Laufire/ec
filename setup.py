@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-
 try:
-    from setuptools import setup
+    from setuptools import setup, find_packages
 except ImportError:
     from distutils.core import setup
 
@@ -30,9 +29,7 @@ setup(
     author="Laufire Technologies",
     author_email='laufiretechnologies@gmail.com',
     url='https://github.com/Laufire/private',
-    packages=['src'],
-    package_dir={'private':
-                 'private'},
+    packages=find_packages(),
     include_package_data=True,
     install_requires=requirements,
     license="MIT",
@@ -43,13 +40,16 @@ setup(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
-        "Programming Language :: Python :: 2",
-        'Programming Language :: Python :: 2.6',
-        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 2.7.10',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
     ],
+    entry_points={
+        'console_scripts': [
+        'private=private.private:main',
+        ],
+    },
     test_suite='tests',
     tests_require=test_requirements
 )
