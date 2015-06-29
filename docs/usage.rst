@@ -3,7 +3,7 @@ Usage
 
 To use private from command line::
 
-    $ private module_path <command route> [options]
+    $ private module_path <command route> [param1=value param2=value ...]
     
 To use private in a project::
 
@@ -12,3 +12,5 @@ To use private in a project::
     private.members(...)
     
     private.call('<command route> [options]')
+
+.. include:: _autodoc/nut_shell.rst

@@ -24,15 +24,16 @@ import os
 
 # Get the project root dir, which is the parent dir of this
 cwd = os.getcwd()
-project_root = os.path.abspath("../src")
+project_root = os.path.abspath("../")
 
 # Insert the project root dir as the first element in the PYTHONPATH.
 # This lets us ensure that the source package is imported, and that its
 # version is used.
 sys.path.insert(0, project_root)
+sys.path.insert(0, os.path.abspath("../scripts/examples"))
 
 import private
-
+from private.modules.decorators import task, arg, group
 # -- General configuration ---------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.

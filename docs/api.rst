@@ -1,6 +1,4 @@
-========
 API
 ========
 
-.. automodule:: laufire_py_boilerplate
-   :members:
+# .. include:: _autodoc/decorators.rst

@@ -15,7 +15,6 @@ Contents:
    installation
    usage
    api
-   contributing
    design
    authors
    history

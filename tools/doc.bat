@@ -1,6 +1,6 @@
 cd docs
 
-REM sphinx-apidoc -o ./ ../src/ -f
+sphinx-apidoc -o ./_autodoc ../scripts/examples/ -f
 
 call make html
 
