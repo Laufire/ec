@@ -38,3 +38,8 @@ Log
   * 2005  **private** could now be used to launch all the scripts in a dir.
   * 2050  Linted the scripts.
   
+* 20150701
+
+  * 0100  Extraceted the workers from the decorators in config.py. It is done in order to avoid reparring the workers over and over.
+  * 0330  Added a custom type **types.regex.pattern**. It took ~20 mins.
+  

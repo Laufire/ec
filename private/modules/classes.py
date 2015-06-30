@@ -56,7 +56,7 @@ class Task(Member):
             InArgs[name] = _type(InArgs[name])
             
           except ValueError:
-            raise HandledException('Invalid value for "%s", expected a value of "%s", got "%s".' % (name, _type, InArgs[name]))
+            raise HandledException('Invalid value for "%s", expected %s, got "%s".' % (name, _type, InArgs[name]))
       
   def __collect_arg__(self, argName): # collect a single arg
     Arg = self.Args[argName]
@@ -80,7 +80,7 @@ class Task(Member):
           Parts.append(Arg['desc'])
           
         if _type:
-          Parts.append(str(_type))
+          Parts.append('Type: %s.' % _type)
         
         err(' '.join(Parts) if Parts else '<invalid value>')
     

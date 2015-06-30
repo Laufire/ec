@@ -29,7 +29,7 @@ def start(BaseModule, Argv=None):
     dispatch.init(Argv)
  
 def execCommand(Argv, collect_missing):
-  CommandParts, Args = split_input(Argv)
+  CommandParts, Args = _split_input(Argv)
   
   ResolvedMember = resolveMember(BaseGroup, CommandParts[:])
   
@@ -38,8 +38,21 @@ def execCommand(Argv, collect_missing):
     
   return ResolvedMember.collectNcall(**Args) if collect_missing else ResolvedMember(**Args)
 
-# Helpers 
-def split_input(argv):
+def resolveMember(Parent, CommandParts):
+  
+  if not CommandParts:
+    return Parent
+    
+  Resolved = Parent.Config['Members'].get(CommandParts.pop(0))
+  
+  if isinstance(Resolved, Group):
+    return resolveMember(Resolved, CommandParts)
+    
+  else:
+    return Resolved
+    
+# Helpers
+def _split_input(argv):
   arg_start = 0
   count = len(argv)
   
@@ -58,18 +71,5 @@ def split_input(argv):
   
   return CommandParts, Args
   
-def resolveMember(Parent, CommandParts):
-  
-  if not CommandParts:
-    return Parent
-    
-  Resolved = Parent.Config['Members'].get(CommandParts.pop(0))
-  
-  if isinstance(Resolved, Group):
-    return resolveMember(Resolved, CommandParts)
-    
-  else:
-    return Resolved
-    
 # Sub Modules
 from classes import HandledException

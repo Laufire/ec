@@ -1,4 +1,7 @@
 API
 ========
 
-# .. include:: _autodoc/decorators.rst
+.. automodule:: private.private
+    :members:
+    :undoc-members:
+    :show-inheritance:
