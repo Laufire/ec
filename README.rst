@@ -5,6 +5,8 @@ private - a simpler, yet better implementation of Commander, a module launcher.
 
 * Free software: MIT license
 
+  **Note: The docs serve as a reference, as well as act as a design guide throught the alpha version. Hence incase of an inconsistency, assume it as a work in progress.**
+  
 Features
 --------
 * Shell and Dispatch modes.
@@ -15,20 +17,18 @@ Features
 
 ToDo
 ----
-* Document an example script using sphix autodoc.
-
 * A separate types library.
+
+* Make private wrappable; ie: implement private.call.
+
+* Implement helper tasks.
 
 Check
 -----
-* Using private as an embedable, as opposed to a launcher, in order to make it play nice with sphinx-autodoc (autodoc can't use private as a launcher).
-
-* Documenting tasks and groups.
-
 * Automatically adding params to the doc string.
 
-* Returning the underlying of the members insted of the decorated wrappers, so that the modules could be imported into other modules, without side effects. On the other hand, there seems to be little to no chance of importing user facing modules into other modules.
+Later
+-----
+* Making the name arg, of the decorator, arg optional. This could be achived through iterating over the FuncArgs.
 
-* Private methods within groups; this too will need the exposing of the underlying, as the methods can't be accessed using dynamic __getattr__ calls, because groups are unintantiated classes.
-
-* Making the 'name' arg of the decorator, arg, optional (the name could be got from FuncArgs).
+* An autodoc extension, to document tasks and groups instead of methods and classes: There are some issues with using autodoc, for example a renamed task is still being documented under the original function name.

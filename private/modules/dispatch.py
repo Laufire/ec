@@ -1,10 +1,10 @@
-from core import exec_command
+from core import execCommand
 from classes import HandledException
 from helpers import err
 
 def init(argv):
   try:
-    exec_command(argv, False)
+    execCommand(argv, False)
     
   except HandledException as e:
     err(e, 1)

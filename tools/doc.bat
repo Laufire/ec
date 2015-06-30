@@ -1,7 +1,11 @@
+@echo off
+
 cd docs
 
-sphinx-apidoc -o ./_autodoc ../scripts/examples/ -f
+REM sphinx-apidoc -o ./_autodoc ../scripts/examples/ -f -E
 
 call make html
 
 cd ..
+
+@echo on

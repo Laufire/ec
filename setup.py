@@ -47,7 +47,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-        'private=private.private:main',
+        'private=private.__main__:main',
         ],
     },
     test_suite='tests',

@@ -1,29 +1,24 @@
 import sys
-import imp
 from os import path
 
-from modules.classes import Group, Task
+from classes import Group, Task
 
 # State
 mode = None
 BaseGroup = {}
 
-def start():
-  argv = sys.argv[1:]
-  
-  if not argv:
-    show_usage()
-    return
-  
-  extendBuiltins()
-  
-  Body = load_module(argv.pop(0))
-  
+# Exports
+__all__ = ['start', 'execCommand', ]
+
+def start(BaseModule, Argv=None):
   global BaseGroup
-  BaseGroup = Group(Body)
+  BaseGroup =  BaseModule.__pr_member__
+  
+  if Argv is None:
+    Argv = sys.argv[1:]
   
   global mode
-  mode = 'd' if argv else 's' # dispatch / shell mode
+  mode = 'd' if Argv else 's' # dispatch / shell mode
   
   if mode == 's':
     import shell
@@ -31,10 +26,11 @@ def start():
     
   else:
     import dispatch
-    dispatch.init(argv)
+    dispatch.init(Argv)
  
-def exec_command(Argv, collect_missing):
+def execCommand(Argv, collect_missing):
   CommandParts, Args = split_input(Argv)
+  
   ResolvedMember = resolveMember(BaseGroup, CommandParts[:])
   
   if not isinstance(ResolvedMember, Task):
@@ -43,25 +39,6 @@ def exec_command(Argv, collect_missing):
   return ResolvedMember.collectNcall(**Args) if collect_missing else ResolvedMember(**Args)
 
 # Helpers 
-def show_usage():
-  print 'private module_path <command route> [options]'
-  
-def load_module(module_path):
-  module_path = path.abspath(module_path)
-  parent_path, name = path.split(module_path)
-  name, dummy = path.splitext(name)
-  
-  sys.path.insert(0, parent_path)
-  Module = imp.load_source(name, module_path)
-  
-  return Module
-
-def extendBuiltins(): # add the methods used by the scripts to __builtins__
-  import decorators
-  
-  for item in decorators.__all__:
-    __builtins__[item] = getattr(decorators, item)
-    
 def split_input(argv):
   arg_start = 0
   count = len(argv)

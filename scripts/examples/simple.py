@@ -1,3 +1,5 @@
+from private.private import start, task, arg, group
+
 @task
 @arg('arg1', type=int, desc= 'Some value.')
 @arg('arg2', type=int)
@@ -10,3 +12,5 @@ class group1:
 	@arg('arg1')
 	def task1(arg1):
 		print arg1 + arg1
+
+start()

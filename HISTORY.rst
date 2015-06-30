@@ -30,4 +30,11 @@ Log
 
   * 0105  Found that sphinx-autodoc cannot document objects of custom classes.
   * 0135  Generated some primitive documentation for nut_shell.py using autodoc.
+  * 1640  Made private embeddable.
+  * 1820  Made private completly embeddable.
+  * 1820  Documented nut_shell.py using sphinx autodoc.
+  * 1900  Class based groups could now have private members.
+  * 1915  Redid the entry points. **private** could now be used to launch scripts.
+  * 2005  **private** could now be used to launch all the scripts in a dir.
+  * 2050  Linted the scripts.
   

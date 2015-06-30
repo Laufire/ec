@@ -70,7 +70,7 @@ Additions
 
 * Custom types.
 
-* Suppling args are more interative.
+* Supplying args are more interative.
 
 Notes
 ------
@@ -80,6 +80,14 @@ Thoughts
 --------
 * **Commandlets** - plugin like mini-programmes that could acomplish specific tasks.
 
+Learned
+-------
+* With experience errors get reduced.
+
+* Simpler structures are often robust.
+
 Decisions
 ---------
 * The methods to be used by the loade scripts are added to __builtins__, in order to avoid an explicit import of private from the script; which will load a separate instance of private and complicate the passing of data between the two instances.
+
+* 150630_1500 Decided to add an attribute __pr_member__ the underlyings, to identify them for private. An alternate impementation was thought of; in which the underlynings and the members would be buffered (in a list) and processed before starting the core. Though the later method doesn't alter the underlying, the former is cohosen for it's simplicity. It took ~30 mins for the rewiring.

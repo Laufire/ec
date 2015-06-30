@@ -30,10 +30,9 @@ project_root = os.path.abspath("../")
 # This lets us ensure that the source package is imported, and that its
 # version is used.
 sys.path.insert(0, project_root)
-sys.path.insert(0, os.path.abspath("../scripts/examples"))
+sys.path.insert(0, os.path.abspath("../scripts/examples")) # allow autodoc on nut_shell.py
 
 import private
-from private.modules.decorators import task, arg, group
 # -- General configuration ---------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
@@ -274,3 +273,5 @@ texinfo_documents = [
 
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #texinfo_no_detailmenu = False
+
+autodoc_member_order = 'bysource'

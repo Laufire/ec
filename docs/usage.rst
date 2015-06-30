@@ -13,4 +13,7 @@ To use private in a project::
     
     private.call('<command route> [options]')
 
-.. include:: _autodoc/nut_shell.rst
+.. automodule:: nut_shell
+    :members:
+    :undoc-members:
+    :show-inheritance:

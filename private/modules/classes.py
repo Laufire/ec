@@ -10,6 +10,7 @@ class Member: # the base class for the classes group and task
 class Task(Member):
   def __init__(self, Underlying):
     Member.__init__(self, Underlying.__doc__)
+    Underlying.__pr_member__ = self
     
     self.Underlying = Underlying
     self.Args = []
@@ -27,7 +28,6 @@ class Task(Member):
     TaskArgs = self.Args
     OrderedArgs = OrderedDict() # the order of configuration (through decorators) is prefered over the order of declaration (within the function body)
     
-    # import pdb; pdb.set_trace()
     for k, Arg in TaskArgs:
       FuncArg = FuncArgs.get(k)
       if FuncArg:
@@ -76,8 +76,11 @@ class Task(Member):
         
       except ValueError:
         Parts = []
-        if 'desc' in Arg: Parts.append(Arg['desc'])
-        if _type: Parts.append(str(_type))
+        if 'desc' in Arg:
+          Parts.append(Arg['desc'])
+          
+        if _type:
+          Parts.append(str(_type))
         
         err(' '.join(Parts) if Parts else '<invalid value>')
     
@@ -99,13 +102,15 @@ class Task(Member):
 class Group(Member):
   def __init__(self, Underlying):
     Member.__init__(self, Underlying.__doc__)
+    Underlying.__pr_member__ = self
     
     self.Underlying = Underlying
     self.Config['Members'] = Members = getattr(Underlying, '__config__', {})
     
     for Item in vars(Underlying).values(): # collect all the children
-      if isinstance(Item, Member):
-        Members[Item.Config.get('name', getattr(Item.Underlying, 'func_name' if isinstance(Item, Task) else '__name__'))] = Item
+      __pr_member__ = getattr(Item, '__pr_member__', None)
+      if __pr_member__:
+        Members[__pr_member__.Config.get('name', getattr(__pr_member__.Underlying, 'func_name' if isinstance(__pr_member__, Task) else '__name__'))] = __pr_member__
     
 # Helper Classes
 class HandledException(Exception): # a custom error class for interanl exceptions, in order to differentiate them from the script raised exceptions

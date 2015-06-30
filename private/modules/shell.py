@@ -1,6 +1,6 @@
 import shlex
 
-from core import exec_command
+from core import execCommand
 from classes import HandledException
 
 def init():
@@ -8,7 +8,7 @@ def init():
     try:
       line = raw_input('>')
       
-      exec_command(shlex.split(line), True)
+      execCommand(shlex.split(line), True)
       
     except HandledException as e:
       print e
