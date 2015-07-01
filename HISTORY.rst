@@ -46,4 +46,12 @@ Log
   * 0520  Added a custom type lib **types.multi**, that helps with inputs related to lists.
   * 2100  Class, CustomType introduced.
   * 2130  Changed input string generation process of the variables.
+  * 2240  Added private.call, that allow the calling of tasks with partial inputs.
+  * 2315  Added a custom type **types.basics.yn**.
+  
+* 20150702
+  
+  * 0055  Added a custom type **types.adv.t2t**, which could convert private args into custom types.
+  * 0140  Dispatch mode now supports flags.
+  * 0145  Dispatch mode flag -p introduced to allow sending partial args to the executing command.
   

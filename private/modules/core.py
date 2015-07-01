@@ -2,6 +2,7 @@ import sys
 from os import path
 
 from classes import Group, Task
+from helpers import list2dict
 
 # State
 mode = None
@@ -63,11 +64,7 @@ def _split_input(argv):
     arg_start += 1
     
   CommandParts = argv[:arg_start]
-  Args = {}
-  
-  for arg in argv[arg_start:]:
-    split_pos = arg.find('=')
-    Args[arg[:split_pos]] = arg[split_pos+1:]
+  Args = list2dict(argv[arg_start:])
   
   return CommandParts, Args
   

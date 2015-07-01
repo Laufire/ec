@@ -9,7 +9,7 @@ Notes
 * DocStrings of the tasks could be used by external modules (like sphinx). This is one of the key factors of developing private, apart from it's predecessor Commander.
 """
 
-from private.private import start, task, arg, group, module
+from private.private import start, task, arg, group, module, call
 
 @task
 @arg('arg1', type=int, desc='Some int')
@@ -39,6 +39,11 @@ class group1:
       * @task.name, **task1** will be the name of this task, not the function name **task_1**.
     """
     group1.log('%s, from %s.' % (arg1, group1.name))
+    
+  @task
+  def task2():
+    """Calls nut_shell.task1 with some arguments, the args that aren't provided will be collected."""
+    call(task1, arg1=1, arg2=2)
     
   @staticmethod
   def log(message):

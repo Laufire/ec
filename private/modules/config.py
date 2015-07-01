@@ -1,7 +1,7 @@
 import sys
 
-from classes import Task, Group
-from helpers import get_calling_module
+from classes import Task, Group, HandledException
+from helpers import get_calling_module, err
 
 __all__ = ['task', 'arg', 'group', 'module']
 
@@ -32,7 +32,12 @@ def module(**Config):
 def _task(Func, Config):
   _Task = _wrapObject(Func, Task)
   _Task.Config.update(**Config)
-  _Task.__prepare__()
+  
+  try:
+    _Task.__prepare__()
+    
+  except HandledException as e:
+    err(e, 1)
   
   return _Task.Underlying
 

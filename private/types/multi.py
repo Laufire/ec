@@ -1,4 +1,6 @@
-class multi:
+from ..modules.classes import CustomType
+
+class multi(CustomType):
   """
   Used to get a list of inputs.
   """
@@ -11,7 +13,7 @@ class multi:
   def __str__(self):
     return getattr(self, 'desc', 'a list of strings separated by \'%s\'' % self.separator)
 
-class some_of:
+class some_of(CustomType):
   def __init__(self, choices, separator=', '):
     self.choices = choices
     self.separator = separator
@@ -27,7 +29,7 @@ class some_of:
   def __str__(self):
     return 'some of: %s' % self.separator.join(self.choices)
     
-class one_of:
+class one_of(CustomType):
   def __init__(self, choices):
     self.choices = choices
     
@@ -38,4 +40,4 @@ class one_of:
     return val
     
   def __str__(self):
-    return 'one of: %s' % ', '.join(self.choices)
+    return '%s' % '/'.join(self.choices)

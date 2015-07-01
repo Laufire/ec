@@ -36,14 +36,18 @@ class Task(Member):
     
     for k, Arg in TaskArgs:
       FuncArg = FuncArgs.get(k)
-      if FuncArg:
+      if FuncArg is not None:
         FuncArg.update(**Arg) # prefer Args config over the values given while defining the function.
         Arg = FuncArg
+        del FuncArgs[k]
         
-      del FuncArgs[k]
+      else:
+        raise HandledException('Unknown arg "%s" while configuring "%s".' % (k, self.Config['name']))
+        
       OrderedArgs[k] = Arg
       
-    OrderedArgs.update(**FuncArgs)
+    OrderedArgs.update(FuncArgs.iteritems())
+    
     self.Args = OrderedArgs
     
   def __digest__(self, InArgs):
@@ -98,8 +102,8 @@ class Task(Member):
     Arg = self.Args[argName]
     _type = Arg.get('type')
     
-    if isinstance(_type, CustomType) and hasattr(_type, 'desc'):
-      return '%s %s' % (argName, _type.desc)
+    if isinstance(_type, CustomType):
+      return '%s, %s' % (argName, _type)
     
     return '%s (%s)' % (argName, Arg['default']) if 'default' in Arg else argName
     
@@ -146,9 +150,16 @@ class Group(Member):
       if __pr_member__:
         Members[__pr_member__.Config['name']] = __pr_member__
     
-class CustomType: # branding class
-  pass
+class CustomType:
+  def __init__(self, desc=None):
+    if desc is not None:
+      self.desc = desc
   
+  def __str__(self):
+    desc = getattr(self, 'desc', None)
+    
+    return desc or ''
+    
 # Helper Classes
 class HandledException(Exception): # a custom error class for interanl exceptions, in order to differentiate them from the script raised exceptions
 

@@ -23,6 +23,17 @@ def load_module(module_path):
   
   return Module
 
-def show_usage():
-  err('private module_path <command route> [options]', 1)
+def list2dict(lst, splitter='='):
+  Dict = {}
+  
+  for item in lst:
+    split_pos = item.find(splitter)
+    
+    if split_pos == -1:
+      Dict[item] = ''
+      
+    else:
+      Dict[item[:split_pos]] = item[split_pos+1:]
+  
+  return Dict
   

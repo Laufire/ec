@@ -25,6 +25,8 @@ Check
 -----
 * Automatically adding params to the doc string.
 
+* ^X in shell mode displaying help.
+
 Later
 -----
 * Add usage document for shell mode.

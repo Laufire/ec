@@ -8,7 +8,8 @@ def init():
     try:
       line = raw_input('>')
       
-      execCommand(shlex.split(line), True)
+      if line:
+        execCommand(shlex.split(line), True)
       
     except HandledException as e:
       print e

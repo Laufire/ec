@@ -1,3 +1,5 @@
+from ..modules.classes import CustomType
+
 class between(CustomType):
   """
   Used to get a number within two numbers.
