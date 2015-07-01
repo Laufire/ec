@@ -42,4 +42,8 @@ Log
 
   * 0100  Extraceted the workers from the decorators in config.py. It is done in order to avoid reparring the workers over and over.
   * 0330  Added a custom type **types.regex.pattern**. It took ~20 mins.
+  * 0515  Unknown args are now filtered out.
+  * 0520  Added a custom type lib **types.multi**, that helps with inputs related to lists.
+  * 2100  Class, CustomType introduced.
+  * 2130  Changed input string generation process of the variables.
   

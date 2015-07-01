@@ -17,8 +17,6 @@ Features
 
 ToDo
 ----
-* A separate types library.
-
 * Make private wrappable; ie: implement private.call.
 
 * Implement helper tasks.
@@ -29,6 +27,10 @@ Check
 
 Later
 -----
+* Add usage document for shell mode.
+
+* Add api docs and more docstrings.
+
 * Making the name arg, of the decorator, arg optional. This could be achived through iterating over the FuncArgs.
 
 * An autodoc extension, to document tasks and groups instead of methods and classes: There are some issues with using autodoc, for example a renamed task is still being documented under the original function name.

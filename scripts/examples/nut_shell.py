@@ -9,19 +9,17 @@ Notes
 * DocStrings of the tasks could be used by external modules (like sphinx). This is one of the key factors of developing private, apart from it's predecessor Commander.
 """
 
-__all__ = ['task1', 'group1']
-
 from private.private import start, task, arg, group, module
 
 @task
-@arg('arg1', type=int, desc='A description for the arg.')
+@arg('arg1', type=int, desc='Some int')
 @arg('arg2', type=int)
 def task1(arg1, arg3=3, arg2=2):
   """A simple task, at the root of the script.
   
-    * Note that the order of input collection will follow the order of configuration (in this case arg1, then arg2 and then arg3).
-    * Any unconfigured arg will be collected after the collection of the configured args.
-    * Since a name isn't specified in @task, the name of the task, *task1* will be used to identify this task.
+    * Note that the order of input collection will follow the order of configuration (in this case arg1 and then arg2).
+    * Any unconfigured arg will be collected after the collection of the configured args (hence arg3 will be collected as the last arg).
+    * Since a name isn't specified in @task, the name of the task, *task1* will be used as the name of this task.
   """
   print arg1, arg2, arg3
 

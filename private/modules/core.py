@@ -36,7 +36,7 @@ def execCommand(Argv, collect_missing):
   if not isinstance(ResolvedMember, Task):
     raise HandledException('No such task.')
     
-  return ResolvedMember.collectNcall(**Args) if collect_missing else ResolvedMember(**Args)
+  return ResolvedMember.__collect_n_call__(**Args) if collect_missing else ResolvedMember(**Args)
 
 def resolveMember(Parent, CommandParts):
   

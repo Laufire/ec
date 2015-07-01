@@ -3,16 +3,21 @@ from collections import OrderedDict
 from helpers import err
 
 class Member: # the base class for the classes group and task
-  def __init__(self, doc):
+  """
+  The base class for the classes Task and Group
+    Brands the given underlying with the __pr_member__ attr, which is used to identify the Underlying as processable by private.
+  """
+  def __init__(self, Underlying):
+    Underlying.__pr_member__ = self
+    self.Underlying = Underlying
     self.Config = {}
-    self.__doc__ = doc # allow the docstrigs to be used by external modules
     
 class Task(Member):
+  """A callable class that allows the calling of the underlying function as a task."""
   def __init__(self, Underlying):
-    Member.__init__(self, Underlying.__doc__)
-    Underlying.__pr_member__ = self
+    Member.__init__(self, Underlying)
     
-    self.Underlying = Underlying
+    self.Config['name'] = Underlying.func_name
     self.Args = []
     
   def __call__(self, **Args):    
@@ -23,7 +28,8 @@ class Task(Member):
     except TypeError as e:
       raise HandledException(e)
   
-  def __prepare__(self): # prepares the task for excecution
+  def __prepare__(self):
+    """Prepares the task for excecution."""
     FuncArgs = getFuncArgs(self.Underlying)
     TaskArgs = self.Args
     OrderedArgs = OrderedDict() # the order of configuration (through decorators) is prefered over the order of declaration (within the function body)
@@ -40,7 +46,10 @@ class Task(Member):
     OrderedArgs.update(**FuncArgs)
     self.Args = OrderedArgs
     
-  def __digest__(self, InArgs): # should be called only from __call__
+  def __digest__(self, InArgs):
+    """A helper for __call__ that digests the provided Args"""
+    self.__confirm_known_args__(InArgs)
+    
     for name, Arg in self.Args.items():
       if not name in InArgs:
         if 'default' in Arg:
@@ -56,35 +65,57 @@ class Task(Member):
             InArgs[name] = _type(InArgs[name])
             
           except ValueError:
-            raise HandledException('Invalid value for "%s", expected %s, got "%s".' % (name, _type, InArgs[name]))
+            raise HandledException('Invalid value for "%s", expected %s; got "%s".' % (name, _type, InArgs[name]))
       
-  def __collect_arg__(self, argName): # collect a single arg
+  def __collect_arg__(self, argName):
+    """Collects a single arg."""
     Arg = self.Args[argName]
     _type = Arg.get('type')
-    has_default = 'default' in Arg
-    Default = Arg.get('default')
+    desc = desc = Arg.get('desc', self.__get_arg__desc__(argName))
     
     while True:
       try:
-        line = raw_input('%s%s: ' % (argName, ' (%s) ' % Default if has_default else ''))
+        line = raw_input('%s: ' % desc)
         
         if not line:
-          if has_default:
+          if 'default' in Arg:
             return Arg['default']
           
         return _type(line) if _type else line
         
       except ValueError:
-        Parts = []
-        if 'desc' in Arg:
-          Parts.append(Arg['desc'])
-          
-        if _type:
-          Parts.append('Type: %s.' % _type)
-        
-        err(' '.join(Parts) if Parts else '<invalid value>')
+        err('<invalid value>')
     
-  def collectNcall(self, **InArgs): # collect all the args and call the Task
+  def __get_arg__desc__(self, argName):
+    """
+    Generates a description for the input, when 'desc' is not provided.
+    Generation Order
+    ----------------
+    
+    * When a **CustomType** with its own **desc** is available, the descriprion will be 'argName CustomType.desc'.
+    * Else 'argName'  or 'argName (dfault) will be the description.
+    """
+    Arg = self.Args[argName]
+    _type = Arg.get('type')
+    
+    if isinstance(_type, CustomType) and hasattr(_type, 'desc'):
+      return '%s %s' % (argName, _type.desc)
+    
+    return '%s (%s)' % (argName, Arg['default']) if 'default' in Arg else argName
+    
+  def __confirm_known_args__(self, InArgs):
+    """Confirms that only known args are passed to the underlying."""
+    ArgKeys = self.Args.keys()
+    
+    for k in InArgs.keys():
+      if k not in ArgKeys:
+        raise HandledException('Unknown arg: %s.' % k)
+  
+  def __collect_n_call__(self, **InArgs):
+    """Helps with collecting all the args and call the Task.
+    """
+    self.__confirm_known_args__(InArgs)
+    
     for name, Arg in self.Args.items():
       if not name in InArgs:
         InArgs[name] = self.__collect_arg__(name)
@@ -100,18 +131,24 @@ class Task(Member):
     return self.Underlying(**InArgs)
     
 class Group(Member):
+  """Groups can contain other Members (Tasks / Groups)."""
   def __init__(self, Underlying):
-    Member.__init__(self, Underlying.__doc__)
     Underlying.__pr_member__ = self
     
-    self.Underlying = Underlying
-    self.Config['Members'] = Members = getattr(Underlying, '__config__', {})
+    Member.__init__(self, Underlying)
+    Config = self.Config
     
-    for Item in vars(Underlying).values(): # collect all the children
+    Config['name'] = Underlying.__name__
+    Config['Members'] = Members = {}
+    
+    for Item in vars(Underlying).values(): # collect all the children (branded with __pr_member__)
       __pr_member__ = getattr(Item, '__pr_member__', None)
       if __pr_member__:
-        Members[__pr_member__.Config.get('name', getattr(__pr_member__.Underlying, 'func_name' if isinstance(__pr_member__, Task) else '__name__'))] = __pr_member__
+        Members[__pr_member__.Config['name']] = __pr_member__
     
+class CustomType: # branding class
+  pass
+  
 # Helper Classes
 class HandledException(Exception): # a custom error class for interanl exceptions, in order to differentiate them from the script raised exceptions
 
