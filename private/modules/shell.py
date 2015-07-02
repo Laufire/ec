@@ -1,9 +1,14 @@
 import shlex
 
-from core import execCommand
-from classes import HandledException
+from core import execCommand, BaseGroup
+from classes import HandledException, Group
 
-def init():
+def init(**options):
+  if options.get('helper_tasks'):
+    import helper_tasks
+    
+    BaseGroup.Config['Members']['$'] = Group(helper_tasks)
+    
   while True:
     try:
       line = raw_input('>')

@@ -15,18 +15,21 @@ __all__ = [
   'task', 'arg', 'group', 'module'
 ]
 
-def start():
+def start(helper_tasks=True):
   """Starts the script, if it is the main script.
   """
+  from modules import core
+  
   CallingModule = get_calling_module()
   
   group(CallingModule) # brand the module with __pr_member__
   
+  core.BaseGroup = CallingModule.__pr_member__ # allow the wrapping of private based modules
+  
   if CallingModule.__name__ != '__main__':
     return
   
-  from modules import core
-  core.start(CallingModule)
+  core.start(CallingModule, None, helper_tasks=helper_tasks)
   
 def call(__pr_func__, **InArgs):
   """Helps with calling the tasks with partial arguments.

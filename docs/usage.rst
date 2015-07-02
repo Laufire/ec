@@ -1,31 +1,62 @@
 Usage
 ========
 
-To use private from command line
+Command line
+-------------
 
-**shell** mode
+To enter shell mode
+
+.. code-block:: bash
 
   $ python script_path
   
-**dispatch** mode
+To dispatch commands
+
+.. code-block:: bash
+
+  $ python script groupX taskX [arg1=value arg2=value ...] # execute a task
   
-    $ python script <command route> [arg1=value arg2=value ...] # execute a task
-    
-    $ python script -p <command route> arg1=value # execute a task, with partial args.
+  $ python script -p groupX taskX arg1=value # execute a task, with partial args.
   
-To launch a scriptlet/dir::
+To launch a scriptlet/dir
 
-  $ private scriptlet/dir [flags] <command route> [args]
+.. code-block:: bash
+
+  $ private scriptlet/dir [flag] groupX taskX [args ...]
   
-To use private in a project::
+Examples
+---------
+A simple example
+################
+.. literalinclude:: ../scripts/examples/simple.py
+  :linenos:
+  :language: python
 
-    import private
+From the command line enter
+
+.. code-block:: bash
+
+  $ python simple.py task1 arg1=1 arg2=2
+    1 2
     
-    private.members(...)
+  $ python simple.py group1 task1 arg1=1
+    2
     
-    private.call('<command route> [options]')
+    
+An advanced example (wrapping private to extened it)
+####################################################
+.. literalinclude:: ../scripts/examples/advanced/wrapping.py
+  :linenos:
+  :language: python
 
+A nut shell example
+###################
+.. literalinclude:: ../scripts/examples/nut_shell.py
+  :linenos:
+  :language: python
 
+Documentation of nut_shell.py
++++++++++++++++++++++++++++++
 .. automodule:: nut_shell
     :members:
     :undoc-members:

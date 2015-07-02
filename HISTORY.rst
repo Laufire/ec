@@ -54,4 +54,7 @@ Log
   * 0055  Added a custom type **types.adv.t2t**, which could convert private args into custom types.
   * 0140  Dispatch mode now supports flags.
   * 0145  Dispatch mode flag -p introduced to allow sending partial args to the executing command.
+  * 0345  private scripts could now be wrapped (by other modules to provide extended functionality, like a GUI etc).
+  * 0520  Added interface.py to help with wrapping private.
+  * 0550  helper_tasks.py introduced.
   

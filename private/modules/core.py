@@ -9,9 +9,9 @@ mode = None
 BaseGroup = {}
 
 # Exports
-__all__ = ['start', 'execCommand', ]
+__all__ = ['start', 'execCommand', 'resolveMember']
 
-def start(BaseModule, Argv=None):
+def start(BaseModule, Argv=None, **options):
   global BaseGroup
   BaseGroup =  BaseModule.__pr_member__
   
@@ -23,7 +23,7 @@ def start(BaseModule, Argv=None):
   
   if mode == 's':
     import shell
-    shell.init()
+    shell.init(**options)
     
   else:
     import dispatch
