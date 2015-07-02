@@ -1,7 +1,7 @@
 Design
 =======
 
-    **ec** is a module launcher. It's a simpler and better implementatoin of commander. It is designed to shed some feature creep and to provide a better UX.
+    **ec** is a module launcher. It's a simpler and better implementation of commander. It is designed to shed some feature creep and to provide a better UX.
     
 Design Goals
 ------------
@@ -13,29 +13,11 @@ Design Goals
 
 * Using simpler structures on the code level.
 
-Features
---------
-Planned
-#######
-
-* Launching individual modules.
-
-* Shell and Dispatch modes.
-
-* Typed params.
-
-* Every param is to be input, separately; with every query having a description, default value etc.
-
-Later
-#####
-
-* Externally adding params to modules that weren't designed for ec.
-
 Ideas
 -----
 * Using simple functions,lambdas and callable classes as types, bot for conversion and validation.
 
-* Nested params, by using tasks as types.
+* Nested args, by using tasks as types.
 
 Differences from Commander
 --------------------------
@@ -66,18 +48,18 @@ Additions
 
 * Custom types.
 
-* Supplying args are more interative.
+* Supplying args are more interactive.
 
 Notes
 ------
-* The args follow a **argName=value** pattern for enhancing redability, especially on the dispatch mode.
+* The args follow a **argName=value** pattern for enhancing readability, especially on the dispatch mode.
 
-* The config decorators return the underlyings, instead of their decorated versions, so to allow a hasssle free use of the underlyings within the script.
+* The config decorators return the underlyings, instead of their decorated versions, so to allow a hassle free use of the underlyings within the script.
 
 
 Thoughts
 --------
-* **scriptlets** - plugin like mini-programmes that could acomplish specific tasks.
+* **scriptlets** - plugin like mini-programs that could accomplish specific tasks.
 
 Learned
 -------
@@ -85,10 +67,10 @@ Learned
 
 * Simpler structures are often robust.
 
-* Writting tests is a lot simpler than imagined.
+* Writing tests is a lot simpler than imagined.
 
 Decisions
 ---------
-* The methods to be used by the loade scripts are added to __builtins__, in order to avoid an explicit import of ec from the script; which will load a separate instance of ec and complicate the passing of data between the two instances.
+* The methods to be used by the loaded scripts are added to __builtins__, in order to avoid an explicit import of ec from the script; which will load a separate instance of ec and complicate the passing of data between the two instances.
 
-* 150630_1500 Decided to add an attribute __pr_member__ the underlyings, to identify them for ec. An alternate impementation was thought of; in which the underlynings and the members would be buffered (as a list / dict) and processed before starting the core. Though the later method doesn't alter the underlying, the former is chosen for it's simplicity. It took ~30 mins for the rewiring.
+* 150630_1500 Decided to add an attribute __ec_member__ the underlyings, to identify them for ec. An alternate implementation was thought of; in which the underlyings and the members would be buffered (as a list / dict) and processed before starting the core. Though the later method doesn't alter the underlying, the former is chosen for it's simplicity. It took ~30 mins for the rewiring.

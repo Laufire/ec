@@ -43,7 +43,7 @@ From the command line enter
     2
     
     
-An advanced example (wrapping ec to extened it)
+An advanced example (wrapping ec to extend it)
 ####################################################
 .. literalinclude:: ../scripts/examples/advanced/wrapping.py
   :linenos:

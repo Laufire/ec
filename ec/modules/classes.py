@@ -5,10 +5,10 @@ from helpers import err
 class Member: # the base class for the classes group and task
   """
   The base class for the classes Task and Group
-    Brands the given underlying with the __pr_member__ attr, which is used to identify the Underlying as processable by ec.
+    Brands the given underlying with the __ec_member__ attr, which is used to identify the Underlying as processable by ec.
   """
   def __init__(self, Underlying):
-    Underlying.__pr_member__ = self
+    Underlying.__ec_member__ = self
     self.Underlying = Underlying
     self.Config = {}
     
@@ -137,7 +137,7 @@ class Task(Member):
 class Group(Member):
   """Groups can contain other Members (Tasks / Groups)."""
   def __init__(self, Underlying):
-    Underlying.__pr_member__ = self
+    Underlying.__ec_member__ = self
     
     Member.__init__(self, Underlying)
     Config = self.Config
@@ -145,10 +145,10 @@ class Group(Member):
     Config['name'] = Underlying.__name__
     Config['Members'] = Members = {}
     
-    for Item in vars(Underlying).values(): # collect all the children (branded with __pr_member__)
-      __pr_member__ = getattr(Item, '__pr_member__', None)
-      if __pr_member__:
-        Members[__pr_member__.Config['name']] = __pr_member__
+    for Item in vars(Underlying).values(): # collect all the children (branded with __ec_member__)
+      __ec_member__ = getattr(Item, '__ec_member__', None)
+      if __ec_member__:
+        Members[__ec_member__.Config['name']] = __ec_member__
     
 class CustomType:
   def __init__(self, desc=None):

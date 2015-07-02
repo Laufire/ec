@@ -2,15 +2,13 @@
 
 call tools\install.bat
 
-cd tests
-
 set errorlevel=
 set RC=
 setlocal
-call nosetests
-endlocal & set RC=%ERRORLEVEL%
 
-cd ..
+python setup.py test
+
+endlocal & set RC=%ERRORLEVEL%
 
 exit /B %RC%
 

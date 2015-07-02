@@ -47,7 +47,7 @@ class group1:
     
   @staticmethod
   def log(message):
-    """Helper methods, are intended to help the tasks. They are often decalred as static methods, due to them being members of unintantiated classes.
+    """Helper methods, are intended to help the tasks. They are often declared as static methods, due to them being members of unintantiated classes.
     """
     print message
     

@@ -13,7 +13,7 @@ __all__ = ['start', 'execCommand', 'resolveMember']
 
 def start(BaseModule, Argv=None, **options):
   global BaseGroup
-  BaseGroup =  BaseModule.__pr_member__
+  BaseGroup =  BaseModule.__ec_member__
   
   if Argv is None:
     Argv = sys.argv[1:]

@@ -15,12 +15,13 @@ Contents:
    installation
    usage
    api
+   todo
    design
    authors
    history
 
 
-Indices and tables
+Indexes and tables
 ==================
 
 * :ref:`genindex`
