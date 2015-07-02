@@ -7,10 +7,10 @@ Tests the dispatch mode.
 
 import unittest
 
-from lib.helpers import shell_exec
+from support.helpers import shell_exec
 
 def dispatch(argStr):
-  return shell_exec('python lib/target_script.py %s' % argStr)
+  return shell_exec('python support/target_script.py %s' % argStr)
   
 class TestPrivate(unittest.TestCase):
 

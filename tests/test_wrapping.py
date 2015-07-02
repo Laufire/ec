@@ -5,7 +5,7 @@ import unittest
 
 from ec import interface
 
-import lib.target_script
+import support.target_script
 
 class TestPrivate(unittest.TestCase):
 
