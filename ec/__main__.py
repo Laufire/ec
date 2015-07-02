@@ -37,7 +37,7 @@ def main():
   
 
 def show_usage():
-  print 'Usage:\n\t$ private script/dir [flag] [command] [args]'
+  print 'Usage:\n\t$ ec script/dir [flag] [command] [args]'
 
 if __name__ == '__main__':
   main()

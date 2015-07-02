@@ -7,11 +7,11 @@ for %%x in (%*) do Set /A argC+=1
 
 if %argC%==0 (
 
-	pylint --rcfile=private/pylintrc private
+	pylint --rcfile=ec/pylintrc ec
 	
 ) else (
 
-	pylint --rcfile=private/pylintrc %*
+	pylint --rcfile=ec/pylintrc %*
 	
 )
 

@@ -1,9 +1,9 @@
 """
-An example fro wrapping private based modules
+An example fro wrapping ec based modules
 """
 
-from private import interface
+from ec import interface
 
-import simple # the privated script
+import simple # the ecd script
 
 interface.call('task1 arg2=1', True)

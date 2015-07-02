@@ -1,7 +1,7 @@
-private
+ec
 ========
 
-private - a simpler, yet better implementation of Commander, a module launcher.
+ec - a simpler, yet better implementation of Commander, a module launcher.
 
 * Free software: MIT license
 

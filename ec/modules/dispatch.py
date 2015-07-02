@@ -25,7 +25,7 @@ def get_help_text():
   from helper_tasks import list_members
   
   text = '\n'.join(['Usage:',
-    '  $ private module_path [flag] <command route> [args]',
+    '  $ ec module_path [flag] <command route> [args]',
     '\nFlags',
     ' -h    show help.',
     ' -p    execute a command with partial args.',

@@ -1,7 +1,7 @@
 API
 ========
 
-.. automodule:: private.private
+.. automodule:: ec.ec
     :members:
     :undoc-members:
     :show-inheritance:

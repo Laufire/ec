@@ -22,19 +22,19 @@ test_requirements = [
 ]
 
 setup(
-    name='private',
+    name='ec',
     version='0.1.0',
-    description="private - a simpler, yet better implementation of Commander, a module launcher.",
+    description="ec - a simpler, yet better implementation of Commander, a module launcher.",
     long_description=readme + '\n\n' + history,
     author="Laufire Technologies",
     author_email='laufiretechnologies@gmail.com',
-    url='https://github.com/Laufire/private',
+    url='https://github.com/Laufire/ec',
     packages=find_packages(),
     include_package_data=True,
     install_requires=requirements,
     license="MIT",
     zip_safe=False,
-    keywords='private',
+    keywords='ec',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
@@ -47,7 +47,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-        'private=private.__main__:main',
+        'ec=ec.__main__:main',
         ],
     },
     test_suite='tests',

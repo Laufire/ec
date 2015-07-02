@@ -1,15 +1,15 @@
 """
 nut_shell
 =========
-  Everything about using private: this module is designed to be a nut shell guide to private and as a way to enable test driven development.
+  Everything about using ec: this module is designed to be a nut shell guide to ec and as a way to enable test driven development.
   
 Notes
 -----
-* The decorators task, arg and group are available as __builtins__, when the script is launched using private.
-* DocStrings of the tasks could be used by external modules (like sphinx). This is one of the key factors of developing private, apart from it's predecessor Commander.
+* The decorators task, arg and group are available as __builtins__, when the script is launched using ec.
+* DocStrings of the tasks could be used by external modules (like sphinx). This is one of the key factors of developing ec, apart from it's predecessor Commander.
 """
 
-from private.private import start, task, arg, group, module, call
+from ec.ec import start, task, arg, group, module, call
 
 @task
 @arg('arg1', type=int, desc='Some int')
@@ -51,7 +51,7 @@ class group1:
     """
     print message
     
-  name = 'group1' #: Groups could even have private variables.
+  name = 'group1' #: Groups could even have ec variables.
   
 module(desc='A module to test decorator based configuration.') # module is an optional call, used to configure the current module.
 

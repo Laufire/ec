@@ -30,12 +30,12 @@ Log
 
   * 0105  Found that sphinx-autodoc cannot document objects of custom classes.
   * 0135  Generated some primitive documentation for nut_shell.py using autodoc.
-  * 1640  Made private embeddable.
-  * 1820  Made private completly embeddable.
+  * 1640  Made ec embeddable.
+  * 1820  Made ec completly embeddable.
   * 1820  Documented nut_shell.py using sphinx autodoc.
-  * 1900  Class based groups could now have private members.
-  * 1915  Redid the entry points. **private** could now be used to launch scripts.
-  * 2005  **private** could now be used to launch all the scripts in a dir.
+  * 1900  Class based groups could now have ec members.
+  * 1915  Redid the entry points. **ec** could now be used to launch scripts.
+  * 2005  **ec** could now be used to launch all the scripts in a dir.
   * 2050  Linted the scripts.
   
 * 20150701
@@ -46,16 +46,16 @@ Log
   * 0520  Added a custom type lib **types.multi**, that helps with inputs related to lists.
   * 2100  Class, CustomType introduced.
   * 2130  Changed input string generation process of the variables.
-  * 2240  Added private.call, that allow the calling of tasks with partial inputs.
+  * 2240  Added ec.call, that allow the calling of tasks with partial inputs.
   * 2315  Added a custom type **types.basics.yn**.
   
 * 20150702
   
-  * 0055  Added a custom type **types.adv.t2t**, which could convert private args into custom types.
+  * 0055  Added a custom type **types.adv.t2t**, which could convert ec args into custom types.
   * 0140  Dispatch mode now supports flags.
   * 0145  Dispatch mode flag -p introduced to allow sending partial args to the executing command.
-  * 0345  private scripts could now be wrapped (by other modules to provide extended functionality, like a GUI etc).
-  * 0520  Added interface.py to help with wrapping private.
+  * 0345  ec scripts could now be wrapped (by other modules to provide extended functionality, like a GUI etc).
+  * 0520  Added interface.py to help with wrapping ec.
   * 0550  helper_tasks.py introduced.
   * 0750  Wrote some tests.
   

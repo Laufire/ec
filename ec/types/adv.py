@@ -5,7 +5,7 @@ from ..modules.helpers import list2dict
 
 class t2t(CustomType):
   """
-  Converts a private task into a type.
+  Converts a ec task into a type.
   """
   def __init__(self, __pr__task__, **InArgs):
     __pr_member__ = __pr__task__.__pr_member__

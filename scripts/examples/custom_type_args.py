@@ -1,10 +1,10 @@
-from private.private import start, task, arg, group
+from ec.ec import start, task, arg, group
 
-from private.types.regex import pattern, email
-from private.types.multi import one_of
-from private.types.num import between
-from private.types.basics import yn
-from private.types.adv import t2t
+from ec.types.regex import pattern, email
+from ec.types.multi import one_of
+from ec.types.num import between
+from ec.types.basics import yn
+from ec.types.adv import t2t
 
 @task
 @arg('id', type=pattern('^a.+'), desc='User id')

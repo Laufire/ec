@@ -1,9 +1,9 @@
 """
-An example fro wrapping private based modules
+An example fro wrapping ec based modules
 """
 import unittest
 
-from private import interface
+from ec import interface
 
 import lib.target_script
 

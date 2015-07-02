@@ -5,7 +5,7 @@ from helpers import err
 class Member: # the base class for the classes group and task
   """
   The base class for the classes Task and Group
-    Brands the given underlying with the __pr_member__ attr, which is used to identify the Underlying as processable by private.
+    Brands the given underlying with the __pr_member__ attr, which is used to identify the Underlying as processable by ec.
   """
   def __init__(self, Underlying):
     Underlying.__pr_member__ = self

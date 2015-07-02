@@ -1,7 +1,7 @@
 Design
 =======
 
-    **private** is a module launcher. It's a simpler and better implementatoin of commander. It is designed to shed some feature creep and to provide a better UX.
+    **ec** is a module launcher. It's a simpler and better implementatoin of commander. It is designed to shed some feature creep and to provide a better UX.
     
 Design Goals
 ------------
@@ -29,7 +29,7 @@ Planned
 Later
 #####
 
-* Externally adding params to modules that weren't designed for private.
+* Externally adding params to modules that weren't designed for ec.
 
 Ideas
 -----
@@ -89,6 +89,6 @@ Learned
 
 Decisions
 ---------
-* The methods to be used by the loade scripts are added to __builtins__, in order to avoid an explicit import of private from the script; which will load a separate instance of private and complicate the passing of data between the two instances.
+* The methods to be used by the loade scripts are added to __builtins__, in order to avoid an explicit import of ec from the script; which will load a separate instance of ec and complicate the passing of data between the two instances.
 
-* 150630_1500 Decided to add an attribute __pr_member__ the underlyings, to identify them for private. An alternate impementation was thought of; in which the underlynings and the members would be buffered (as a list / dict) and processed before starting the core. Though the later method doesn't alter the underlying, the former is chosen for it's simplicity. It took ~30 mins for the rewiring.
+* 150630_1500 Decided to add an attribute __pr_member__ the underlyings, to identify them for ec. An alternate impementation was thought of; in which the underlynings and the members would be buffered (as a list / dict) and processed before starting the core. Though the later method doesn't alter the underlying, the former is chosen for it's simplicity. It took ~30 mins for the rewiring.

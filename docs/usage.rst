@@ -22,7 +22,7 @@ To launch a scriptlet/dir
 
 .. code-block:: bash
 
-  $ private scriptlet/dir [flag] groupX taskX [args ...]
+  $ ec scriptlet/dir [flag] groupX taskX [args ...]
   
 Examples
 ---------
@@ -43,7 +43,7 @@ From the command line enter
     2
     
     
-An advanced example (wrapping private to extened it)
+An advanced example (wrapping ec to extened it)
 ####################################################
 .. literalinclude:: ../scripts/examples/advanced/wrapping.py
   :linenos:

@@ -1,6 +1,6 @@
 import os
 
-from private.private import task, arg, group, module
+from ec.ec import task, arg, group, module
 
 from core import resolveMember, BaseGroup
 from classes import Group, Task
