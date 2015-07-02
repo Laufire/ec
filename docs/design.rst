@@ -29,11 +29,7 @@ Planned
 Later
 #####
 
-* Treating modules of a dir / package as sibblings.
-
 * Externally adding params to modules that weren't designed for private.
-
-* Helper commands like, help, list, etc, for shell mode.
 
 Ideas
 -----
@@ -81,13 +77,15 @@ Notes
 
 Thoughts
 --------
-* **Commandlets** - plugin like mini-programmes that could acomplish specific tasks.
+* **scriptlets** - plugin like mini-programmes that could acomplish specific tasks.
 
 Learned
 -------
 * With experience errors get reduced.
 
 * Simpler structures are often robust.
+
+* Writting tests is a lot simpler than imagined.
 
 Decisions
 ---------

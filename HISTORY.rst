@@ -57,4 +57,5 @@ Log
   * 0345  private scripts could now be wrapped (by other modules to provide extended functionality, like a GUI etc).
   * 0520  Added interface.py to help with wrapping private.
   * 0550  helper_tasks.py introduced.
+  * 0750  Wrote some tests.
   

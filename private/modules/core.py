@@ -6,7 +6,7 @@ from helpers import list2dict
 
 # State
 mode = None
-BaseGroup = {}
+BaseGroup = None
 
 # Exports
 __all__ = ['start', 'execCommand', 'resolveMember']

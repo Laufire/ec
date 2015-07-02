@@ -17,6 +17,8 @@ __all__ = [
 
 def start(helper_tasks=True):
   """Starts the script, if it is the main script.
+    :param helper_tasks: enables / disables helper tasks ($ ..) in the shell.
+    :param helper_tasks: default True
   """
   from modules import core
   
