@@ -30,7 +30,7 @@ def list2dict(lst, splitter='='):
     split_pos = item.find(splitter)
     
     if split_pos == -1:
-      Dict[item] = ''
+      Dict[item] = None
       
     else:
       Dict[item[:split_pos]] = item[split_pos+1:]

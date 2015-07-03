@@ -14,9 +14,14 @@ Fix
 
 Check
 -----
+* Allowing name-less args, especially for a better UX in the shell mode. There are several ways, including:
+  
+  * Allowing the first argument of a task to be name-less.
+  * Allowing tasks with a single arg to have name-less inputs.
+
 * Automatically adding params to the doc string.
 
-* ^X in shell mode displaying help.
+* ^X in shell mode displaying help on the arg being collected.
 
 Later
 -----

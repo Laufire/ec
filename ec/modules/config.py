@@ -1,21 +1,60 @@
 import sys
 
 from classes import Task, Group, HandledException
-from helpers import get_calling_module, err
+from helpers import get_calling_module
 
 __all__ = ['task', 'arg', 'group', 'module']
 
-# Decorators
-def task(Func=None, **Config):
-  """A decorator to make tasks out of functions."""
-  return _task(Func, Config) if Func else lambda Func: _task(Func, Config)
+# Helpers
+def wrap(func, with_func):
+  func.__name__ = with_func.__name__
+  func.__doc__ = with_func.__doc__
+  func.__dict__.update(with_func.__dict__)
+  
+  return func
 
-def arg(name, **Config):
+def decorator(func):
+  """Makes thae passed decorators to support optional args."""
+  def wrapper(__decorated__=None, **Config):
+    if __decorated__ is None: # some configration is available through the decorator
+      return lambda _func: func(_func, **Config)
+      
+    else:
+      return func(__decorated__, **Config)
+    
+  return wrap(wrapper, func)
+  
+
+# Decorators
+@decorator
+def task(__decorated__=None, **Config):
+  """A decorator to make tasks out of functions."""
+  if isinstance(__decorated__, tuple):  # the task has some args
+    _Task = Task(__decorated__[0], __decorated__[1], Config=Config)
+  
+  else:
+    _Task = Task(__decorated__, [], Config)
+  
+  return _Task.Underlying
+
+def arg(name=None, **Config): # wraps the _arg decorator, in order to allow unnamed args
   """A decorator to configure an argument of a task.
   
     * It always follows a @task or an @arg.
   """
-  return lambda Func: _arg(name, Func, Config)
+  if name is not None:
+    Config['name']= name
+    
+  return lambda decorated: _arg(decorated, **Config)
+
+@decorator  
+def _arg(__decorated__, **Config): # the worker for the arg decorator
+  if isinstance(__decorated__, tuple):  # this decorator is followed by another arg decorator
+    __decorated__[1].insert(0, Config)
+    return __decorated__
+    
+  else:
+    return __decorated__, [Config] # this decorator is the first arg decorator
   
 def group(Underlying=None, **Config):
   """A decorator to make groups out of classes."""
@@ -26,34 +65,9 @@ def module(**Config):
   """Helps with adding configs to Modules.
   """
   Underlying = get_calling_module()
-  Group(Underlying).Config.update(**Config)
+  Group(Underlying, Config)
 
-# Workers - does the actual work within the decorators
-def _task(Func, Config):
-  _Task = _wrapObject(Func, Task)
-  _Task.Config.update(**Config)
-  
-  try:
-    _Task.__prepare__()
-    
-  except HandledException as e:
-    err(e, 1)
-  
-  return _Task.Underlying
-
-def _arg(name, Func, Config):
-  _Task = _wrapObject(Func, Task)
-  _Task.Args.insert(0, (name, Config))
-  
-  return _Task
-  
-def _group(Underlying, Config):
-  _Group = Group(Underlying)
-  _Group.Config.update(**Config)
-  
-  return _Group.Underlying
-  
-# Helpers
-def _wrapObject(Obj, Wrapper):
-  return Obj if isinstance(Obj, Wrapper) else Wrapper(Obj)
+@decorator
+def group(Underlying, **Config):
+  return Group(Underlying, Config).Underlying
   

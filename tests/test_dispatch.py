@@ -45,7 +45,7 @@ class TestPrivate(unittest.TestCase):
     assert(Result['err'].strip()[:2] == 'No')
     
   def test_nested_task(self):
-    Result = dispatch('group1 task1 arg1=1')
+    Result = dispatch('group1/task1 arg1=1')
     
     assert(Result['code'] == 0)
     assert(Result['out'].strip() == '1')

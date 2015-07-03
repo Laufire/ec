@@ -30,7 +30,8 @@ def start(BaseModule, Argv=None, **options):
     dispatch.init(Argv)
  
 def execCommand(Argv, collect_missing):
-  CommandParts, Args = _split_input(Argv)
+  CommandParts = Argv[0].split('/')
+  Args = list2dict(Argv[1:])
   
   ResolvedMember = resolveMember(BaseGroup, CommandParts[:])
   
@@ -52,21 +53,5 @@ def resolveMember(Parent, CommandParts):
   else:
     return Resolved
     
-# Helpers
-def _split_input(argv):
-  arg_start = 0
-  count = len(argv)
-  
-  while arg_start < count:
-    if argv[arg_start].find('=') > -1:
-      break
-    
-    arg_start += 1
-    
-  CommandParts = argv[:arg_start]
-  Args = list2dict(argv[arg_start:])
-  
-  return CommandParts, Args
-  
 # Sub Modules
 from classes import HandledException

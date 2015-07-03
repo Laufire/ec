@@ -1,3 +1,5 @@
+from ec.ec import start, task, arg, group
+
 @task
 def unconfigured(a, b=1):
   print a, b
@@ -8,3 +10,5 @@ class _arg:
   @arg('a', type=int)
   def without_desc(a, b=1):
     print a, b
+    
+start()

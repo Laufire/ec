@@ -14,15 +14,15 @@ To dispatch commands
 
 .. code-block:: bash
 
-  $ python script groupX taskX [arg1=value arg2=value ...] # execute a task
+  $ python script groupX/taskX [arg1=value arg2=value ...] # execute a task
   
-  $ python script -p groupX taskX arg1=value # execute a task, with partial args.
+  $ python script -p groupX/taskX arg1=value # execute a task, with partial args.
   
 To launch a scriptlet/dir
 
 .. code-block:: bash
 
-  $ ec scriptlet/dir [flag] groupX taskX [args ...]
+  $ ec scriptlet/dir [flag] groupX/taskX [args ...]
   
 Examples
 ---------

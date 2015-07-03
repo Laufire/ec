@@ -61,4 +61,14 @@ Log
   * 1405  Added TODO.rst.
   * 1535  Added tools\spellcheckbat.
   * 1620  Added tools\dist.bat.
+  * 1655  Pushed to github.
+  * 1735  Registerd the package at PiPy.
+  * 2145  Shell mode now supports **None** inputs, through the \0 (^z) char.
+  * 2005  Command routes are now separated by '/', instead of ' '; in order to closely emulate query strings.
+  * 2005  Dispatch mode now  **None** inputs, through omitted '=' signs after the arg names. ie: in *task1 a b=1*, the value of **a** will be **None**.
+  
+* 20150702
+  
+  * 1830  Tuned config processing to be cleaner.
+  
   
