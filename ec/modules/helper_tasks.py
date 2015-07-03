@@ -7,27 +7,34 @@ from classes import Group, Task
 from helpers import err
 
 # Helper Exports
-def list_members(route=''):
+def listMemberHelps(route=''):
   
-  Ret = []
+  Members = []
   TargetGroup = resolveMember(BaseGroup, route.split(' ')) if route else BaseGroup
   
-  for name, Member in TargetGroup.Config['Members'].items():
-    Ret.append((name, Member.Config.get('desc', '')))
+  for Member in TargetGroup.Config['Members'].values(): # get unique children (by discarding aliases)
+    if Member not in Members:
+      Members.append(Member)
+    
+  Ret = []
+  
+  for Member in Members:
+    Config = Member.Config
+    Ret.append(('%s%s' % (Config['name'], ', %s' % Config['alias'] if 'alias' in Config else ''), Config.get('desc', '')))
   
   return Ret
   
 # Tasks
-@task
+@task(alias='c', desc='Clears the console.')
 def clear():
 	os.system('cls' if os.name == 'nt' else 'clear')
   
-@task
+@task(alias='h', desc='Displays help on the available tasks and groups.')
 def help(route):
   Resolved = resolveMember(BaseGroup, route.split(' ')) if route else BaseGroup
   
   if isinstance(Resolved, Group):
-    print '\n'.join([('%s  %s' % (name, desc))[:60] for name, desc in list_members(route)])
+    print '\n'.join([('%s  %s' % (name, desc))[:60] for name, desc in listMemberHelps(route)])
     
   elif isinstance(Resolved, Task):
     print _getTaskHelp(Resolved)

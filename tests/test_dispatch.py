@@ -34,7 +34,7 @@ class TestPrivate(unittest.TestCase):
     
   def test_flag_help(self):
     Result = dispatch('-h')
-    
+    print Result['err']
     assert(Result['code'] == 0)
     assert(Result['out'].strip()[:5] == 'Usage')
     
@@ -52,6 +52,12 @@ class TestPrivate(unittest.TestCase):
 
   def test_default_arg(self):
     Result = dispatch('task1 arg1=1')
+    
+    assert(Result['code'] == 0)
+    assert(Result['out'].strip() == '1 2')
+  
+  def test_alias(self):
+    Result = dispatch('t1 arg1=1')
     
     assert(Result['code'] == 0)
     assert(Result['out'].strip() == '1 2')

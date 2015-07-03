@@ -22,7 +22,7 @@ def show_help(is_error=0):
     print get_help_text()
     
 def get_help_text():
-  from helper_tasks import list_members
+  from helper_tasks import listMemberHelps
   
   text = '\n'.join(['Usage:',
     '  $ ec module_path [flag] <command route> [args]',
@@ -31,6 +31,6 @@ def get_help_text():
     ' -p    execute a command with partial args.',
     '\nMembers\n',
   ]
-  ) + '  ' + '\n  '.join([('%s  %s' % (name, desc))[:60] for name, desc in list_members('')])
+  ) + '  ' + '\n  '.join([('%s  %s' % (name, desc))[:60] for name, desc in listMemberHelps('')])
   
   return text

@@ -23,12 +23,12 @@ def task1(arg1, arg3=3, arg2=2):
   """
   print arg1, arg2, arg3
 
-@group(desc = 'Description for group1.')
+@group(alias='g1', desc = 'Description for group1.')
 class group1:
   """A group.
   
     Groups can contain tasks and other groups within them.
-    A **class** is used as a namespace for the group.
+    This group has an alias; thus could be identified as group1 or g1.
   """
   @task(name='task1')
   @arg('arg1', desc='Some string.')

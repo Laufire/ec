@@ -14,7 +14,7 @@ def wrap(func, with_func):
   return func
 
 def decorator(func):
-  """Makes thae passed decorators to support optional args."""
+  """Makes the passed decorators to support optional args."""
   def wrapper(__decorated__=None, **Config):
     if __decorated__ is None: # some configration is available through the decorator
       return lambda _func: func(_func, **Config)

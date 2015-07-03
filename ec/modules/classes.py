@@ -164,7 +164,10 @@ class Group(Member):
     for Item in vars(Underlying).values(): # collect all the children (branded with __ec_member__)
       __ec_member__ = getattr(Item, '__ec_member__', None)
       if __ec_member__:
-        Members[__ec_member__.Config['name']] = __ec_member__
+        Config = __ec_member__.Config
+        Members[Config['name']] = __ec_member__
+        if 'alias' in Config:
+          Members[Config['alias']] = __ec_member__
     
 class CustomType:
   def __init__(self, desc=None):

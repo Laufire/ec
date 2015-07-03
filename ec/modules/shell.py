@@ -7,7 +7,7 @@ def init(**options):
   if options.get('helper_tasks'):
     import helper_tasks
     
-    BaseGroup.Config['Members']['$'] = Group(helper_tasks)
+    BaseGroup.Config['Members']['$'] = Group(helper_tasks, {'name': '$', 'desc': 'Shell mode Tasks.'})
     
   while True:
     try:

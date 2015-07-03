@@ -70,5 +70,6 @@ Log
 * 20150702
   
   * 1830  Tuned config processing to be cleaner.
-  
+  * 1925  Aliases introduced.
+  * 1935  docs\dev_notes.rst added.
   
