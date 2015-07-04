@@ -3,6 +3,8 @@ ToDo
 
 * Test for cross environment compatibility.
 
+* Test the interactive parts, like shell mode and utils.get.
+
 * Add usage document for shell mode.
 
 * Add api docs and more docstrings.

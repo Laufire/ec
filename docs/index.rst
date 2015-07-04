@@ -17,6 +17,7 @@ Contents:
    api
    todo
    design
+   dev_notes
    authors
    history
 

@@ -1,10 +1,10 @@
 """Helper import for demonstrating advanced examples.
 """
 
-from ec.ec import start, task, arg, group
+from ec.config import start, task, arg, group
 
 @task
-@arg('arg1', type=int, desc= 'Value for arg1')
+@arg('arg1', type=int, desc= 'Value for arg1 (int)')
 @arg('arg2', type=int)
 def task1(arg1, arg2=1):
   print arg1, arg2

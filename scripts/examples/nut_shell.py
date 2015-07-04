@@ -9,41 +9,49 @@ Notes
 * DocStrings of the tasks could be used by external modules (like sphinx). This is one of the key factors of developing ec, apart from it's predecessor Commander.
 """
 
-from ec.ec import start, task, arg, group, module, call
+from ec.config import start, task, arg, group, module, call
+from ec.utils import get
+from ec.types import regex
 
 @task
 @arg('arg1', type=int, desc='Some int')
 @arg('arg2', type=int)
-def task1(arg1, arg3=3, arg2=2):
+def simple(arg1, arg3=3, arg2=2):
   """A simple task, at the root of the script.
   
     * Note that the order of input collection will follow the order of configuration (in this case arg1 and then arg2).
     * Any unconfigured arg will be collected after the collection of the configured args (hence arg3 will be collected as the last arg).
-    * Since a name isn't specified in @task, the name of the task, *task1* will be used as the name of this task.
+    * Since a name isn't specified in @task, the name of the task, *simple* will be used as the name of this task.
   """
   print arg1, arg2, arg3
 
-@group(alias='g1', desc = 'Description for group1.')
-class group1:
+@group(alias='i', desc = 'Description for group1.')
+class intro:
   """A group.
   
     Groups can contain tasks and other groups within them.
-    This group has an alias; thus could be identified as group1 or g1.
+    This group has an alias; thus could be identified as **intro** or **i**. Tasks to could have aliases.
   """
-  @task(name='task1')
-  @arg('arg1', desc='Some string.')
-  def task_1(arg1):
+  @task(name='simple')
+  @arg('arg1', desc='Some string')
+  def renamed_task(arg1):
     """A task within a group.
     
+      * This task can be accessed as intro/simple.
       * Notice the missing **self** arg.
-      * @task.name, **task1** will be the name of this task, not the function name **task_1**.
+      * @task.name, **simple** will be the name of this task, not the function name **renamed_task**.
     """
-    group1.log('%s, from %s.' % (arg1, group1.name))
+    intro.log('%s, from %s.' % (arg1, intro.name))
     
   @task
-  def task2():
-    """Calls nut_shell.task1 with some arguments, the args that aren't provided will be collected."""
-    call(task1, arg1=1, arg2=2)
+  def wrapper():
+    """Calls nut_shell.simple with some arguments, the args that aren't provided will be collected."""
+    call(simple, arg1=1, arg2=2)
+    
+  @task
+  def get():
+    """Get user input through utils.get."""
+    print get(desc='Email id', type=regex.email)
     
   @staticmethod
   def log(message):
@@ -51,8 +59,8 @@ class group1:
     """
     print message
     
-  name = 'group1' #: Groups could even have ec variables.
+  name = 'intro' #: Groups could even have ec variables.
   
-module(desc='A module to test decorator based configuration.') # module is an optional call, used to configure the current module.
+module(desc='A module to test decorator based configuration.') # module is an optional call, used to configure the group that wraps current module.
 
 start()

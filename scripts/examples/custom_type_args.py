@@ -1,4 +1,4 @@
-from ec.ec import start, task, arg, group
+from ec.config import start, task, arg, group
 
 from ec.types.regex import pattern, email
 from ec.types.multi import one_of

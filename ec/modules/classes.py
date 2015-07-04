@@ -1,6 +1,7 @@
 from collections import OrderedDict
 
 from helpers import err
+from ..utils import get
 
 class Member: # the base class for the classes group and task
   """
@@ -78,34 +79,15 @@ class Task(Member):
           except ValueError:
             raise HandledException('Invalid value for "%s", expected %s; got "%s".' % (name, _type, InArgs[name]))
       
-  def __collect_arg__(self, argName):
-    """Collects a single arg."""
+  def __get_arg__(self, argName):
+    """Gets user input for a single arg."""
     Arg = self.Args[argName]
-    _type = Arg.get('type')
-    desc = desc = Arg.get('desc', self.__get_arg__desc__(argName))
+    ArgOptions = Arg.copy()
     
-    while True:
-      try:
-        line = raw_input('%s: ' % desc)
-        
-        if not line:
-          if 'default' in Arg:
-            return Arg['default']
-        
-        input = line
-        
-      except EOFError: # consider ^z as None
+    if 'desc' not in Arg:
+      ArgOptions['desc'] = self.__get_arg__desc__(argName)
       
-        input = None
-        
-      try:
-        return _type(input) if _type else input
-        
-      except ValueError:
-        err('<invalid value>')
-        
-      except TypeError:
-        err('<invalid value>')
+    return get(**ArgOptions)
     
   def __get_arg__desc__(self, argName):
     """
@@ -139,7 +121,7 @@ class Task(Member):
     
     for name, Arg in self.Args.items():
       if not name in InArgs:
-        InArgs[name] = self.__collect_arg__(name)
+        InArgs[name] = self.__get_arg__(name)
         
       else:
         _type = Arg.get('type')
@@ -147,7 +129,7 @@ class Task(Member):
           InArgs[name] = _type(InArgs[name]) if _type else InArgs[name]
           
         except ValueError:
-          InArgs[name] = self.__collect_arg__(name)
+          InArgs[name] = self.__get_arg__(name)
       
     return self.Underlying(**InArgs)
     

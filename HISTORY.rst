@@ -73,3 +73,9 @@ Log
   * 1925  Aliases introduced.
   * 1935  docs\dev_notes.rst added.
   
+* 20150702
+  
+  * 1310  Introduced ec.utils, with a set of utility functions for the scripts.
+  * 1340  Introduced ec.utils.get, that helps to interactively get user input.
+  * 1355  Renamed the module, ec.ec to ec.config.
+  

@@ -1,5 +1,5 @@
 """
-An example fro wrapping ec based modules
+An example for wrapping ec based modules.
 """
 import unittest
 
