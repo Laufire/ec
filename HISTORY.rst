@@ -89,4 +89,5 @@ Log
 * 20150706
 
   * 0045  Added types.multi.menu.
+  * 0255  Bug fixed: dist builds weren't including some needed modules.
   
