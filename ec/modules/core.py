@@ -1,7 +1,7 @@
 import sys
 from os import path
 
-from classes import Group, Task
+from classes import Group, Task, HandledException
 from helpers import list2dict
 
 # State
@@ -53,5 +53,3 @@ def resolveMember(Parent, CommandParts):
   else:
     return Resolved
     
-# Sub Modules
-from classes import HandledException

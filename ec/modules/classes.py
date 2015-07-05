@@ -1,7 +1,6 @@
 from collections import OrderedDict
 
 from helpers import err
-from ..utils import get
 
 class Member: # the base class for the classes group and task
   """
@@ -84,25 +83,20 @@ class Task(Member):
     Arg = self.Args[argName]
     ArgOptions = Arg.copy()
     
-    if 'desc' not in Arg:
+    if 'desc' in Arg:
+      ArgOptions['autoDesc'] = False
+      
+    else:
       ArgOptions['desc'] = self.__get_arg__desc__(argName)
       
     return get(**ArgOptions)
     
   def __get_arg__desc__(self, argName):
     """
-    Generates a description for the input, when 'desc' is not provided.
-    Generation Order
-    ----------------
-    
-    * When a **CustomType** with its own **desc** is available, the descriprion will be 'argName CustomType.desc'.
-    * Else 'argName'  or 'argName (dfault) will be the description.
+    Generates a description for the input; 'argName' or 'argName (default) will be the description.
     """
     Arg = self.Args[argName]
     _type = Arg.get('type')
-    
-    if isinstance(_type, CustomType):
-      return '%s, %s' % (argName, _type)
     
     return '%s (%s)' % (argName, Arg['default']) if 'default' in Arg else argName
     
@@ -157,9 +151,7 @@ class CustomType:
       self.desc = desc
   
   def __str__(self):
-    desc = getattr(self, 'desc', None)
-    
-    return desc or ''
+    return getattr(self, 'desc', '')
     
 # Helper Classes
 class HandledException(Exception): # a custom error class for interanl exceptions, in order to differentiate them from the script raised exceptions
@@ -189,3 +181,5 @@ def getFuncArgs(func): # get details on the args of the given func
     
   return Args
   
+# Cross dependencies
+from ..utils import get

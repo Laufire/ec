@@ -1,10 +1,7 @@
-# -*- coding: utf-8 -*-
 """
-ec
-===
+ec - a simpler, yet better implementation of Commander, a module launcher.
+==========================================================================
 """
-
-__version__ = '0.1.0'
 
 from modules.helpers import get_calling_module
 from modules.config import task, arg, group, module

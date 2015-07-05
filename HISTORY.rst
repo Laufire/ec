@@ -2,7 +2,7 @@
 
 History
 =======
-0.1.0 (2015-06-01)
+v0.1.1 (2015-07-06)
 ---------------------
 
 Log
@@ -78,4 +78,11 @@ Log
   * 1310  Introduced ec.utils, with a set of utility functions for the scripts.
   * 1340  Introduced ec.utils.get, that helps to interactively get user input.
   * 1355  Renamed the module, ec.ec to ec.config.
+  * 1645  Tuned the handling of description strings.
+  * 1705  Bug fixed: -h flag in the dispatch mode wasn't working.
+  
+* 20150705
+  
+  * 2145  Renamed the module, ec.config back to ec.ec, as it felt more apt .
+  * 2310  Added __info__.py.
   

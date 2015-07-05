@@ -7,7 +7,8 @@ def init(argv):
   
   if flag == '-h':
     print get_help_text()
-  
+    return
+    
   try:
     execCommand(argv, flag == '-p')
     

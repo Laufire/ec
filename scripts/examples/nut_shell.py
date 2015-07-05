@@ -9,7 +9,7 @@ Notes
 * DocStrings of the tasks could be used by external modules (like sphinx). This is one of the key factors of developing ec, apart from it's predecessor Commander.
 """
 
-from ec.config import start, task, arg, group, module, call
+from ec.ec import start, task, arg, group, module, call
 from ec.utils import get
 from ec.types import regex
 

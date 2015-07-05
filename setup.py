@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 try:
     from setuptools import setup, find_packages
@@ -21,13 +20,15 @@ test_requirements = [
     # TODO: put package test requirements here
 ]
 
+from ec import __info__
+
 setup(
     name='ec',
-    version='0.1.0',
+    version=__info__.__version__,
     description="ec - a simpler, yet better implementation of Commander, a module launcher.",
     long_description=readme + '\n\n' + history,
-    author="Laufire Technologies",
-    author_email='laufiretechnologies@gmail.com',
+    author=__info__.__author__,
+    author_email=__info__.__email__,
     url='https://github.com/Laufire/ec',
     packages=find_packages(),
     include_package_data=True,

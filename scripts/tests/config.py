@@ -1,4 +1,4 @@
-from ec.config import start, task, arg, group
+from ec.ec import start, task, arg, group
 
 @task
 def unconfigured(a, b=1):

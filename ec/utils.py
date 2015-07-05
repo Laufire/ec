@@ -5,15 +5,18 @@ A set of utility functions for the scripts.
 """
 from modules.helpers import err
 
-def get(desc=None, type=None, **Kwargs):
+def get(desc, type=None, autoDesc=True, **Kwargs):
   """Helps to interactively get user input."""
+  has_default = 'default' in Kwargs
+  default = Kwargs.get('default')
+  label = '%s: ' % ('%s%s' % (desc, ', %s' % type if isinstance(type, CustomType) else '') if autoDesc else desc)
+  
   while True:
     try:
-      line = raw_input('%s: ' % desc)
+      line = raw_input(label)
       
-      if not line:
-        if 'default' in Kwargs:
-          return Kwargs['default']
+      if has_default and not line:
+        return default
       
       got = line
       
@@ -30,3 +33,5 @@ def get(desc=None, type=None, **Kwargs):
     except TypeError:
       err('<invalid value>')
   
+# Cross dependencies
+from modules.classes import CustomType

@@ -9,6 +9,8 @@ ToDo
 
 * Add api docs and more docstrings.
 
+* Test custom types (doctest?).
+
 * Make nut_shell.py as the target_script for the tests.
 
 Fix

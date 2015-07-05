@@ -1,4 +1,4 @@
-from ec.config import start, task, arg, group
+from ec.ec import start, task, arg, group
 
 @task(alias='t1')
 @arg('arg1', type=int, desc= 'Value for arg1')
