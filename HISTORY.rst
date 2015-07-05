@@ -86,3 +86,7 @@ Log
   * 2145  Renamed the module, ec.config back to ec.ec, as it felt more apt .
   * 2310  Added __info__.py.
   
+* 20150706
+
+  * 0045  Added types.multi.menu.
+  
