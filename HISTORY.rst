@@ -2,8 +2,8 @@
 
 History
 =======
-v0.1.1 (2015-07-06)
----------------------
+v0.1.2 (2015-07-06 0355 +0530)
+------------------------------
 
 Log
 ---
@@ -89,5 +89,5 @@ Log
 * 20150706
 
   * 0045  Added types.multi.menu.
-  * 0255  Bug fixed: dist builds weren't including some needed modules.
+  * 0355  Replaced tools\dist.bat with tools\dist.py (the former was buggy).
   
