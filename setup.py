@@ -9,9 +9,6 @@ except ImportError:
 with open('README.rst') as readme_file:
     readme = readme_file.read()
 
-with open('HISTORY.rst') as history_file:
-    history = history_file.read().replace('.. :changelog:', '')
-
 requirements = [
     # TODO: put package requirements here
 ]
@@ -26,7 +23,7 @@ setup(
     name='ec',
     version=__info__.__version__,
     description="ec - a simpler, yet better implementation of Commander, a module launcher.",
-    long_description=readme + '\n\n' + history,
+    long_description=readme,
     author=__info__.__author__,
     author_email=__info__.__email__,
     url='https://github.com/Laufire/ec',

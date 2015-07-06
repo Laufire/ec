@@ -7,9 +7,11 @@ from modules.helpers import shell_exec, rmtree, get_relative
 parent_dir = get_relative(__file__, '/../')
 os.chdir(parent_dir)
 
-rmtree('build')
-rmtree('dist')
+# Clean the build related dirs
+for dir in ['build', 'dist']:
+  rmtree(dir)
 
+# Shell the build commands
 for command in ['build', 'install', 'test', 'sdist']:
   assert(shell_exec('python setup.py %s' % command)['code'] == 0)
 

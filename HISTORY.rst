@@ -90,4 +90,7 @@ Log
 
   * 0045  Added types.multi.menu.
   * 0355  Replaced tools\dist.bat with tools\dist.py (the former was buggy).
+  * 1545  Tried, but failed to automate the building of README.rst with sphinx, to be used as the long_description for the package (which would be used as the home page in PyPI); as there wasn't a way to dynamically generate rst-s fr static rst files.
+  * 1725  Alered README.rst to fit PyPI.
+  * 1725  Added tools\upload_docs.bat.
   

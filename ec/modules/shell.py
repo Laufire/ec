@@ -11,7 +11,7 @@ def init(**options):
     
   while True:
     try:
-      line = raw_input('>')
+      line = raw_input('\n>')
       
       if line:
         execCommand(shlex.split(line), True)

@@ -39,7 +39,7 @@ From the command line enter
   $ python simple.py task1 arg1=1 arg2=2
     1 2
     
-  $ python simple.py group1 task1 arg1=1
+  $ python simple.py group1/task1 arg1=1
     2
     
     
