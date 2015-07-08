@@ -89,7 +89,7 @@ Log
   * 0045  Added types.multi.menu.
   * 0050  v0.1.1 released.
   * 0350  Replaced tools\dist.bat with tools\dist.py (the former was buggy).
-  * 0050  v0.1.2 released. Thoygh no changes were made to the packagem it wasn't possible to upload the module (because of a previously missing file), to PyPI with the same version string.
+  * 0050  v0.1.2 released. Thoygh no changes were made to the package, it wasn't possible to upload the module (because of a previously missing file), to PyPI with the same version string.
   * 1545  Tried, but failed to automate the building of README.rst with sphinx, to be used as the long_description for the package (which would be used as the home page in PyPI); as there wasn't a way to dynamically generate rst-s fr static rst files.
   * 1725  Alered README.rst to fit PyPI.
   * 1725  Added tools\upload_docs.bat.
@@ -101,4 +101,9 @@ Log
   * 1840  Switched to google-style docstrings.
   * 1950  Added more docstrings.
   * 2100  v0.1.3 released.
+  * 2335  Removed ec calls from the exception tracebacks of the scripts, to make the traceback more understandable. It took ~1:30 hrs to finish it, owing mostly to the inexperience with tracebacks.
+  
+* 20150708
+
+  * 0205  Tuned the error reporting process (~30 mins).
   

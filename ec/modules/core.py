@@ -3,13 +3,15 @@ Handles the execution and the resolution of the tasks.
 """
 import sys
 from os import path
+import traceback
 
 from classes import Group, Task, HandledException
-from helpers import list2dict
+from helpers import err, list2dict
 
 # State
 mode = None
 BaseGroup = None
+is_dev_mode = None
 
 def start(BaseModule, Argv=None, **options):
   """Starts ec.
@@ -23,6 +25,9 @@ def start(BaseModule, Argv=None, **options):
   global mode
   mode = 'd' if Argv else 's' # dispatch / shell mode
   
+  global is_dev_mode
+  is_dev_mode = options.get('dev_mode', False)
+  
   if mode == 's':
     import shell
     shell.init(**options)
@@ -34,6 +39,9 @@ def start(BaseModule, Argv=None, **options):
 def execCommand(Argv, collect_missing):
   """Executes the given task with parameters.
   """
+  if not Argv:
+    raise HandledException('Please specify a command!')
+    
   RouteParts = Argv[0].split('/')
   Args = list2dict(Argv[1:])
   
@@ -42,7 +50,20 @@ def execCommand(Argv, collect_missing):
   if not isinstance(ResolvedMember, Task):
     raise HandledException('No such task.')
     
-  return ResolvedMember.__collect_n_call__(**Args) if collect_missing else ResolvedMember(**Args)
+  try:
+    return ResolvedMember.__collect_n_call__(**Args) if collect_missing else ResolvedMember(**Args)
+    
+  except Exception as e:
+    if is_dev_mode: # log the trace
+      etype, value, tb = sys.exc_info()
+      tb = tb.tb_next.tb_next # remove the ec - calls from the traceback, to make it more understandable
+      
+      message = ''.join(traceback.format_exception(etype, value, tb))[:-1]
+      
+    else: # provide a succinct error message
+      message = str(e)
+      
+    raise HandledException(message)
 
 def getDescendant(Ancestor, RouteParts):
   """Resolves a descendant, of the given Ancestor, as pointed by the RouteParts.

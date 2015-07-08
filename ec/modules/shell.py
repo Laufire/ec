@@ -5,6 +5,7 @@ import shlex
 
 from core import execCommand, BaseGroup
 from classes import HandledException, Group
+from helpers import err
 
 def init(**options):
   if options.get('helper_tasks'):
@@ -14,13 +15,14 @@ def init(**options):
     
   while True:
     try:
-      line = raw_input('\n>')
+      line = raw_input('>')
       
       if line:
-        execCommand(shlex.split(line), True)
-      
+        result = execCommand(shlex.split(line), True)
+        print '%s\n' % '' if result is None else result
+        
     except HandledException as e:
-      print e
+      err('%s\n' % e)
       
     except EOFError: # ^z (null character) was passed
       exit()

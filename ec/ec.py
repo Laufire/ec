@@ -14,11 +14,12 @@ __all__ = [
   'task', 'arg', 'group', 'module'
 ]
 
-def start(helper_tasks=True):
+def start(helper_tasks=True, dev_mode=False):
   """Starts the script, if it is the main script.
 
   Args:
     helper_tasks (bool): Allow helper tasks ($/*) in the shell (defaults to True).
+    dev_mode (bool): Enables the logging of a detailed traceback on exceptions (defaults to False).
   """
   from modules import core
   
@@ -31,7 +32,7 @@ def start(helper_tasks=True):
   if CallingModule.__name__ != '__main__':
     return
   
-  core.start(CallingModule, None, helper_tasks=helper_tasks)
+  core.start(CallingModule, None, helper_tasks=helper_tasks, dev_mode=dev_mode)
   
 def call(__ec_func__, **Args):
   """Helps with calling the tasks with partial arguments (within the script being configured).
