@@ -7,3 +7,4 @@ def shell_exec(command, path='.'): # from gitapi.py
 	out, err = [x.decode("utf-8") for x in  proc.communicate()]
 
 	return {'out': out, 'err': err, 'code': proc.returncode}
+  

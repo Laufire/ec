@@ -34,7 +34,7 @@ class TestPrivate(unittest.TestCase):
     
   def test_flag_help(self):
     Result = dispatch('-h')
-    print Result['err']
+    
     assert(Result['code'] == 0)
     assert(Result['out'].strip()[:5] == 'Usage')
     

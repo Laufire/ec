@@ -14,13 +14,13 @@ from ec.utils import get
 from ec.types import regex
 
 @task
-@arg('arg1', type=int, desc='Some int')
-@arg('arg2', type=int)
+@arg(type=int, desc='Some int') # configure the first arg
+@arg('arg2', type=int) # configure the arg named 'arg2'.
 def simple(arg1, arg3=3, arg2=2):
   """A simple task, at the root of the script.
   
     * Note that the order of input collection will follow the order of configuration (in this case arg1 and then arg2).
-    * Any unconfigured arg will be collected after the collection of the configured args (hence arg3 will be collected as the last arg).
+    * Any unconfigured args will be collected after the collection of the configured args (hence arg3 will be collected as the last arg).
     * Since a name isn't specified in @task, the name of the task, *simple* will be used as the name of this task.
   """
   print arg1, arg2, arg3

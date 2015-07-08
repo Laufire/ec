@@ -1,8 +1,7 @@
 from ..modules.classes import CustomType
 
 class yn(CustomType):
-  """
-  The classic y / n input that returns a truthy / falsy value.
+  """The classic y/n input that returns a truthy/falsy value.
   """
   def __init__(self, desc=None, default=None):
     label = desc if desc is not None else ('y/n%s' % ((' (%s)' % 'y' if default else 'n') if default is not None else ''))

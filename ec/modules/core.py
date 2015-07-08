@@ -1,3 +1,6 @@
+"""
+Handles the execution and the resolution of the tasks.
+"""
 import sys
 from os import path
 
@@ -8,10 +11,9 @@ from helpers import list2dict
 mode = None
 BaseGroup = None
 
-# Exports
-__all__ = ['start', 'execCommand', 'resolveMember']
-
 def start(BaseModule, Argv=None, **options):
+  """Starts ec.
+  """
   global BaseGroup
   BaseGroup =  BaseModule.__ec_member__
   
@@ -30,25 +32,28 @@ def start(BaseModule, Argv=None, **options):
     dispatch.init(Argv)
  
 def execCommand(Argv, collect_missing):
-  CommandParts = Argv[0].split('/')
+  """Executes the given task with parameters.
+  """
+  RouteParts = Argv[0].split('/')
   Args = list2dict(Argv[1:])
   
-  ResolvedMember = resolveMember(BaseGroup, CommandParts[:])
+  ResolvedMember = getDescendant(BaseGroup, RouteParts[:])
   
   if not isinstance(ResolvedMember, Task):
     raise HandledException('No such task.')
     
   return ResolvedMember.__collect_n_call__(**Args) if collect_missing else ResolvedMember(**Args)
 
-def resolveMember(Parent, CommandParts):
-  
-  if not CommandParts:
-    return Parent
+def getDescendant(Ancestor, RouteParts):
+  """Resolves a descendant, of the given Ancestor, as pointed by the RouteParts.
+  """
+  if not RouteParts:
+    return Ancestor
     
-  Resolved = Parent.Config['Members'].get(CommandParts.pop(0))
+  Resolved = Ancestor.Config['Members'].get(RouteParts.pop(0))
   
   if isinstance(Resolved, Group):
-    return resolveMember(Resolved, CommandParts)
+    return getDescendant(Resolved, RouteParts)
     
   else:
     return Resolved

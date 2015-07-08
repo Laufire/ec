@@ -1,8 +1,9 @@
 from ..modules.classes import CustomType
 
+# Check: Escaping the separators.
+
 class multi(CustomType):
-  """
-  Used to get a list of inputs.
+  """Get a list of inputs.
   """
   def __init__(self, separator=', '):
     self.separator = separator
@@ -14,6 +15,8 @@ class multi(CustomType):
     return getattr(self, 'desc', 'a list of strings separated by \'%s\'' % self.separator)
 
 class some_of(CustomType):
+  """Get mutilple items from a list of choices.
+  """
   def __init__(self, choices, separator=', '):
     self.choices = choices
     self.separator = separator
@@ -30,6 +33,8 @@ class some_of(CustomType):
     return 'some of: %s' % self.separator.join(self.choices)
     
 class one_of(CustomType):
+  """Get a single item from a list of values.
+  """
   def __init__(self, choices):
     self.choices = choices
     
@@ -43,6 +48,8 @@ class one_of(CustomType):
     return '%s' % '/'.join(self.choices)
     
 class menu(CustomType):
+  """A numbered menu.
+  """
   def __init__(self, choices):
     self.choices = choices
     

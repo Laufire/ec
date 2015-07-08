@@ -1,3 +1,8 @@
+"""
+Helpers
+
+  Generic helpers for the modules.
+"""
 import sys
 
 def err(message, exit_code=None):
@@ -30,7 +35,7 @@ def list2dict(lst, splitter='='):
     split_pos = item.find(splitter)
     
     if split_pos == -1:
-      Dict[item] = None
+      Dict[item] = None # consider entries without an equal sign as an item with a value of None.
       
     else:
       Dict[item[:split_pos]] = item[split_pos+1:]

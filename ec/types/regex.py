@@ -3,8 +3,7 @@ import re
 from ..modules.classes import CustomType
 
 class pattern(CustomType):
-  """
-  Used to restrict the input to specific patterns.
+  """Get inputs that fit a specific pattern.
   """
   def __init__(self, pattern, flags=0, desc=None):
     CustomType.__init__(self, desc)

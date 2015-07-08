@@ -1,8 +1,11 @@
+"""
+Helpers tasks for the shell mode.
+"""
 import os
 
 from ec.ec import task, arg, group, module
 
-from core import resolveMember, BaseGroup
+from core import getDescendant, BaseGroup
 from classes import Group, Task
 from helpers import err
 
@@ -10,7 +13,7 @@ from helpers import err
 def listMemberHelps(route=''):
   
   Members = []
-  TargetGroup = resolveMember(BaseGroup, route.split(' ')) if route else BaseGroup
+  TargetGroup = getDescendant(BaseGroup, route.split(' ')) if route else BaseGroup
   
   for Member in TargetGroup.Config['Members'].values(): # get unique children (by discarding aliases)
     if Member not in Members:
@@ -30,8 +33,9 @@ def clear():
 	os.system('cls' if os.name == 'nt' else 'clear')
   
 @task(alias='h', desc='Displays help on the available tasks and groups.')
+@arg(desc='item')
 def help(route):
-  Resolved = resolveMember(BaseGroup, route.split(' ')) if route else BaseGroup
+  Resolved = getDescendant(BaseGroup, route.split(' ')) if route else BaseGroup
   
   if isinstance(Resolved, Group):
     print '\n'.join([('%s  %s' % (name, desc))[:60] for name, desc in listMemberHelps(route)])
@@ -59,8 +63,6 @@ def _getTaskHelp(_Task):
     Props = ['name', 'desc', 'type', 'default']
     
     for argName, Arg in Args.items():
-      Ret.append('  name: %s' % argName)
-      
       for k in Props:
         v = Arg.get(k)
         

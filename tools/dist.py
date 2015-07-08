@@ -14,8 +14,9 @@ for dir in ['build', 'dist']:
 # Shell the build commands
 for command in ['build', 'install', 'test', 'sdist']:
   assert(shell_exec('python setup.py %s' % command)['code'] == 0)
-
-print """Dist build done.\n
+  print '%s done' % command
+  
+print """\nDist build done.\n
 	Use the following command to upload the package to PyPI:\n
 	python setup.py sdist upload
   """

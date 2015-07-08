@@ -1,7 +1,7 @@
 from ec.ec import start, task, arg, group
 
 @task(alias='t1')
-@arg('arg1', type=int, desc= 'Value for arg1')
+@arg(type=int, desc= 'Value for arg1')
 @arg('arg2', type=int)
 def task1(arg1, arg3=3, arg2=2):
   print arg1, arg2

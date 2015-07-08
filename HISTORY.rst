@@ -1,8 +1,6 @@
-.. :changelog:
-
 History
 =======
-v0.1.2 (2015-07-06 0355 +0530)
+v0.1.3 (2015-07-08 2100 +0530)
 ------------------------------
 
 Log
@@ -89,8 +87,18 @@ Log
 * 20150706
 
   * 0045  Added types.multi.menu.
-  * 0355  Replaced tools\dist.bat with tools\dist.py (the former was buggy).
+  * 0050  v0.1.1 released.
+  * 0350  Replaced tools\dist.bat with tools\dist.py (the former was buggy).
+  * 0050  v0.1.2 released. Thoygh no changes were made to the packagem it wasn't possible to upload the module (because of a previously missing file), to PyPI with the same version string.
   * 1545  Tried, but failed to automate the building of README.rst with sphinx, to be used as the long_description for the package (which would be used as the home page in PyPI); as there wasn't a way to dynamically generate rst-s fr static rst files.
   * 1725  Alered README.rst to fit PyPI.
   * 1725  Added tools\upload_docs.bat.
+  * 1805  Found that stdin could be used to test the shell mode.
+  
+* 20150708
+
+  * 1830  Made the name arg of the decorator, arg, optional.
+  * 1840  Switched to google-style docstrings.
+  * 1950  Added more docstrings.
+  * 2100  v0.1.3 released.
   

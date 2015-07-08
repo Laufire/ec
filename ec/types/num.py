@@ -1,8 +1,7 @@
 from ..modules.classes import CustomType
 
 class between(CustomType):
-  """
-  Used to get a number within two numbers.
+  """Get a number within two numbers.
   """
   def __init__(self, min, max, num_type=int):
     self.min = min

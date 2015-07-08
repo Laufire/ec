@@ -1,3 +1,7 @@
+"""
+A module to handle the dispatch mode.
+"""
+
 from core import execCommand
 from classes import HandledException
 from helpers import err

@@ -3,7 +3,7 @@ ToDo
 
 * Test for cross environment compatibility.
 
-* Test the interactive parts, like shell mode and utils.get.
+* Test the interactive parts, like shell mode and utils.get; using stdin.
 
 * Add usage document for shell mode.
 
@@ -12,6 +12,8 @@ ToDo
 * Test custom types (doctest?).
 
 * Make nut_shell.py as the target_script for the tests.
+
+* More documentation for the custom types.
 
 Fix
 ---
@@ -31,8 +33,6 @@ Check
 
 Later
 -----
-* Making the name arg, of the decorator, optional. This could be achieved through iterating over the FuncArgs.
-
 * An autodoc extension, to document tasks and groups instead of methods and classes: There are some issues with using autodoc, for example a renamed task is still being documented under the original function name.
 
 * Externally adding params to modules that weren't designed for ec.
