@@ -4,7 +4,6 @@ ec
 
 The main module, that allows the configuration of the importing script.
 """
-
 from modules.helpers import get_calling_module
 from modules.config import task, arg, group, module
 

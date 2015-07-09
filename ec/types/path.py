@@ -1,10 +1,8 @@
-
 """
 path
 ====
 Types for handling paths.
 """
-
 from os import path
 
 from ..modules.classes import CustomType
@@ -22,7 +20,7 @@ class PathBase(CustomType):
     if self.func(val) == self.ret:
       return val
       
-    raise ValueError('Invalid value.')
+    raise ValueError()
     
   def __str__(self):
     return getattr(self, 'desc', '')
@@ -33,3 +31,7 @@ isdir = PathBase(path.isdir, desc='a dir')
 isfile = PathBase(path.isfile, desc='a file')
 isabs = PathBase(path.isabs, desc='an absolute path')
 isrelative = PathBase(path.isabs, False, 'a relative path')
+
+def exists_in(root):
+  return PathBase(lambda val: path.exists(path.join(root, val)), desc='a path inside %s' % root)
+  

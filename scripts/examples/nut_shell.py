@@ -8,7 +8,6 @@ Notes
 * The decorators task, arg and group are available as __builtins__, when the script is launched using ec.
 * DocStrings of the tasks could be used by external modules (like sphinx). This is one of the key factors of developing ec, apart from it's predecessor Commander.
 """
-
 from ec.ec import start, task, arg, group, module, call
 from ec.utils import get
 from ec.types import regex

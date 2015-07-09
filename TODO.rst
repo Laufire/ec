@@ -1,5 +1,6 @@
 ToDo
 =====
+* Support nested modules.
 
 * Test for cross environment compatibility.
 
@@ -30,8 +31,6 @@ Check
 * Automatically adding params to the doc string.
 
 * ^X in shell mode displaying help on the arg being collected.
-
-* Add members to the groups in an orderly fashion (based on their declaration). A buffer list could be used to achieve the effect.
 
 Later
 -----

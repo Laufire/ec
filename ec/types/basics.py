@@ -1,3 +1,8 @@
+"""
+basics
+======
+Basic types, like bool and the likes.
+"""
 from ..modules.classes import CustomType
 
 # Check: is it possible to use yn as a singleton as well as a constructor. ie: yn refers to an instance with default values,
@@ -23,5 +28,5 @@ class yn(CustomType):
       return self.default
       
     else:
-      raise ValueError('Invalid value.')
+      raise ValueError()
       

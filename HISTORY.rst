@@ -112,3 +112,6 @@ Log
   * 0540  Bug fixed: arg configurations without names weren't processed properly.
   * 0600  Replaced tools\*.bat with tools\main.py, an ec based script.
   * 0645  v0.1.4 released.
+  * 0730  Added types.adv.invert.
+  * 2115  Members are added in an orderly fashion.
+  

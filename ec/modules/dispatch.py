@@ -2,7 +2,7 @@
 A module to handle the dispatch mode.
 """
 
-from core import execCommand
+from core import execCommand, BaseGroup
 from classes import HandledException
 from helpers import err
 
@@ -29,7 +29,7 @@ def get_help_text():
     ' -p    execute a command with partial args.',
     '\nMembers\n',
   ]
-  ) + '  ' + '\n  '.join([('%s  %s' % (name, desc))[:60] for name, desc in listMemberHelps('')])
+  ) + '  ' + '\n  '.join([('%s  %s' % (name, desc))[:60] for name, desc in listMemberHelps(BaseGroup)])
   
   return text
   

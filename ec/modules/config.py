@@ -69,7 +69,7 @@ def _arg(__decorated__, **Config):
 def group(Underlying, **Config):
   """A decorator to make groups out of classes.
   """
-  return Group(Underlying, Config).Underlying
+  return getattr(Group(Underlying, Config), 'Underlying', None)
   
 # Methods
 def module(**Config):

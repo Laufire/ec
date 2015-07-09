@@ -1,3 +1,8 @@
+"""
+multi
+=====
+Types for handling lists and list members.
+"""
 from ..modules.classes import CustomType
 
 # Check: Escaping the separators.
@@ -29,7 +34,7 @@ class some_of(CustomType):
     values = val.split(self.separator)
     
     if [value for value in values if value not in self.choices]:
-      raise ValueError('Invalid value.')
+      raise ValueError()
      
     return values
     
@@ -46,7 +51,7 @@ class one_of(CustomType):
     
   def __call__(self, val):
     if not val in self.choices:
-      raise ValueError('Invalid value.')
+      raise ValueError()
      
     return val
     
@@ -71,7 +76,7 @@ class menu(CustomType):
       return self.choices[val - 1]
       
     except:
-      raise ValueError('Invalid value.')
+      raise ValueError()
     
   def __str__(self):
     ret = 'Select:\n'

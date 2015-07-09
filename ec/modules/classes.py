@@ -5,6 +5,8 @@ from collections import OrderedDict
 
 from helpers import err
 
+MemberBuffer = []
+
 class Member: # the base class for the classes group and task
   """The base class for the classes Task and Group.
   
@@ -14,6 +16,8 @@ class Member: # the base class for the classes group and task
     Underlying.__ec_member__ = self
     self.Underlying = Underlying
     self.Config = Config
+    # print self, Underlying
+    MemberBuffer.append(self)
     
 class Task(Member):
   """A callable class that allows the calling of the underlying function as a task.
@@ -90,7 +94,7 @@ class Task(Member):
           try:
             InArgs[name] = _type(InArgs[name])
             
-          except ValueError:
+          except (ValueError, TypeError):
             raise HandledException('Invalid value for "%s", expected %s; got "%s".' % (name, _type, InArgs[name]))
     
   def __get_arg__(self, argName):
@@ -138,7 +142,7 @@ class Task(Member):
         try:
           InArgs[name] = _type(InArgs[name]) if _type else InArgs[name]
           
-        except ValueError:
+        except (ValueError, TypeError):
           InArgs[name] = self.__get_arg__(name)
       
     return self.Underlying(**InArgs)
@@ -147,20 +151,39 @@ class Group(Member):
   """Groups can contain other Members (Tasks / Groups).
   """
   def __init__(self, Underlying, Config):
+    Members = OrderedDict()
+    UnderlyingAttrs = vars(Underlying).values()
+    
+    TempBuffer = []
+    
+    while MemberBuffer and MemberBuffer[-1].Underlying in UnderlyingAttrs:
+      TempBuffer.insert(0, MemberBuffer.pop()) # reverse the Members and stored them in this TempBuffer, as we work from behind.
+      
+    for Item in TempBuffer:
+      ItemConfig = Item.Config
+      alias = ItemConfig.get('alias')
+      name = ItemConfig['name']
+      
+      if alias:
+        if not name in Members:
+          Members[name] = Item
+          Members[alias] = Item
+          
+      else:
+        Members[name] = Item
+    
     if not 'name' in Config:
       Config['name'] = Underlying.__name__
     
-    Member.__init__(self, Underlying, Config)
+    __ec_member__ = getattr(Underlying, '__ec_member__', None)
     
-    self.Config['Members'] = Members = {}
-    
-    for Item in vars(Underlying).values(): # collect all the children (branded with __ec_member__)
-      __ec_member__ = getattr(Item, '__ec_member__', None)
-      if __ec_member__:
-        Config = __ec_member__.Config
-        Members[Config['name']] = __ec_member__
-        if 'alias' in Config:
-          Members[Config['alias']] = __ec_member__
+    if __ec_member__: # The Underlying is already branded, hence update the exisisting member
+      __ec_member__.Config.update(**Config)
+      __ec_member__.Config['Members'].update(Members.iteritems())
+      
+    else:
+      Member.__init__(self, Underlying, Config)
+      self.Config['Members'] = Members
     
 class CustomType:
   """The base class for custom types.
@@ -170,6 +193,7 @@ class CustomType:
       self.desc = desc
   
   def __str__(self):
+    """Used to represent the type as a string, in messages and queries."""
     return getattr(self, 'desc', '')
     
 # Helper Classes

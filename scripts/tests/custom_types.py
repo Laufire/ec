@@ -22,9 +22,9 @@ def add(id, email_id, gender, age, is_married, movie):
   print id, email_id, gender, age, is_married, movie
 
 
-from ec.types.multi import menu
+from ec.types.adv import invert
 @task
-@arg('arg', type=menu(['a', 'b', 'v']))
+@arg('arg', type=invert(int, 'anything but an integer'))
 def t(arg):
   "A task to test the custom type under development."
   print arg

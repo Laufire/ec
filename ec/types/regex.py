@@ -1,4 +1,3 @@
-
 """
 regex
 =====
@@ -18,7 +17,7 @@ class pattern(CustomType):
     
   def __call__(self, val):
     if not self.exp.match(val):
-      raise ValueError('Invalid value.')
+      raise ValueError()
       
     return val
     

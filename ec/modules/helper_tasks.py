@@ -10,10 +10,10 @@ from classes import Group, Task
 from helpers import err
 
 # Helper Exports
-def listMemberHelps(route=''):
-  
+def listMemberHelps(TargetGroup):
+  """Gets help on a groups children.
+  """
   Members = []
-  TargetGroup = getDescendant(BaseGroup, route.split(' ')) if route else BaseGroup
   
   for Member in TargetGroup.Config['Members'].values(): # get unique children (by discarding aliases)
     if Member not in Members:
@@ -30,15 +30,21 @@ def listMemberHelps(route=''):
 # Tasks
 @task(alias='c', desc='Clears the console.')
 def clear():
+  """Clears the console.
+  """
   os.system('cls' if os.name == 'nt' else 'clear')
   
 @task(alias='h', desc='Displays help on the available tasks and groups.')
-@arg(desc='item')
-def help(route):
-  Resolved = getDescendant(BaseGroup, route.split(' ')) if route else BaseGroup
+def help(member):
+  """Displays help for the given member.
+  
+  Args:
+    member (str): A route that resolves a member.
+  """
+  Resolved = getDescendant(BaseGroup, member.split(' ')) if member else BaseGroup
   
   if isinstance(Resolved, Group):
-    return '\n%s\n' % '\n\n'.join([('%s  %s' % (name, desc))[:60] for name, desc in listMemberHelps(route)])
+    return '\n%s\n' % '\n\n'.join([('%s  %s' % (name, desc))[:60] for name, desc in listMemberHelps(Resolved)])
     
   elif isinstance(Resolved, Task):
     return '\n%s\n' % _getTaskHelp(Resolved)
@@ -72,6 +78,7 @@ def _getTaskHelp(_Task):
           Ret.append('  %s: %s' % (k, v))
       
       Ret.append('')
+      
     Ret.pop()
     
   return '\n'.join(Ret)

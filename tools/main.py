@@ -29,10 +29,19 @@ def install():
     assert(run('python setup.py %s' % command) == 0)
   
 @task
-def test():
+def test(name=None):
+  """Tests the package.
+  
+  Args:
+    name (str): The name of the test (the string after 'test_'). When a name isn't specified all tests will be done.
+  """
   install()
   
-  assert(run('python setup.py test') == 0)
+  if name:
+    assert(run('python tests/test_%s.py' % name) == 0)
+    
+  else:
+    assert(run('python setup.py test') == 0)
   
 @task
 def spellcheck():
@@ -65,6 +74,10 @@ def dist():
 @task
 def uploadPkg():
   assert(run('python setup.py sdist upload') == 0)
+
+@task
+def push():
+  assert(run('git push origin master') == 0)
 
 @task
 def uploadDocs():

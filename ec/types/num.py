@@ -1,3 +1,8 @@
+"""
+num
+====
+Types for handling numbers.
+"""
 from ..modules.classes import CustomType
 
 class between(CustomType):
@@ -14,7 +19,7 @@ class between(CustomType):
     value = self.num_type(val)
     
     if value < self.min or value > self.max:
-      raise ValueError('Invalid value.')
+      raise ValueError()
     
     return value
     

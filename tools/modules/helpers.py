@@ -26,3 +26,4 @@ def rmtree(dir):
   
 def get_relative(file_path, relation):
   return path.abspath(path.abspath(path.split(file_path)[0]) +  relation)
+  
