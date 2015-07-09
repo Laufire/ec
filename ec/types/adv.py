@@ -1,6 +1,6 @@
 import shlex
 
-from ..modules.classes import CustomType
+from ..modules.classes import CustomType, HandledException
 from ..modules.helpers import list2dict
 
 class t2t(CustomType):
@@ -21,3 +21,32 @@ class t2t(CustomType):
     
     return self.Task.__collect_n_call__(**Args)
     
+class chain(CustomType):
+  def __init__(self, *Types, **Kwargs):
+    """Combines mutiple types into one.
+    
+    Args:
+      *Types (Type): The types to chain.
+      
+    Kwargs:
+      desc (str): The description for the chain.
+      
+    Example:
+    
+      @arg(type=chain(exists, isabs), desc="an existing abs path")
+    """
+    CustomType.__init__(self, Kwargs.get('desc'))
+    
+    self.Types = Types
+    self.CurrentType = None
+    
+  def __call__(self, val):
+    
+    for Type in self.Types:
+      self.CurrentType = Type
+      val = Type(val)
+    
+    return val
+    
+  def __str__(self):
+    return getattr(self, 'desc', str(self.CurrentType) if self.CurrentType else '')

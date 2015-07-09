@@ -6,18 +6,22 @@ class multi(CustomType):
   """Get a list of inputs.
   """
   def __init__(self, separator=', '):
+    CustomType.__init__(self)
+    
     self.separator = separator
     
   def __call__(self, val):
     return val.split(self.separator)
     
   def __str__(self):
-    return getattr(self, 'desc', 'a list of strings separated by \'%s\'' % self.separator)
+    return 'a list of strings separated by \'%s\'' % self.separator
 
 class some_of(CustomType):
   """Get mutilple items from a list of choices.
   """
   def __init__(self, choices, separator=', '):
+    CustomType.__init__(self)
+    
     self.choices = choices
     self.separator = separator
     
@@ -36,6 +40,8 @@ class one_of(CustomType):
   """Get a single item from a list of values.
   """
   def __init__(self, choices):
+    CustomType.__init__(self)
+    
     self.choices = choices
     
   def __call__(self, val):
@@ -51,6 +57,8 @@ class menu(CustomType):
   """A numbered menu.
   """
   def __init__(self, choices):
+    CustomType.__init__(self)
+    
     self.choices = choices
     
   def __call__(self, val):
@@ -62,7 +70,7 @@ class menu(CustomType):
       
       return self.choices[val - 1]
       
-    except Exception as e:
+    except:
       raise ValueError('Invalid value.')
     
   def __str__(self):

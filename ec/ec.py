@@ -18,7 +18,7 @@ def start(helper_tasks=True, dev_mode=False):
   """Starts the script, if it is the main script.
 
   Args:
-    helper_tasks (bool): Allow helper tasks ($/*) in the shell (defaults to True).
+    helper_tasks (bool): Allow helper tasks ($/\*) in the shell (defaults to True).
     dev_mode (bool): Enables the logging of a detailed traceback on exceptions (defaults to False).
   """
   from modules import core
@@ -44,7 +44,7 @@ def call(__ec_func__, **Args):
     **Args: Partial args for the function.
     
   Notes:
-    * The param name **__ec_func__** is chosen, in order to avoid collission with the **Args**.
+    * The param name **__ec_func__** is chosen, in order to avoid collision with the **Args**.
   """
   return __ec_func__.__ec_member__.__collect_n_call__(**Args)
   

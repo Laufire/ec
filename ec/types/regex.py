@@ -1,3 +1,10 @@
+
+"""
+regex
+=====
+Types based on regular expressions.
+"""
+
 import re
 
 from ..modules.classes import CustomType

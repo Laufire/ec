@@ -30,7 +30,7 @@ def listMemberHelps(route=''):
 # Tasks
 @task(alias='c', desc='Clears the console.')
 def clear():
-	os.system('cls' if os.name == 'nt' else 'clear')
+  os.system('cls' if os.name == 'nt' else 'clear')
   
 @task(alias='h', desc='Displays help on the available tasks and groups.')
 @arg(desc='item')
@@ -38,10 +38,10 @@ def help(route):
   Resolved = getDescendant(BaseGroup, route.split(' ')) if route else BaseGroup
   
   if isinstance(Resolved, Group):
-    print '\n'.join([('%s  %s' % (name, desc))[:60] for name, desc in listMemberHelps(route)])
+    return '\n%s\n' % '\n\n'.join([('%s  %s' % (name, desc))[:60] for name, desc in listMemberHelps(route)])
     
   elif isinstance(Resolved, Task):
-    print _getTaskHelp(Resolved)
+    return '\n%s\n' % _getTaskHelp(Resolved)
     
   else:
     err('Can\'t help :(')
@@ -59,10 +59,12 @@ def _getTaskHelp(_Task):
   Args = _Task.Args
   
   if Args:
-    Ret.append('Args:')
-    Props = ['name', 'desc', 'type', 'default']
+    Ret.append('\nArgs:')
+    Props = ['desc', 'type', 'default']
     
     for argName, Arg in Args.items():
+      Ret.append('  name: %s' % argName)
+      
       for k in Props:
         v = Arg.get(k)
         

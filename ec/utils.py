@@ -12,7 +12,7 @@ def get(desc, type=None, autoDesc=True, **Kwargs):
   Args:
     desc (str): The description for input.
     type (type / CustomType): The type of the input (defaults to None).
-    autoDesc (bool): When set to false, it suppresses the genaration of the prompt string based on the given arguments (defaults to True).
+    autoDesc (bool): When set to false, it suppresses the generation of the prompt string based on the given arguments (defaults to True).
     default: The default value for the input.
     
   Notes:

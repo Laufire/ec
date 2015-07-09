@@ -4,6 +4,8 @@ class between(CustomType):
   """Get a number within two numbers.
   """
   def __init__(self, min, max, num_type=int):
+    CustomType.__init__(self)
+    
     self.min = min
     self.max = max
     self.num_type = num_type

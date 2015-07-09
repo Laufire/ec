@@ -30,13 +30,14 @@ dummy-variables-rqx = dummy.*$
 # W0611: Unused import Command (Several modules have cross dependencies that have to be imported at the end of the module)
 # W0614: Unused import from wildcard import
 # W0621: Redefining name from outer scope (the implementation is buggy, it doesn't consider the global statement)
+# W0622: Redefining built-in 'type' (skipped because some names are chosen for redability) 
 # W0702: No exception type(s) specified (all the exceptions should be caught)
 # W0703: Catching too general exception (even the most generic exception shoud be caught)
 
 disable = C0111, C0103, C0301,
 	E1103,
   R0201, R0903, R0912, R0913, R0914, R0915,
-	W0142, W0311, W0403, W0603, W0611, W0621,
+	W0142, W0311, W0403, W0603, W0611, W0621, W0622,
 
 [REPORTS]
 output-format = text

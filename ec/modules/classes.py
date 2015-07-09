@@ -26,7 +26,7 @@ class Task(Member):
     Member.__init__(self, Underlying, Config)
     
     try:
-      self.__load_args__(Args)
+      self.Args = self.__load_args__(Args)
     
     except HandledException as e:
       err(e, 1)
@@ -54,7 +54,7 @@ class Task(Member):
           
         FuncArg = FuncArgs.iteritems().next() # get the first item
         argName = FuncArg[0]
-        FuncArg = {argName: FuncArg[1]}
+        FuncArg = FuncArg[1]
         
       else:
         FuncArg = FuncArgs.get(argName)
@@ -68,7 +68,7 @@ class Task(Member):
       
     OrderedArgs.update(FuncArgs.iteritems()) # add any unconfigured args
     
-    self.Args = OrderedArgs
+    return OrderedArgs
     
   def __digest__(self, InArgs):
     """A helper for __call__ that digests the provided Args.
@@ -77,6 +77,7 @@ class Task(Member):
     
     for name, Arg in self.Args.items():
       if not name in InArgs:
+        
         if 'default' in Arg:
           InArgs[name] = Arg['default']
           
@@ -91,7 +92,7 @@ class Task(Member):
             
           except ValueError:
             raise HandledException('Invalid value for "%s", expected %s; got "%s".' % (name, _type, InArgs[name]))
-      
+    
   def __get_arg__(self, argName):
     """Gets user input for a single arg.
     """
