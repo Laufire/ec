@@ -115,3 +115,9 @@ Log
   * 0730  Added types.adv.invert.
   * 2115  Members are added in an orderly fashion.
   
+* 20150710
+
+  * 0105  Added tests\test_dir_group.py.
+  * 0520  Tried, but failed to make tasks inside groups to be callable, like **group1.task1(...)**. ~2 hrs of tinkering couldn't make the unbound methods into functions.
+  * 0705  Added tests\test_shell.py.
+  

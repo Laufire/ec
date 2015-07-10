@@ -16,6 +16,8 @@ ToDo
 
 * More documentation for the custom types.
 
+* A way to call tasks inside groups like methods. ie: like **group1.task1(...)**.
+
 Fix
 ---
 

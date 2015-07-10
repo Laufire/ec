@@ -1,5 +1,5 @@
 """
-An example for wrapping ec based modules.
+Test ec.interface.
 """
 import unittest
 
@@ -7,7 +7,7 @@ from ec import interface
 
 import support.target_script
 
-class TestPrivate(unittest.TestCase):
+class TestInterface(unittest.TestCase):
 
   def setUp(self):
     pass

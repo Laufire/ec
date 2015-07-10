@@ -16,7 +16,7 @@ class Member: # the base class for the classes group and task
     Underlying.__ec_member__ = self
     self.Underlying = Underlying
     self.Config = Config
-    # print self, Underlying
+    
     MemberBuffer.append(self)
     
 class Task(Member):
@@ -37,11 +37,9 @@ class Task(Member):
       
   def __call__(self, **Args):    
     self.__digest__(Args)
-    try:
-      return self.Underlying(**Args)
-      
-    except TypeError as e:
-      raise HandledException(e)
+    
+    return self.Underlying(**Args)
+    
   
   def __load_args__(self, Args):
     """Prepares the task for excecution.

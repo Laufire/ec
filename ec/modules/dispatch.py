@@ -15,6 +15,7 @@ def init(argv):
     
   try:
     execCommand(argv, flag == '-p')
+    # Check: Should the dispatch mode log the return value? It isn't logging it now to keep the console from excess output.
     
   except HandledException as e:
     err(e, 1)

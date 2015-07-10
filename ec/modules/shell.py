@@ -19,7 +19,7 @@ def init(**options):
       
       if line:
         result = execCommand(shlex.split(line), True)
-        print '' if result is None else '%s\n' % result 
+        print '' if result is None else '%s\n' % str(result)
         
     except HandledException as e:
       err('%s\n' % e)

@@ -3,6 +3,7 @@ from os import path
 import shlex
 from subprocess import Popen, STDOUT, PIPE
 from shutil import rmtree as _rmtree
+import win32file
 
 def shell_exec(command, path='.'): # from gitapi.py	
   """Excecutes the given command silently.
@@ -27,3 +28,24 @@ def rmtree(dir):
 def get_relative(file_path, relation):
   return path.abspath(path.abspath(path.split(file_path)[0]) +  relation)
   
+def unlink(target_path):
+  if path.isfile(target_path):
+    os.unlink(target_path)
+  
+def rmdir(target_path):
+  if path.isdir(target_path):
+    os.rmdir(target_path)
+  
+def make_link(source_path, target_path): # links two paths. Files are hard linked, where as dirs are linked as junctions.
+	if path.isfile(source_path):
+		unlink(target_path)
+		win32file.CreateHardLink(target_path, path.abspath(source_path))
+		
+	elif path.isdir(source_path):
+		rmdir(target_path)
+		
+		win32file.CreateSymbolicLink(target_path, path.abspath(source_path), 1)
+		
+	else:
+		return 1 # error
+    

@@ -4,7 +4,7 @@ from ec.ec import task, arg, group, module, start
 from ec.types.basics import yn
 from ec.types import path as path_type
 
-from modules.helpers import shell_exec, rmtree, get_relative, run
+from modules.helpers import shell_exec, rmtree, get_relative, run, make_link, rmdir
 
 # Globals
 project_root = get_relative(__file__, '/../')
@@ -35,13 +35,14 @@ def test(name=None):
   Args:
     name (str): The name of the test (the string after 'test_'). When a name isn't specified all tests will be done.
   """
-  install()
-  
   if name:
     assert(run('python tests/test_%s.py' % name) == 0)
     
   else:
+    devLinks.clear.im_func() # clear all the dev links to avoid module mixing
+    install()
     assert(run('python setup.py test') == 0)
+    devLinks.create.im_func()
   
 @task
 def spellcheck():
@@ -83,4 +84,36 @@ def push():
 def uploadDocs():
   assert(run('python setup.py upload_sphinx') == 0)
 
+@group
+class devLinks:
+  """Handles the linking to the package dir from various dev dirs, so that the package under development can be the source of ec.
+  """
+  pkgPath = 'ec'
+  
+  Dirs = [
+    'scripts/examples',
+    'scripts/examples/advanced',
+    'scripts/tests',
+    'tests/support', 
+    'tools', 
+  ]
+  
+  @task
+  def create(dir=None):
+    if dir:
+      devLinks.linkEc(dir)
+      
+    else:
+      for dir in devLinks.Dirs:
+        devLinks.linkEc(dir)
+        
+  @task
+  def clear():
+    for dir in devLinks.Dirs:
+      rmdir('%s/ec' % dir)
+  
+  @staticmethod
+  def linkEc(dir):
+    make_link('ec', '%s/ec' % dir)
+    
 start(dev_mode=True) # we need a detailed trace, hence this is a developer tool.

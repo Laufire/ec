@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 """
 Tests the dispatch mode.
 """
@@ -9,10 +6,10 @@ import unittest
 
 from support.helpers import shell_exec
 
-def dispatch(argStr):
-  return shell_exec('python tests/support/target_script.py %s' % argStr)
+def dispatch(argStr, input=''):
+  return shell_exec('python tests/support/target_script.py %s' % argStr, input=input)
   
-class TestPrivate(unittest.TestCase):
+class TestDispatch(unittest.TestCase):
 
   def setUp(self):
     pass
@@ -37,8 +34,14 @@ class TestPrivate(unittest.TestCase):
     
     assert(Result['code'] == 0)
     assert(Result['out'].strip()[:5] == 'Usage')
+  
+  def test_flag_partial(self):
+    Result = dispatch('-p task1 arg1=1', '1')
     
-  def test_no_task(self):
+    assert(Result['code'] == 0)
+    assert(Result['out'][-5:-1].strip() == '1 1')
+    
+  def test_absent_task(self):
     Result = dispatch('task2')
     
     assert(Result['code'] == 1)
