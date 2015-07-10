@@ -52,7 +52,6 @@ class intro:
     """Get user input through utils.get."""
     print get(desc='Email id', type=regex.email)
     
-  @staticmethod
   def log(message):
     """Helper methods, are intended to help the tasks. They are often declared as static methods, due to them being members of unintantiated classes.
     """

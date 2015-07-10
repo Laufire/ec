@@ -39,10 +39,10 @@ def test(name=None):
     assert(run('python tests/test_%s.py' % name) == 0)
     
   else:
-    devLinks.clear.im_func() # clear all the dev links to avoid module mixing
+    devLinks.clear() # clear all the dev links to avoid module mixing
     install()
     assert(run('python setup.py test') == 0)
-    devLinks.create.im_func()
+    devLinks.create()
   
 @task
 def spellcheck():
@@ -94,6 +94,7 @@ class devLinks:
     'scripts/examples',
     'scripts/examples/advanced',
     'scripts/tests',
+    'tests',
     'tests/support', 
     'tools', 
   ]

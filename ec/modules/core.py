@@ -19,6 +19,8 @@ def start(BaseModule, Argv=None, **options):
   global BaseGroup
   BaseGroup =  BaseModule.__ec_member__
   
+  convertMethodsToFunctions(BaseGroup)
+  
   if Argv is None:
     Argv = sys.argv[1:]
   
@@ -79,3 +81,27 @@ def getDescendant(Ancestor, RouteParts):
   else:
     return Resolved
     
+def convertMethodsToFunctions(Target):
+  """Converts all the methods of the groups to staticmethods.
+  So that they could be called on the fly, without instantiation.
+  """
+  Underlying = Target.Underlying
+  
+  if isclass(Underlying): # replace existing methods of the underlying calss with staticmethods
+    for attr in dir(Underlying):
+      im_func = getattr(getattr(Underlying, attr), 'im_func', None)
+      if im_func:
+        setattr(Underlying, attr, staticmethod(im_func))
+  
+  for Member in Target.Config['Members'].values(): # recurse
+    if not isfunction(Member.Underlying):
+      convertMethodsToFunctions(Member)    
+    
+# Helpers
+ClassType = type(Task)
+def isclass(object):
+  return isinstance(object, (type, ClassType))
+
+FunctionType = type(isclass)
+def isfunction(object):
+  return isinstance(object, FunctionType)

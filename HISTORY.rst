@@ -120,4 +120,5 @@ Log
   * 0105  Added tests\test_dir_group.py.
   * 0520  Tried, but failed to make tasks inside groups to be callable, like **group1.task1(...)**. ~2 hrs of tinkering couldn't make the unbound methods into functions.
   * 0705  Added tests\test_shell.py.
+  * 0930  All the methods of the groups are converted to static methods, to facilitate easier calling.
   
