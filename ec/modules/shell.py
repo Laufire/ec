@@ -3,15 +3,15 @@ A module to handle the shell mode.
 """
 import shlex
 
+from state import Settings
 from core import execCommand, BaseGroup
 from classes import HandledException, Group
 from helpers import err
 
-def init(**options):
-  if options.get('helper_tasks'):
+def init():
+  if Settings.get('helper_tasks', True):
     import helper_tasks
-    
-    BaseGroup.Config['Members']['$'] = Group(helper_tasks, {'name': '$', 'desc': 'Shell mode Tasks.'})
+    helper_tasks.main()
     
   while True:
     try:

@@ -121,4 +121,19 @@ Log
   * 0520  Tried, but failed to make tasks inside groups to be callable, like **group1.task1(...)**. ~2 hrs of tinkering couldn't make the unbound methods into functions.
   * 0705  Added tests\test_shell.py.
   * 0930  All the methods of the groups are converted to static methods, to facilitate easier calling.
+  * 1945  Introduced modules.exposed.
+  * 1950  Conversion of static methods has been moved from ec.core to ec.modules.exposed. The functionality is now exposed as **utils.static**.
+  * 1950  Nested modules made to work.
+
+* 20150712
+
+  * 0500  Moved helper_tasks.listMemberHelps to helper.listMemberHelps, to avoid importing helper_tasks in the dispatch mode.
+
+* 20150713
+
+  * 0050  modules.state introduced.
+  * 0500  Removed ec.start, the scripts now just have to import ec, to be considered an ec script.
+  * 0500  Introduced ec.settings to replace ec.start as the settings provider.
+  * 1805  Moved shell helpers, clear and help to '/', with an option to move them inside a group through **ec.settings.helper_route**.
+  * 2250  Partiall redid the core (member classification) to support the new API. Neseted modules and launching dirs aren't supported yet.
   

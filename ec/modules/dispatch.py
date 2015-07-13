@@ -4,7 +4,7 @@ A module to handle the dispatch mode.
 
 from core import execCommand, BaseGroup
 from classes import HandledException
-from helpers import err
+from helpers import err, listMemberHelps
 
 def init(argv):
   flag = argv.pop(0) if argv[0][0] == '-' else None
@@ -21,8 +21,6 @@ def init(argv):
     err(e, 1)
     
 def get_help_text():
-  from helper_tasks import listMemberHelps
-  
   text = '\n'.join(['Usage:',
     '  $ ec module_path [flag] <command route> [args]',
     '\nFlags',

@@ -3,7 +3,6 @@ Provides the decorators and functions for the configuration of the args, tasks, 
 """
 import sys
 
-from classes import Task, Group, HandledException
 from helpers import get_calling_module
 
 __all__ = ['task', 'arg', 'group', 'module']
@@ -69,7 +68,7 @@ def _arg(__decorated__, **Config):
 def group(Underlying, **Config):
   """A decorator to make groups out of classes.
   """
-  return getattr(Group(Underlying, Config), 'Underlying', None)
+  return Group(Underlying, Config).Underlying
   
 # Methods
 def module(**Config):
@@ -78,3 +77,5 @@ def module(**Config):
   Underlying = get_calling_module()
   Group(Underlying, Config)
   
+# Cross dependencies
+from classes import Task, Group, HandledException

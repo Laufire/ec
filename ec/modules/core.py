@@ -4,35 +4,36 @@ Handles the execution and the resolution of the tasks.
 import sys
 from os import path
 import traceback
+from collections import OrderedDict
 
-from classes import Group, Task, HandledException
-from helpers import err, list2dict
+import state
+from state import Settings, ModuleMembers
+from helpers import err, list2dict, isfunction, isclass, ismodule, isunderlying
 
 # State
-mode = None
 BaseGroup = None
+mode = None
 is_dev_mode = None
 
-def start(BaseModule, Argv=None, **options):
+def start(BaseModule, Argv=None):
   """Starts ec.
   """
-  global BaseGroup
-  BaseGroup =  BaseModule.__ec_member__
-  
-  convertMethodsToFunctions(BaseGroup)
-  
   if Argv is None:
     Argv = sys.argv[1:]
+  
+  processModules()
+  global BaseGroup
+  BaseGroup =  sys.modules[BaseModule.__name__].__ec_member__
   
   global mode
   mode = 'd' if Argv else 's' # dispatch / shell mode
   
   global is_dev_mode
-  is_dev_mode = options.get('dev_mode', False)
+  is_dev_mode = Settings.get('dev_mode', False)
   
   if mode == 's':
     import shell
-    shell.init(**options)
+    shell.init()
     
   else:
     import dispatch
@@ -81,27 +82,103 @@ def getDescendant(Ancestor, RouteParts):
   else:
     return Resolved
     
-def convertMethodsToFunctions(Target):
-  """Converts all the methods of the groups to staticmethods.
-  So that they could be called on the fly, without instantiation.
+def registerModule(Module):
+  """Called when ec is imported by a script.
   """
-  Underlying = Target.Underlying
+  name = Module.__name__
   
-  if isclass(Underlying): # replace existing methods of the underlying calss with staticmethods
-    for attr in dir(Underlying):
-      im_func = getattr(getattr(Underlying, attr), 'im_func', None)
-      if im_func:
-        setattr(Underlying, attr, staticmethod(im_func))
-  
-  for Member in Target.Config['Members'].values(): # recurse
-    if not isfunction(Member.Underlying):
-      convertMethodsToFunctions(Member)    
+  if name not in ModuleMembers:
+    ModuleMembers[name] = []
     
-# Helpers
-ClassType = type(Task)
-def isclass(object):
-  return isinstance(object, (type, ClassType))
-
-FunctionType = type(isclass)
-def isfunction(object):
-  return isinstance(object, FunctionType)
+def processModules():
+  """Builds a command tree out of the ec based scripts.
+  """
+  Items = ModuleMembers.items()
+  Items.reverse()
+  ModuleMembers.clear()
+  ModuleMembers.update(Items)
+  
+  for name in ModuleMembers:
+    processModule(name)
+    
+def processModule(name):
+  """Builds a command tree out of the configured members of a module.
+  """
+  # Brand the module with __ec_member__
+  Module = sys.modules[name]
+  __ec_member__ = getattr(Module, '__ec_member__', None)
+  
+  if not __ec_member__:
+    __ec_member__ = Group(Module, {})
+  
+  Members = ModuleMembers[name]
+  MembersTarget = []
+  ClassQ = []
+  Members.reverse()
+  Cls = None
+  
+  for Member in Members:
+    Underlying = Member.Underlying
+    member_name = Member.Config['name']
+    member_alias = Member.Config.get('alias', None)
+    
+    if ClassQ:
+      ClsGroup = ClassQ[-1]
+      Cls = ClsGroup.Underlying
+      ClsMembersTarget = ClsGroup.Config.get('Members', [])
+      underlying_name = Underlying.__name__
+      CurrentMember = getattr(Cls, underlying_name, None) # Note: The methods of classes would be different than the functions registerd by @task
+      
+      if  CurrentMember and getattr(CurrentMember, 'im_func', Underlying) is Underlying:
+      
+        if isfunction(Underlying):
+          im_func = CurrentMember.im_func # convert the method into a function so it could be used within the script like object methods (without a refrence to self)
+          setattr(Cls, underlying_name, im_func)
+          im_func.__ec_member__ = Member
+          Member.Underlying = im_func
+          
+        elif isclass(Underlying):
+          ClassQ.append(Underlying.__ec_member__)
+          
+        elif not ismodule(Underlying):
+          continue
+          
+        if member_alias:
+          ClsMembersTarget.insert(0, (member_alias, Member))
+          
+        ClsMembersTarget.insert(0, (member_name, Member))
+        ClsGroup.Config['Members'] = ClsMembersTarget
+        continue
+        
+      else:
+      
+        if Cls:
+          ClsGroup.Config['Members'] = OrderedDict(ClsGroup.Config['Members'])
+          ClassQ.pop()
+          convertNonEcMethodsToStatic(Cls)
+          Cls = None        
+    
+    if isunderlying(Underlying):
+      if member_alias:
+        MembersTarget.insert(0, (member_alias, Member))
+        
+      MembersTarget.insert(0, (member_name, Member))
+      
+      if isclass(Underlying):
+        ClassQ.append(Underlying.__ec_member__)
+        
+  if Cls:
+    convertNonEcMethodsToStatic(Cls)
+    
+  __ec_member__.Config['Members'] = OrderedDict(MembersTarget)  
+  
+def convertNonEcMethodsToStatic(Cls):
+  """Convert helper methods of a Group into statics, so that they too could be called like group.helper(...) like the tasks of the group.
+  """
+  for attr in dir(Cls):
+    im_func = getattr(getattr(Cls, attr), 'im_func', None)
+    if im_func and not hasattr(im_func, '__ec_member__'):
+      setattr(Cls, attr, staticmethod(im_func))
+  
+# Cross dependencies
+from classes import Group, Task, HandledException

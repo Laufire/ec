@@ -2,31 +2,18 @@
 Helpers tasks for the shell mode.
 """
 import os
+import sys
 
 from ec.ec import task, arg, group, module
 
-from core import getDescendant, BaseGroup
+from state import Settings
+import core
+from core import getDescendant, processModule
 from classes import Group, Task
-from helpers import err
+from helpers import err, listMemberHelps
 
-# Helper Exports
-def listMemberHelps(TargetGroup):
-  """Gets help on a groups children.
-  """
-  Members = []
-  
-  for Member in TargetGroup.Config['Members'].values(): # get unique children (by discarding aliases)
-    if Member not in Members:
-      Members.append(Member)
-    
-  Ret = []
-  
-  for Member in Members:
-    Config = Member.Config
-    Ret.append(('%s%s' % (Config['name'], ', %s' % Config['alias'] if 'alias' in Config else ''), Config.get('desc', '')))
-  
-  return Ret
-  
+module(desc= 'Shell mode Tasks.')
+
 # Tasks
 @task(alias='c', desc='Clears the console.')
 def clear():
@@ -41,7 +28,7 @@ def help(member):
   Args:
     member (str): A route that resolves a member.
   """
-  Resolved = getDescendant(BaseGroup, member.split(' ')) if member else BaseGroup
+  Resolved = getDescendant(core.BaseGroup, member.split(' ')) if member else core.BaseGroup
   
   if isinstance(Resolved, Group):
     return '\n%s\n' % '\n\n'.join([('%s  %s' % (name, desc))[:60] for name, desc in listMemberHelps(Resolved)])
@@ -52,6 +39,20 @@ def help(member):
   else:
     err('Can\'t help :(')
     
+# Main
+def main():
+  processModule(__name__)
+  __ec_member__ = sys.modules[__name__].__ec_member__
+  
+  helper_route = Settings.get('helper_route')
+  
+  if helper_route:
+    __ec_member__.Config['name'] = helper_route
+    core.BaseGroup.Config['Members'][helper_route] = __ec_member__
+    
+  else:
+    core.BaseGroup.Config['Members'].update(__ec_member__.Config['Members'].iteritems())
+
 # Helpers
 def _getTaskHelp(_Task):
   Ret = []

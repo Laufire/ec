@@ -31,11 +31,14 @@ class TestShell(unittest.TestCase):
     assert(Result['code'] == 0)
     assert(Result['out'].find('(1, 1)') > -1)
     
-  # def test_help(self):
-    # Result = dispatch('$/h', '')
-    # print Result
-    # assert(Result['code'] == 0)
-    # assert(Result['out'].strip()[:5] == 'Usage')
+  def test_help(self):
+    Result = dispatch('h', '')
+    assert(Result['code'] == 0)
+    
+    out = Result['out']    
+    assert(out.find('task1') > -1)
+    assert(out.find('group1') > -1)
+    assert(out.find('task1') > -1)
   
   def test_absent_task(self):
     Result = dispatch('task2')

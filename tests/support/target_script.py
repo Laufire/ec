@@ -1,4 +1,10 @@
-from ec.ec import start, task, arg, group
+"""
+target_script
+=============
+
+The target for testing.
+"""
+from ec.ec import task, arg, group, settings
 
 @task(alias='t1')
 @arg(type=int, desc= 'Value for arg1')
@@ -13,5 +19,3 @@ class group1:
 	@arg('arg1')
 	def task1(arg1):
 		print arg1
-
-start()

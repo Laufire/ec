@@ -1,6 +1,6 @@
 import os
 
-from ec.ec import task, arg, group, module, start
+from ec.ec import task, arg, group, module, settings
 from ec.types.basics import yn
 from ec.types import path as path_type
 
@@ -91,12 +91,9 @@ class devLinks:
   pkgPath = 'ec'
   
   Dirs = [
-    'scripts/examples',
-    'scripts/examples/advanced',
-    'scripts/tests',
-    'tests',
-    'tests/support', 
-    'tools', 
+    'scripts/examples', 'scripts/examples/advanced', 'scripts/tests',
+    'tests', 'tests/support', 
+    'tools', '.trial'
   ]
   
   @task
@@ -113,8 +110,7 @@ class devLinks:
     for dir in devLinks.Dirs:
       rmdir('%s/ec' % dir)
   
-  @staticmethod
   def linkEc(dir):
     make_link('ec', '%s/ec' % dir)
     
-start(dev_mode=True) # we need a detailed trace, hence this is a developer tool.
+settings(dev_mode=True) # we need a detailed trace, hence this is a developer tool.

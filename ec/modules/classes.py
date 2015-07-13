@@ -3,9 +3,8 @@ All the classes of ec.
 """
 from collections import OrderedDict
 
-from helpers import err
-
-MemberBuffer = []
+from state import Settings, ModuleMembers
+from helpers import err, ismodule
 
 class Member: # the base class for the classes group and task
   """The base class for the classes Task and Group.
@@ -17,7 +16,9 @@ class Member: # the base class for the classes group and task
     self.Underlying = Underlying
     self.Config = Config
     
-    MemberBuffer.append(self)
+    if not ismodule(Underlying):
+      ModuleMembers[Underlying.__module__].append(self)
+    
     
 class Task(Member):
   """A callable class that allows the calling of the underlying function as a task.
@@ -147,41 +148,15 @@ class Task(Member):
     
 class Group(Member):
   """Groups can contain other Members (Tasks / Groups).
+  
+  Note:
+    Groups that have modules as their underlying would have it's members loaded by ec.start.
   """
-  def __init__(self, Underlying, Config):
-    Members = OrderedDict()
-    UnderlyingAttrs = vars(Underlying).values()
-    
-    TempBuffer = []
-    
-    while MemberBuffer and MemberBuffer[-1].Underlying in UnderlyingAttrs:
-      TempBuffer.insert(0, MemberBuffer.pop()) # reverse the Members and stored them in this TempBuffer, as we work from behind.
-      
-    for Item in TempBuffer:
-      ItemConfig = Item.Config
-      alias = ItemConfig.get('alias')
-      name = ItemConfig['name']
-      
-      if alias:
-        if not name in Members:
-          Members[name] = Item
-          Members[alias] = Item
-          
-      else:
-        Members[name] = Item
-    
+  def __init__(self, Underlying, Config=None):
     if not 'name' in Config:
       Config['name'] = Underlying.__name__
     
-    __ec_member__ = getattr(Underlying, '__ec_member__', None)
-    
-    if __ec_member__: # The Underlying is already branded, hence update the exisisting member
-      __ec_member__.Config.update(**Config)
-      __ec_member__.Config['Members'].update(Members.iteritems())
-      
-    else:
-      Member.__init__(self, Underlying, Config)
-      self.Config['Members'] = Members
+    Member.__init__(self, Underlying, Config or {})
     
 class CustomType:
   """The base class for custom types.
@@ -230,4 +205,4 @@ def _getFuncArgs(func):
   return Args
   
 # Cross dependencies
-from ..utils import get
+from exposed import get, static

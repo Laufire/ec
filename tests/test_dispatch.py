@@ -1,14 +1,22 @@
 """
 Tests the dispatch mode.
+
+Notes:
+  * This test is used as the base by several other tests.
 """
 
 import unittest
 
 from support.helpers import shell_exec
 
-def dispatch(argStr, input=''):
-  return shell_exec('python tests/support/target_script.py %s' % argStr, input=input)
+# Overridables - could be overridden by other tests.
+script_name = 'support/target_script.py'
+command_prefix = ''
+
+def dispatch(argStr='', input='', flag=''):
+  return shell_exec('python tests/%s %s%s%s' % (script_name, flag, command_prefix if flag != '-h' else '', argStr), input=input)
   
+# Tests
 class TestDispatch(unittest.TestCase):
 
   def setUp(self):
@@ -30,13 +38,13 @@ class TestDispatch(unittest.TestCase):
     assert(Result['out'].strip() == '1 1')
     
   def test_flag_help(self):
-    Result = dispatch('-h')
+    Result = dispatch(flag='-h')
     
     assert(Result['code'] == 0)
     assert(Result['out'].strip()[:5] == 'Usage')
   
   def test_flag_partial(self):
-    Result = dispatch('-p task1 arg1=1', '1')
+    Result = dispatch('task1 arg1=1', '1', '-p ')
     
     assert(Result['code'] == 0)
     assert(Result['out'][-5:-1].strip() == '1 1')

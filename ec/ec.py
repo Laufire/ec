@@ -4,34 +4,30 @@ ec
 
 The main module, that allows the configuration of the importing script.
 """
+from modules.state import Settings
 from modules.helpers import get_calling_module
 from modules.config import task, arg, group, module
+from modules import core
 
 # Exports
 __all__ = [
-  'start', 'call',
+  'settings', 'call',
   'task', 'arg', 'group', 'module'
 ]
 
-def start(helper_tasks=True, dev_mode=False):
-  """Starts the script, if it is the main script.
-
-  Args:
-    helper_tasks (bool): Allow helper tasks ($/\*) in the shell (defaults to True).
-    dev_mode (bool): Enables the logging of a detailed traceback on exceptions (defaults to False).
+def settings(**NewSettings):
+  """Sets the settings of ec.
+  
+  Settings:
+    * helper_tasks (bool): Allow helper tasks ($/\*) in the shell (defaults to True).
+    * dev_mode (bool): Enables the logging of a detailed traceback on exceptions (defaults to False).
+    * clean (bool): cleans the existing settings before applying new settings.
   """
-  from modules import core
   
-  CallingModule = get_calling_module()
-  
-  group(CallingModule) # brand the module with __ec_member__
-  
-  core.BaseGroup = CallingModule.__ec_member__ # allow the wrapping of ec-ed modules
-  
-  if CallingModule.__name__ != '__main__':
-    return
-  
-  core.start(CallingModule, None, helper_tasks=helper_tasks, dev_mode=dev_mode)
+  if 'clean' in Settings:
+    Settings.clear()
+    
+  Settings.update(**NewSettings)
   
 def call(__ec_func__, **Args):
   """Helps with calling the tasks with partial arguments (within the script being configured).
@@ -46,4 +42,40 @@ def call(__ec_func__, **Args):
     * The param name **__ec_func__** is chosen, in order to avoid collision with the **Args**.
   """
   return __ec_func__.__ec_member__.__collect_n_call__(**Args)
+
   
+# Main
+Caller = get_calling_module()
+
+def registe_exit_call():
+  """Register an exit call to start the core.
+  
+    The core would be started after the main module is loaded. Ec would be exited from the core.
+  """
+  import atexit
+  
+  @atexit.register
+  def exit_hook():
+    core.start(Caller)
+
+def hook_into_import():
+  # hook into __import__ to register modules when they import ec
+  import __builtin__
+
+  origImp = __builtin__.__import__
+
+  def newImp(name, *x):
+    if name == __name__:
+      core.registerModule(get_calling_module())
+    
+    return origImp(name, *x)
+
+  __builtin__.__import__ = newImp
+  
+  core.registerModule(Caller) # add the first module that import ec directly, as we would haven't hooked into the imports yet.
+
+def main():
+  hook_into_import()
+  registe_exit_call()
+  
+main()

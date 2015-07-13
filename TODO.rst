@@ -1,8 +1,8 @@
 ToDo
 =====
-* Fix interface test are failing.
-
 * Support nested modules.
+
+* The long description of the package seems to be broken on PyPI (Could it be because of the code block?).
 
 * Test for cross environment compatibility.
 
@@ -25,6 +25,8 @@ Fix
 
 Check
 -----
+* Skipping the mandatory ec.start, by initiatin all the modules that import ec.ec. This needs some hooking into the import system.
+
 * Allowing name-less args, especially for a better UX in the shell mode. There are several ways, including:
   
   * Allowing the first argument of a task to be name-less.

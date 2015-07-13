@@ -9,17 +9,15 @@ import unittest
 
 from support.helpers import shell_exec
 
-def dispatch(argStr, input=''):
+def dispatch(argStr='', input='', flag=''):
   """Launches the support dir."""
   
-  flag = argStr[:2]
-  
   if flag == '-h':
-    command = 'ec tests/support %s' % argStr
+    command = 'ec tests/support -h'
     
   elif flag == '-p':
     
-    command = 'ec tests/support -p target_script/%s' % argStr[3:]
+    command = 'ec tests/support -p target_script/%s' % argStr
     
   else:
     

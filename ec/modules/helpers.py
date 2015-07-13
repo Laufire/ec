@@ -3,6 +3,7 @@ Helpers
 
   Generic helpers for the modules.
 """
+from types import ClassType, ModuleType, FunctionType
 import sys
 
 def err(message, exit_code=None):
@@ -12,8 +13,7 @@ def err(message, exit_code=None):
     exit(exit_code)
     
 def get_calling_module():
-  import inspect
-  return inspect.getmodule(inspect.currentframe().f_back.f_back) # Check: Could the depency on inspect be avoided?
+  return sys.modules[sys._getframe().f_back.f_back.f_locals['__name__']]
 
 def load_module(module_path):
   import imp
@@ -42,3 +42,31 @@ def list2dict(lst, splitter='='):
   
   return Dict
   
+def listMemberHelps(TargetGroup):
+  """Gets help on a group's children.
+  """
+  Members = []
+  
+  for Member in TargetGroup.Config['Members'].values(): # get unique children (by discarding aliases)
+    if Member not in Members:
+      Members.append(Member)
+    
+  Ret = []
+  
+  for Member in Members:
+    Config = Member.Config
+    Ret.append(('%s%s' % (Config['name'], ', %s' % Config['alias'] if 'alias' in Config else ''), Config.get('desc', '')))
+  
+  return Ret
+  
+def isunderlying(object):
+  return isinstance(object, (FunctionType, ClassType, ModuleType))
+  
+def isclass(object):
+  return isinstance(object, ClassType)
+  
+def ismodule(object):
+  return isinstance(object, ModuleType)
+  
+def isfunction(object):
+  return isinstance(object, FunctionType)
