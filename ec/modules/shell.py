@@ -6,7 +6,7 @@ import shlex
 from state import Settings
 from core import execCommand, BaseGroup
 from classes import HandledException, Group
-from helpers import err
+from helpers import err, split
 
 def init():
   if Settings.get('helper_tasks', True):
@@ -18,7 +18,7 @@ def init():
       line = raw_input('>')
       
       if line:
-        result = execCommand(shlex.split(line), True)
+        result = execCommand(split(line), True)
         print '' if result is None else '%s\n' % str(result)
         
     except HandledException as e:

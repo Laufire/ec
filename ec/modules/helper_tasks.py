@@ -41,7 +41,6 @@ def help(member):
     
 # Main
 def main():
-  processModule(__name__)
   __ec_member__ = sys.modules[__name__].__ec_member__
   
   helper_route = Settings.get('helper_route')

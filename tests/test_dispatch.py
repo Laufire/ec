@@ -9,13 +9,23 @@ import unittest
 
 from support.helpers import shell_exec
 
-# Overridables - could be overridden by other tests.
-script_name = 'support/target_script.py'
-command_prefix = ''
 
 def dispatch(argStr='', input='', flag=''):
-  return shell_exec('python tests/%s %s%s%s' % (script_name, flag, command_prefix if flag != '-h' else '', argStr), input=input)
+  """Dispatches command to the target script."""
   
+  if flag == '-h':
+    rest = flag
+    
+  elif flag == '-p':
+    
+    rest = '%s %s' % (flag, argStr)
+    
+  else:
+    
+    rest = argStr
+    
+  return shell_exec('python tests/support/target_script.py %s' % rest, input=input)
+    
 # Tests
 class TestDispatch(unittest.TestCase):
 
@@ -44,7 +54,7 @@ class TestDispatch(unittest.TestCase):
     assert(Result['out'].strip()[:5] == 'Usage')
   
   def test_flag_partial(self):
-    Result = dispatch('task1 arg1=1', '1', '-p ')
+    Result = dispatch('task1 arg1=1', '1', '-p')
     
     assert(Result['code'] == 0)
     assert(Result['out'][-5:-1].strip() == '1 1')

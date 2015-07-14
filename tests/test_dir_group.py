@@ -10,8 +10,8 @@ import unittest
 from support.helpers import shell_exec
 
 def dispatch(argStr='', input='', flag=''):
-  """Launches the support dir."""
-  
+  """Launches the support dir.
+  """
   if flag == '-h':
     command = 'ec tests/support -h'
     

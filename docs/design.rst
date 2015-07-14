@@ -73,4 +73,6 @@ Decisions
 ---------
 * The methods to be used by the loaded scripts are added to __builtins__, in order to avoid an explicit import of ec from the script; which will load a separate instance of ec and complicate the passing of data between the two instances.
 
-* 150630_1500 Decided to add an attribute __ec_member__ the underlyings, to identify them for ec. An alternate implementation was thought of; in which the underlyings and the members would be buffered (as a list / dict) and processed before starting the core. Though the later method doesn't alter the underlying, the former is chosen for it's simplicity. It took ~30 mins for the rewiring.
+* 150630_1500  Decided to add an attribute __ec_member__ the underlyings, to identify them for ec. An alternate implementation was thought of; in which the underlyings and the members would be buffered (as a list / dict) and processed before starting the core. Though the later method doesn't alter the underlying, the former is chosen for it's simplicity. It took ~30 mins for the rewiring.
+
+* 150714_0400  Decided to use an explicit method **modules.config.member** to facilitate the addition of imported members; instead of automatically scanning the scripts for importables. This is because "Explicit is better than implicit".

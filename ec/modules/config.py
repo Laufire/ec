@@ -3,7 +3,9 @@ Provides the decorators and functions for the configuration of the args, tasks, 
 """
 import sys
 
-from helpers import get_calling_module
+from state import Settings, ModulesQ
+from classes import Task, Group
+from helpers import getCallingModule
 
 __all__ = ['task', 'arg', 'group', 'module']
 
@@ -40,6 +42,8 @@ def task(__decorated__=None, **Config):
   else:
     _Task = Task(__decorated__, [], Config)
   
+  ModulesQ[-1].insert(0, _Task)
+  
   return _Task.Underlying
 
 def arg(name=None, **Config): # wraps the _arg decorator, in order to allow unnamed args
@@ -68,14 +72,25 @@ def _arg(__decorated__, **Config):
 def group(Underlying, **Config):
   """A decorator to make groups out of classes.
   """
-  return Group(Underlying, Config).Underlying
+  _Group = Group(Underlying, Config)
+  
+  ModulesQ[-1].insert(0, _Group)
+  
+  return _Group.Underlying
   
 # Methods
 def module(**Config):
   """Helps with adding configs to Modules.
   """
-  Underlying = get_calling_module()
+  Underlying = getCallingModule()
   Group(Underlying, Config)
+  
+def member(Imported, **Config):
+  """Helps with adding imported members to Scripts.
+  """
+  __ec_member__ = Imported.__ec_member__
+  __ec_member__.Config.update(**Config)
+  ModulesQ[-1].insert(0, __ec_member__)
   
 # Cross dependencies
 from classes import Task, Group, HandledException

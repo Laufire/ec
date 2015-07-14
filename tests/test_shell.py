@@ -8,7 +8,8 @@ from support.helpers import shell_exec
 
 
 def dispatch(*lines):
-  
+  """Passes commands through the shell.
+  """
   return shell_exec('python tests/support/target_script.py', input='%s\n\0' % '\r\n'.join(lines))
 
 class TestShell(unittest.TestCase):

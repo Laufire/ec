@@ -3,8 +3,10 @@ Helpers
 
   Generic helpers for the modules.
 """
-from types import ClassType, ModuleType, FunctionType
 import sys
+import shlex
+from os import path
+from types import ClassType, ModuleType, FunctionType
 
 def err(message, exit_code=None):
   sys.stderr.write('%s\n' % message)
@@ -12,21 +14,19 @@ def err(message, exit_code=None):
   if exit_code is not None:
     exit(exit_code)
     
-def get_calling_module():
-  return sys.modules[sys._getframe().f_back.f_back.f_locals['__name__']]
+def getCallingModule():
+  return sys.modules[sys._getframe().f_back.f_back.f_globals['__name__']]
 
 def load_module(module_path):
-  import imp
-  from os import path
-  
   module_path = path.abspath(module_path)
   parent_path, name = path.split(module_path)
   name, dummy = path.splitext(name)
   
   sys.path.insert(0, parent_path)
-  Module = imp.load_source(name, module_path)
+  imported = __import__(name)
+  sys.path.pop(0)
   
-  return Module
+  return imported
 
 def list2dict(lst, splitter='='):
   Dict = {}
@@ -59,6 +59,14 @@ def listMemberHelps(TargetGroup):
   
   return Ret
   
+def split(line):
+  try:
+    return shlex.split(line)
+    
+  except ValueError:
+    raise HandledException('<command not understood>')
+    
+# inspect helpers
 def isunderlying(object):
   return isinstance(object, (FunctionType, ClassType, ModuleType))
   
@@ -70,3 +78,6 @@ def ismodule(object):
   
 def isfunction(object):
   return isinstance(object, FunctionType)
+
+# Cross Dependencies
+from classes import HandledException

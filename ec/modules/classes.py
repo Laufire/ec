@@ -3,24 +3,9 @@ All the classes of ec.
 """
 from collections import OrderedDict
 
-from state import Settings, ModuleMembers
 from helpers import err, ismodule
 
-class Member: # the base class for the classes group and task
-  """The base class for the classes Task and Group.
-  
-    Brands the given underlying with the __ec_member__ attr, which is used to identify the Underlying as processable by ec.
-  """
-  def __init__(self, Underlying, Config):
-    Underlying.__ec_member__ = self
-    self.Underlying = Underlying
-    self.Config = Config
-    
-    if not ismodule(Underlying):
-      ModuleMembers[Underlying.__module__].append(self)
-    
-    
-class Task(Member):
+class Task():
   """A callable class that allows the calling of the underlying function as a task.
   """
   def __init__(self, Underlying, Args, Config):
@@ -28,7 +13,7 @@ class Task(Member):
     if not 'name' in Config:
       Config['name'] = Underlying.func_name
       
-    Member.__init__(self, Underlying, Config)
+    _getEcMember(self, Underlying, Config)
     
     try:
       self.Args = self.__load_args__(Args)
@@ -146,7 +131,7 @@ class Task(Member):
       
     return self.Underlying(**InArgs)
     
-class Group(Member):
+class Group():
   """Groups can contain other Members (Tasks / Groups).
   
   Note:
@@ -156,7 +141,7 @@ class Group(Member):
     if not 'name' in Config:
       Config['name'] = Underlying.__name__
     
-    Member.__init__(self, Underlying, Config or {})
+    _getEcMember(self, Underlying, Config or {})
     
 class CustomType:
   """The base class for custom types.
@@ -204,5 +189,20 @@ def _getFuncArgs(func):
     
   return Args
   
+def _getEcMember(obj, Underlying, Config):
+  """The base class for the classes Task and Group.
+  
+    Brands the given underlying with the __ec_member__ attr, which is used to identify the Underlying as processable by ec.
+  """
+  __ec_member__ = getattr(Underlying, '__ec_member__', None)
+  
+  if not __ec_member__:
+    Underlying.__ec_member__ = obj
+    obj.Underlying = Underlying
+    obj.Config = Config
+    
+  else:
+    __ec_member__.Config.update(Config)  
+
 # Cross dependencies
 from exposed import get, static

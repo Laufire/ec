@@ -4,15 +4,17 @@ ec
 
 The main module, that allows the configuration of the importing script.
 """
-from modules.state import Settings
-from modules.helpers import get_calling_module
-from modules.config import task, arg, group, module
+import sys
+
+from modules.state import Settings, ECedModules, ModulesQ
+from modules.helpers import getCallingModule
+from modules.config import task, arg, group, module, member
 from modules import core
 
 # Exports
 __all__ = [
   'settings', 'call',
-  'task', 'arg', 'group', 'module'
+  'task', 'arg', 'group', 'module', 'member'
 ]
 
 def settings(**NewSettings):
@@ -45,9 +47,9 @@ def call(__ec_func__, **Args):
 
   
 # Main
-Caller = get_calling_module()
+Caller = getCallingModule()
 
-def registe_exit_call():
+def register_exit_call():
   """Register an exit call to start the core.
   
     The core would be started after the main module is loaded. Ec would be exited from the core.
@@ -61,21 +63,33 @@ def registe_exit_call():
 def hook_into_import():
   # hook into __import__ to register modules when they import ec
   import __builtin__
-
+  
   origImp = __builtin__.__import__
-
+  
   def newImp(name, *x):
+    if name in ECedModules:
+      return origImp(name, *x)
+      
     if name == __name__:
-      core.registerModule(get_calling_module())
+      ECedModules.add(getCallingModule().__name__)
+      
+      return origImp(name, *x)
     
-    return origImp(name, *x)
+    else:
+      ModulesQ.append([])
+      
+      imported = origImp(name, *x)
+      
+      if imported.__name__ in ECedModules:
+        core.processModule(imported)
+      
+      ModulesQ.pop()
+      return imported
 
   __builtin__.__import__ = newImp
-  
-  core.registerModule(Caller) # add the first module that import ec directly, as we would haven't hooked into the imports yet.
 
 def main():
+  register_exit_call()
   hook_into_import()
-  registe_exit_call()
   
 main()

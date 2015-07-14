@@ -135,5 +135,11 @@ Log
   * 0500  Removed ec.start, the scripts now just have to import ec, to be considered an ec script.
   * 0500  Introduced ec.settings to replace ec.start as the settings provider.
   * 1805  Moved shell helpers, clear and help to '/', with an option to move them inside a group through **ec.settings.helper_route**.
-  * 2250  Partiall redid the core (member classification) to support the new API. Neseted modules and launching dirs aren't supported yet.
+  * 2250  Partially redid the core (member classification) to support the new API. Neseted modules and launching dirs aren't supported yet.
+  
+* 20150714
+
+  * 0400  Introduce modules.config.member to allow the addition of imported members to scripts.
+  * 0425  Nested modules now support the newer API.
+  * 0720  Dir launching now supports the newer API.
   

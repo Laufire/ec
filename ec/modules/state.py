@@ -11,6 +11,6 @@ from collections import OrderedDict
 
 Settings = {}
 
-ModuleMembers = OrderedDict() # Stores the module members for organising
+ModulesQ = [[]] # Stores the module members for organising
 
-ModulesQ = [] # Stores the module members for organising
+ECedModules = set()

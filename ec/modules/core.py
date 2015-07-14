@@ -7,7 +7,7 @@ import traceback
 from collections import OrderedDict
 
 import state
-from state import Settings, ModuleMembers
+from state import Settings, ModulesQ
 from helpers import err, list2dict, isfunction, isclass, ismodule, isunderlying
 
 # State
@@ -21,9 +21,9 @@ def start(BaseModule, Argv=None):
   if Argv is None:
     Argv = sys.argv[1:]
   
-  processModules()
+  processModule(BaseModule)
   global BaseGroup
-  BaseGroup =  sys.modules[BaseModule.__name__].__ec_member__
+  BaseGroup =  BaseModule.__ec_member__
   
   global mode
   mode = 'd' if Argv else 's' # dispatch / shell mode
@@ -82,42 +82,14 @@ def getDescendant(Ancestor, RouteParts):
   else:
     return Resolved
     
-def registerModule(Module):
-  """Called when ec is imported by a script.
-  """
-  name = Module.__name__
-  
-  if name not in ModuleMembers:
-    ModuleMembers[name] = []
-    
-def processModules():
-  """Builds a command tree out of the ec based scripts.
-  """
-  Items = ModuleMembers.items()
-  Items.reverse()
-  ModuleMembers.clear()
-  ModuleMembers.update(Items)
-  
-  for name in ModuleMembers:
-    processModule(name)
-    
-def processModule(name):
+def processModule(Module):
   """Builds a command tree out of the configured members of a module.
   """
-  # Brand the module with __ec_member__
-  Module = sys.modules[name]
-  __ec_member__ = getattr(Module, '__ec_member__', None)
-  
-  if not __ec_member__:
-    __ec_member__ = Group(Module, {})
-  
-  Members = ModuleMembers[name]
   MembersTarget = []
   ClassQ = []
-  Members.reverse()
   Cls = None
   
-  for Member in Members:
+  for Member in ModulesQ[-1]:
     Underlying = Member.Underlying
     member_name = Member.Config['name']
     member_alias = Member.Config.get('alias', None)
@@ -169,8 +141,13 @@ def processModule(name):
         
   if Cls:
     convertNonEcMethodsToStatic(Cls)
-    
-  __ec_member__.Config['Members'] = OrderedDict(MembersTarget)  
+  
+  # Brand the module with __ec_member__
+  __ec_member__ = getattr(Module, '__ec_member__', None)
+  if not __ec_member__:
+    __ec_member__ = Group(Module, {})
+  
+  __ec_member__.Config['Members'] = OrderedDict(MembersTarget)
   
 def convertNonEcMethodsToStatic(Cls):
   """Convert helper methods of a Group into statics, so that they too could be called like group.helper(...) like the tasks of the group.
