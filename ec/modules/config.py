@@ -3,7 +3,8 @@ Provides the decorators and functions for the configuration of the args, tasks, 
 """
 import sys
 
-from state import Settings, ModulesQ
+import state
+from state import Settings
 from classes import Task, Group
 from helpers import getCallingModule
 
@@ -42,7 +43,7 @@ def task(__decorated__=None, **Config):
   else:
     _Task = Task(__decorated__, [], Config)
   
-  ModulesQ[-1].insert(0, _Task)
+  state.ActiveModuleMemberQ.insert(0, _Task)
   
   return _Task.Underlying
 
@@ -74,7 +75,7 @@ def group(Underlying, **Config):
   """
   _Group = Group(Underlying, Config)
   
-  ModulesQ[-1].insert(0, _Group)
+  state.ActiveModuleMemberQ.insert(0, _Group)
   
   return _Group.Underlying
   
@@ -90,7 +91,8 @@ def member(Imported, **Config):
   """
   __ec_member__ = Imported.__ec_member__
   __ec_member__.Config.update(**Config)
-  ModulesQ[-1].insert(0, __ec_member__)
+  
+  state.ActiveModuleMemberQ.insert(0, __ec_member__)
   
 # Cross dependencies
 from classes import Task, Group, HandledException

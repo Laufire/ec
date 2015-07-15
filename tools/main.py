@@ -98,6 +98,11 @@ class devLinks:
   
   @task
   def create(dir=None):
+    """Creates link to the main ec dir for developing convinience.
+    
+    Args:
+      dir (str): The target dir to create the link in. When no target is specified, all devLinks.Dirs are considered as the targets.
+    """
     if dir:
       devLinks.linkEc(dir)
       
@@ -107,6 +112,8 @@ class devLinks:
         
   @task
   def clear():
+    """Clears the links to the ec dir, under all devLinks.Dirs.
+    """
     for dir in devLinks.Dirs:
       rmdir('%s/ec' % dir)
   

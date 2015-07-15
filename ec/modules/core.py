@@ -7,7 +7,7 @@ import traceback
 from collections import OrderedDict
 
 import state
-from state import Settings, ModulesQ
+from state import Settings, ModulesQ, ModuleMembers
 from helpers import err, list2dict, isfunction, isclass, ismodule, isunderlying
 
 # State
@@ -15,15 +15,20 @@ BaseGroup = None
 mode = None
 is_dev_mode = None
 
-def start(BaseModule, Argv=None):
+def start():
   """Starts ec.
   """
-  if Argv is None:
-    Argv = sys.argv[1:]
+  Argv = sys.argv[1:]
   
-  processModule(BaseModule)
+  if not state.main_module_name in ModulesQ: # don't start the core when main is not Ec-ed
+    return
+    
+  MainModule = sys.modules[state.main_module_name]
+  
+  processPendingModules()
+  
   global BaseGroup
-  BaseGroup =  BaseModule.__ec_member__
+  BaseGroup =  MainModule.__ec_member__
   
   global mode
   mode = 'd' if Argv else 's' # dispatch / shell mode
@@ -82,6 +87,32 @@ def getDescendant(Ancestor, RouteParts):
   else:
     return Resolved
     
+def setActiveModule(Module):
+  """Helps with collecting the members of the imported modules.
+  """
+  module_name = Module.__name__
+  
+  if module_name not in ModuleMembers:
+    ModuleMembers[module_name] = []
+    ModulesQ.append(module_name)
+    Group(Module, {}) # brand the module with __ec_member__
+  
+  state.ActiveModuleMemberQ = ModuleMembers[module_name]
+
+def resetActiveModuleToNext():
+  # Remove the module name from ModulesQ as it has been processed
+  ModulesQ.pop()
+  
+  if ModulesQ: # Set the next module's Q the ActiveModuleMemberQ, so that the configured elements could be gathered for the right target
+    state.ActiveModuleMemberQ = ModuleMembers[ModulesQ[-1]]
+  
+def processPendingModules():
+  """Processes the modules left unprocessed by the import hook.
+  """
+  for name in ModulesQ[:]:
+    processModule(sys.modules[name])
+    ModulesQ.pop()
+  
 def processModule(Module):
   """Builds a command tree out of the configured members of a module.
   """
@@ -89,7 +120,7 @@ def processModule(Module):
   ClassQ = []
   Cls = None
   
-  for Member in ModulesQ[-1]:
+  for Member in ModuleMembers[Module.__name__]:
     Underlying = Member.Underlying
     member_name = Member.Config['name']
     member_alias = Member.Config.get('alias', None)
@@ -99,9 +130,9 @@ def processModule(Module):
       Cls = ClsGroup.Underlying
       ClsMembersTarget = ClsGroup.Config.get('Members', [])
       underlying_name = Underlying.__name__
-      CurrentMember = getattr(Cls, underlying_name, None) # Note: The methods of classes would be different than the functions registerd by @task
+      CurrentMember = getattr(Cls, underlying_name, None)
       
-      if  CurrentMember and getattr(CurrentMember, 'im_func', Underlying) is Underlying:
+      if  CurrentMember and getattr(CurrentMember, 'im_func', Underlying) is Underlying: # Note: The methods of classes would be different than the functions registerd by @task
       
         if isfunction(Underlying):
           im_func = CurrentMember.im_func # convert the method into a function so it could be used within the script like object methods (without a refrence to self)
@@ -142,12 +173,7 @@ def processModule(Module):
   if Cls:
     convertNonEcMethodsToStatic(Cls)
   
-  # Brand the module with __ec_member__
-  __ec_member__ = getattr(Module, '__ec_member__', None)
-  if not __ec_member__:
-    __ec_member__ = Group(Module, {})
-  
-  __ec_member__.Config['Members'] = OrderedDict(MembersTarget)
+  Module.__ec_member__.Config['Members'] = OrderedDict(MembersTarget)
   
 def convertNonEcMethodsToStatic(Cls):
   """Convert helper methods of a Group into statics, so that they too could be called like group.helper(...) like the tasks of the group.

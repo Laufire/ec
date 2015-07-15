@@ -1,5 +1,5 @@
 """
-Tests the dispatch mode.
+Tests the.launch_ec mode.
 
 Notes:
   * This test is used as the base by several other tests.
@@ -10,7 +10,7 @@ import unittest
 from support.helpers import shell_exec
 
 
-def dispatch(argStr='', input='', flag=''):
+def launch_ec(argStr='', input='', flag=''):
   """Dispatches command to the target script."""
   
   if flag == '-h':
@@ -36,49 +36,49 @@ class TestDispatch(unittest.TestCase):
     pass
     
   def test_dispatch(self):
-    Result = dispatch('task1 arg1=1')
+    Result = launch_ec('task1 arg1=1')
     
     assert(Result['code'] == 0)
     assert(Result['out'].strip() == '1 2')
     
   def test_multiple_args(self):
-    Result = dispatch('task1 arg1=1 arg2=1')
+    Result = launch_ec('task1 arg1=1 arg2=1')
     
     assert(Result['code'] == 0)
     assert(Result['out'].strip() == '1 1')
     
   def test_flag_help(self):
-    Result = dispatch(flag='-h')
+    Result = launch_ec(flag='-h')
     
     assert(Result['code'] == 0)
     assert(Result['out'].strip()[:5] == 'Usage')
   
   def test_flag_partial(self):
-    Result = dispatch('task1 arg1=1', '1', '-p')
+    Result = launch_ec('task1 arg1=1', '1', '-p')
     
     assert(Result['code'] == 0)
     assert(Result['out'][-5:-1].strip() == '1 1')
     
   def test_absent_task(self):
-    Result = dispatch('task2')
+    Result = launch_ec('task2')
     
     assert(Result['code'] == 1)
     assert(Result['err'].strip()[:2] == 'No')
     
   def test_nested_task(self):
-    Result = dispatch('group1/task1 arg1=1')
+    Result = launch_ec('group1/task1 arg1=1')
     
     assert(Result['code'] == 0)
     assert(Result['out'].strip() == '1')
 
   def test_default_arg(self):
-    Result = dispatch('task1 arg1=1')
+    Result = launch_ec('task1 arg1=1')
     
     assert(Result['code'] == 0)
     assert(Result['out'].strip() == '1 2')
   
   def test_alias(self):
-    Result = dispatch('t1 arg1=1')
+    Result = launch_ec('t1 arg1=1')
     
     assert(Result['code'] == 0)
     assert(Result['out'].strip() == '1 2')

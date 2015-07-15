@@ -9,7 +9,7 @@ import unittest
 
 from support.helpers import shell_exec
 
-def dispatch(argStr='', input='', flag=''):
+def launch_ec(argStr='', input='', flag=''):
   """Launches the support dir.
   """
   if flag == '-h':
@@ -28,7 +28,7 @@ def dispatch(argStr='', input='', flag=''):
 
 import test_dispatch # The test cases are imported from test_dispatch
 
-test_dispatch.dispatch = dispatch # replace the dispatch function of test_dispatch
+test_dispatch.launch_ec = launch_ec # replace the.launch_ec function of test_dispatch
 
 TestDirGroup = test_dispatch.TestDispatch # assign the test to a variable so that unittest could find it
 

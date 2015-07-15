@@ -6,11 +6,11 @@ The main module, that allows the configuration of the importing script.
 """
 import sys
 
-from modules.state import Settings, ECedModules, ModulesQ
+from modules.state import Settings, ModulesQ
 from modules.helpers import getCallingModule
 from modules.config import task, arg, group, module, member
-from modules import core
-
+from modules import hooks
+  
 # Exports
 __all__ = [
   'settings', 'call',
@@ -47,49 +47,22 @@ def call(__ec_func__, **Args):
 
   
 # Main
-Caller = getCallingModule()
+hooks.EcModuleName = __name__
 
-def register_exit_call():
-  """Register an exit call to start the core.
-  
-    The core would be started after the main module is loaded. Ec would be exited from the core.
-  """
-  import atexit
-  
-  @atexit.register
-  def exit_hook():
-    core.start(Caller)
+FirstCaller = getCallingModule()
 
-def hook_into_import():
-  # hook into __import__ to register modules when they import ec
-  import __builtin__
+def registerFirstCaller(): # Note: the FirstCaller should be registered separately as the import wouldn't be hooked yet.
+  from modules import core
   
-  origImp = __builtin__.__import__
+  core.setActiveModule(FirstCaller)
   
-  def newImp(name, *x):
-    if name in ECedModules:
-      return origImp(name, *x)
-      
-    if name == __name__:
-      ECedModules.add(getCallingModule().__name__)
-      
-      return origImp(name, *x)
-    
-    else:
-      ModulesQ.append([])
-      
-      imported = origImp(name, *x)
-      
-      if imported.__name__ in ECedModules:
-        core.processModule(imported)
-      
-      ModulesQ.pop()
-      return imported
-
-  __builtin__.__import__ = newImp
-
 def main():
-  register_exit_call()
-  hook_into_import()
+  from modules.hooks import isImportHooked, registerExitCall, hookIntoImport
+  
+  registerExitCall()
+  
+  if not isImportHooked():
+    hookIntoImport()
+    registerFirstCaller()
   
 main()

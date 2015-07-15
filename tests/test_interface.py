@@ -5,7 +5,9 @@ import unittest
 
 from ec import interface
 
-import support.target_script
+from support import target_script
+
+interface.setBase(target_script)
 
 class TestInterface(unittest.TestCase):
 

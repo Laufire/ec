@@ -22,13 +22,16 @@ def main():
     from os import path
     from modules import core
     from modules.helpers import load_module
+    from modules import state
+    
+    state.main_module_name = 'ec.__main__'
     
     target_path = argv.pop(0)
     
     sys.argv = sys.argv[:1] + argv # alter sys.argv so that the modules could process them
     
     if path.isfile(target_path):
-      core.start(load_module(target_path), argv)
+      load_module(target_path)
       
     elif path.isdir(target_path): # launch the dir with its children as groups
       from glob import glob
@@ -45,7 +48,7 @@ def main():
       show_usage()  
 
 def show_usage():
-  print 'Usage:\n\t$ ec script/dir [flag] [command] [args]'
+  print 'Usage:\n\t$ ec (script / dir) [flag] [command] [args]'
 
 if __name__ == '__main__':
   main()

@@ -12,7 +12,7 @@ from support.helpers import shell_exec
 # Modifications to test_dispatch
 import test_dispatch
 
-def dispatch(argStr='', input='', flag=''):
+def launch_ec(argStr='', input='', flag=''):
   """Dispatches command to the target script.
   """
   if flag == '-h':
@@ -29,7 +29,7 @@ def dispatch(argStr='', input='', flag=''):
   return shell_exec('python tests/support/nester.py %s' % rest, input=input)
     
 
-test_dispatch.dispatch = dispatch
+test_dispatch.launch_ec = launch_ec
 
 TestNested = test_dispatch.TestDispatch
 

@@ -139,7 +139,15 @@ Log
   
 * 20150714
 
-  * 0400  Introduce modules.config.member to allow the addition of imported members to scripts.
+  * 0400  Introduced modules.config.member to allow the addition of imported members to scripts.
   * 0425  Nested modules now support the newer API.
   * 0720  Dir launching now supports the newer API.
+  
+* 20150715
+  
+  * 1700  Separated the hooks from ec.ec into modules.hooks.
+  
+* 20150716
+  
+  * 0305  Redid the core to support the new API.
   

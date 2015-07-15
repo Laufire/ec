@@ -11,6 +11,10 @@ from collections import OrderedDict
 
 Settings = {}
 
-ModulesQ = [[]] # Stores the module members for organising
+main_module_name = '__main__'
 
-ECedModules = set()
+ModulesQ = []
+
+ActiveModuleMemberQ = None # used to collect the configured members of the current module
+
+ModuleMembers = {}

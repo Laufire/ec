@@ -1,6 +1,8 @@
 ToDo
 =====
-* Support nested modules.
+Tasks
+-----
+* Mtehods aren't converted into static.
 
 * The long description of the package seems to be broken on PyPI (Could it be because of the code block?).
 
@@ -18,6 +20,11 @@ ToDo
 
 * More documentation for the custom types.
 
+Issues
+------
+
+* Could not exit cleanly from ec, when launching dirs. It seems to be an issue with threading.
+
 Fix
 ---
 
@@ -25,8 +32,6 @@ Fix
 
 Check
 -----
-* Skipping the mandatory ec.start, by initiatin all the modules that import ec.ec. This needs some hooking into the import system.
-
 * Allowing name-less args, especially for a better UX in the shell mode. There are several ways, including:
   
   * Allowing the first argument of a task to be name-less.
