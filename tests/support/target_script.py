@@ -15,7 +15,8 @@ def task1(arg1, arg3=3, arg2=2):
 
 @group(desc = 'Description for group1')
 class group1:
-	@task
-	@arg('arg1')
-	def task1(arg1):
-		print arg1
+  @task
+  @arg('arg1')
+  def task1(arg1):
+    print arg1
+    return 1

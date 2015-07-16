@@ -15,7 +15,7 @@ def err(message, exit_code=None):
     exit(exit_code)
     
 def getCallingModule():
-  return sys.modules[sys._getframe().f_back.f_back.f_globals['__name__']]
+  return sys.modules[sys._getframe().f_back.f_back.f_globals['__name__']] #pylint: disable=W0212
 
 def load_module(module_path):
   module_path = path.abspath(module_path)
@@ -47,7 +47,7 @@ def listMemberHelps(TargetGroup):
   """
   Members = []
   
-  for Member in TargetGroup.Config['Members'].values(): # get unique children (by discarding aliases)
+  for Member in TargetGroup.Members.values(): # get unique children (by discarding aliases)
     if Member not in Members:
       Members.append(Member)
     

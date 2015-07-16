@@ -48,8 +48,7 @@ def registerExitCall():
     
   isExitHooked = True
   
-  import atexit
+  from atexit import register
   
-  @atexit.register
-  def exit_hook():
-    core.start()
+  register(core.start) # start the core when the main module exits
+  

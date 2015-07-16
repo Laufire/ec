@@ -16,8 +16,6 @@ __all__ = ['setBase', 'resolve', 'call']
 def setBase(Underlying):
   """Sets the base for the interface to work on.
   """
-  from modules import state
-  
   core.processPendingModules()
   core.BaseGroup = Underlying.__ec_member__
 

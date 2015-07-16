@@ -14,7 +14,9 @@ dummy-variables-rqx = dummy.*$
 # C0103: Invalid name
 # C0301: Line too long
 # E1103: Instance of '...' has no '...' member (but some types could not be inferred) (buggy)
+# I0011: Locally disabling ...
 # R0201: Method could be a function (some classes are used only outside of the defining script)
+# R0401:  Cyclic import (we really need some)
 # R0903: Too few public methods (some classes are used as Data structures)
 # R0912: Too many branches (there are a few monoliths that have to have a lot of branches)
 # R0913: Too many arguments
@@ -35,8 +37,9 @@ dummy-variables-rqx = dummy.*$
 # W0703: Catching too general exception (even the most generic exception shoud be caught)
 
 disable = C0111, C0103, C0301,
+	I0011,
 	E1103,
-  R0201, R0903, R0912, R0913, R0914, R0915,
+  R0201, R0401, R0903, R0912, R0913, R0914, R0915,
 	W0142, W0311, W0403, W0603, W0611, W0621, W0622,
 
 [REPORTS]

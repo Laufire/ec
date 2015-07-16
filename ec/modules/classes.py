@@ -5,7 +5,23 @@ from collections import OrderedDict
 
 from helpers import err, ismodule
 
-class Task():
+class Member():
+  """The base class for the classes Task and Group.
+  
+    Brands the given underlying with the __ec_member__ attr, which is used to identify the Underlying as processable by ec.
+  """
+  def __init__(self, Underlying, Config):
+    __ec_member__ = getattr(Underlying, '__ec_member__', None)
+    
+    if not __ec_member__:
+      Underlying.__ec_member__ = self
+      self.Underlying = Underlying
+      self.Config = Config
+      
+    else:
+      __ec_member__.Config.update(Config)  
+
+class Task(Member):
   """A callable class that allows the calling of the underlying function as a task.
   """
   def __init__(self, Underlying, Args, Config):
@@ -13,7 +29,7 @@ class Task():
     if not 'name' in Config:
       Config['name'] = Underlying.func_name
       
-    _getEcMember(self, Underlying, Config)
+    Member.__init__(self, Underlying, Config)
     
     try:
       self.Args = self.__load_args__(Args)
@@ -131,17 +147,17 @@ class Task():
       
     return self.Underlying(**InArgs)
     
-class Group():
+class Group(Member):
   """Groups can contain other Members (Tasks / Groups).
   
   Note:
     Groups that have modules as their underlying would have it's members loaded by ec.start.
   """
-  def __init__(self, Underlying, Config=None):
+  def __init__(self, Underlying, Config):
     if not 'name' in Config:
       Config['name'] = Underlying.__name__
     
-    _getEcMember(self, Underlying, Config or {})
+    Member.__init__(self, Underlying, Config or {})
     
 class CustomType:
   """The base class for custom types.
@@ -189,20 +205,5 @@ def _getFuncArgs(func):
     
   return Args
   
-def _getEcMember(obj, Underlying, Config):
-  """The base class for the classes Task and Group.
-  
-    Brands the given underlying with the __ec_member__ attr, which is used to identify the Underlying as processable by ec.
-  """
-  __ec_member__ = getattr(Underlying, '__ec_member__', None)
-  
-  if not __ec_member__:
-    Underlying.__ec_member__ = obj
-    obj.Underlying = Underlying
-    obj.Config = Config
-    
-  else:
-    __ec_member__.Config.update(Config)  
-
 # Cross dependencies
 from exposed import get, static

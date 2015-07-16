@@ -150,4 +150,6 @@ Log
 * 20150716
   
   * 0305  Redid the core to support the new API.
+  * 0500  Simplified the static method concersions of the group.
+  * 0725  Tuned and linted.
   

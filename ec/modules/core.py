@@ -79,7 +79,7 @@ def getDescendant(Ancestor, RouteParts):
   if not RouteParts:
     return Ancestor
     
-  Resolved = Ancestor.Config['Members'].get(RouteParts.pop(0))
+  Resolved = Ancestor.Members.get(RouteParts.pop(0))
   
   if isinstance(Resolved, Group):
     return getDescendant(Resolved, RouteParts)
@@ -119,8 +119,10 @@ def processModule(Module):
   MembersTarget = []
   ClassQ = []
   Cls = None
+  ClsGrpMembers = []
   
   for Member in ModuleMembers[Module.__name__]:
+    
     Underlying = Member.Underlying
     member_name = Member.Config['name']
     member_alias = Member.Config.get('alias', None)
@@ -128,38 +130,25 @@ def processModule(Module):
     if ClassQ:
       ClsGroup = ClassQ[-1]
       Cls = ClsGroup.Underlying
-      ClsMembersTarget = ClsGroup.Config.get('Members', [])
-      underlying_name = Underlying.__name__
-      CurrentMember = getattr(Cls, underlying_name, None)
       
-      if  CurrentMember and getattr(CurrentMember, 'im_func', Underlying) is Underlying: # Note: The methods of classes would be different than the functions registerd by @task
-      
-        if isfunction(Underlying):
-          im_func = CurrentMember.im_func # convert the method into a function so it could be used within the script like object methods (without a refrence to self)
-          setattr(Cls, underlying_name, im_func)
-          im_func.__ec_member__ = Member
-          Member.Underlying = im_func
-          
-        elif isclass(Underlying):
+      if getattr(Cls, Underlying.__name__, None) is Underlying: # we got a member tht is a child of the previous class
+        if isclass(Underlying):
           ClassQ.append(Underlying.__ec_member__)
           
-        elif not ismodule(Underlying):
+        elif not isunderlying(Underlying):
           continue
           
         if member_alias:
-          ClsMembersTarget.insert(0, (member_alias, Member))
+          ClsGrpMembers.insert(0, (member_alias, Member))
           
-        ClsMembersTarget.insert(0, (member_name, Member))
-        ClsGroup.Config['Members'] = ClsMembersTarget
+        ClsGrpMembers.insert(0, (member_name, Member))
         continue
         
-      else:
-      
-        if Cls:
-          ClsGroup.Config['Members'] = OrderedDict(ClsGroup.Config['Members'])
-          ClassQ.pop()
-          convertNonEcMethodsToStatic(Cls)
-          Cls = None        
+      elif Cls: # we've finished adding chidren to the previous class
+        ClsGroup.Members = OrderedDict(ClsGrpMembers)
+        ClsGrpMembers = []
+        ClassQ.pop()
+        Cls = None        
     
     if isunderlying(Underlying):
       if member_alias:
@@ -170,18 +159,7 @@ def processModule(Module):
       if isclass(Underlying):
         ClassQ.append(Underlying.__ec_member__)
         
-  if Cls:
-    convertNonEcMethodsToStatic(Cls)
-  
-  Module.__ec_member__.Config['Members'] = OrderedDict(MembersTarget)
-  
-def convertNonEcMethodsToStatic(Cls):
-  """Convert helper methods of a Group into statics, so that they too could be called like group.helper(...) like the tasks of the group.
-  """
-  for attr in dir(Cls):
-    im_func = getattr(getattr(Cls, attr), 'im_func', None)
-    if im_func and not hasattr(im_func, '__ec_member__'):
-      setattr(Cls, attr, staticmethod(im_func))
+  Module.__ec_member__.Members = OrderedDict(MembersTarget)
   
 # Cross dependencies
 from classes import Group, Task, HandledException

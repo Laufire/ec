@@ -5,9 +5,10 @@ import sys
 
 import state
 from state import Settings
-from classes import Task, Group
+from classes import Task, Group, HandledException
 from helpers import getCallingModule
-
+from helpers import isclass
+from exposed import static
 __all__ = ['task', 'arg', 'group', 'module']
 
 # Helpers
@@ -75,6 +76,9 @@ def group(Underlying, **Config):
   """
   _Group = Group(Underlying, Config)
   
+  if isclass(Underlying): # conver the method of the class ro static methods so that they could be accessed like object methods; ir: g1/t1(...).
+    static(Underlying)
+    
   state.ActiveModuleMemberQ.insert(0, _Group)
   
   return _Group.Underlying
@@ -94,5 +98,3 @@ def member(Imported, **Config):
   
   state.ActiveModuleMemberQ.insert(0, __ec_member__)
   
-# Cross dependencies
-from classes import Task, Group, HandledException

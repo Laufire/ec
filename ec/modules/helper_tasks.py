@@ -50,10 +50,10 @@ def main():
   
   if helper_route:
     __ec_member__.Config['name'] = helper_route
-    core.BaseGroup.Config['Members'][helper_route] = __ec_member__
+    core.BaseGroup.Members[helper_route] = __ec_member__
     
   else:
-    core.BaseGroup.Config['Members'].update(__ec_member__.Config['Members'].iteritems())
+    core.BaseGroup.Members.update(__ec_member__.Members.iteritems())
 
 # Helpers
 def _getTaskHelp(_Task):

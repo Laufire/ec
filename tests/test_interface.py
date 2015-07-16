@@ -20,6 +20,18 @@ class TestInterface(unittest.TestCase):
   def test_call(self):
     assert(interface.call('task1 arg1=1') == (1, 2))
     
+  def test_call_with_input(self):
+    # Hook into existing raw_input
+    import __builtin__
+    origCall = __builtin__.raw_input
+    __builtin__.raw_input = lambda dummy: 2
+    
+    # test the call
+    assert(interface.call('task1 arg1=1', True) == (1, 2))
+    
+    # remove the hook
+    __builtin__.raw_input = origCall
+    
   def test_resolve(self):
     assert(interface.resolve('task1').Config['name'] == 'task1')
     
@@ -41,7 +53,8 @@ class TestInterface(unittest.TestCase):
   def test_group(self):
     Group1 = interface.resolve('group1')
     Config = Group1.Config
-    Members = Config['Members']
+    Members = Group1.Members
+    Members = Group1.Members
     
     assert(len(Members.keys()) == 1)
     assert(Members['task1'] is not None)

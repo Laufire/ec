@@ -2,13 +2,9 @@ ToDo
 =====
 Tasks
 -----
-* Mtehods aren't converted into static.
-
 * The long description of the package seems to be broken on PyPI (Could it be because of the code block?).
 
 * Test for cross environment compatibility.
-
-* Test the interactive parts, like shell mode and utils.get; using stdin.
 
 * Add usage document for shell mode.
 
@@ -23,7 +19,7 @@ Tasks
 Issues
 ------
 
-* Could not exit cleanly from ec, when launching dirs. It seems to be an issue with threading.
+* Could not exit cleanly from the shell mode of ec, when launching dirs. EOFError is not handled well.
 
 Fix
 ---

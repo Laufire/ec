@@ -20,7 +20,6 @@ def main():
     
   else:
     from os import path
-    from modules import core
     from modules.helpers import load_module
     from modules import state
     
