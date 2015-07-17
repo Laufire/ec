@@ -1,5 +1,5 @@
 """
-Tests the.launch_ec mode.
+Tests the dispatch mode.
 
 Notes:
   * This test is used as the base by several other tests.
@@ -8,7 +8,6 @@ Notes:
 import unittest
 
 from support.helpers import shell_exec
-
 
 def launch_ec(argStr='', input='', flag=''):
   """Dispatches command to the target script."""
@@ -82,6 +81,21 @@ class TestDispatch(unittest.TestCase):
     
     assert(Result['code'] == 0)
     assert(Result['out'].strip() == '1 2')
+    
+  def test_handled_exception(self):
+    Result = launch_ec('hex')
+    
+    assert(Result['code'] == 1)
+    assert(Result['err'].find('Invalid') > -1)
+    assert(Result['err'].find('arg1') > -1)
+    assert(Result['err'].find('int') > -1)
+    assert(Result['err'].find('got') > -1)
+    
+  def test_exception(self):
+    Result = launch_ec('ex')
+    
+    assert(Result['code'] == 1)
+    assert(Result['err'].strip() == 'integer division or modulo by zero')
   
 if __name__ == '__main__':
   unittest.main()

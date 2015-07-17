@@ -1,20 +1,17 @@
 ec
 ===
 
-ec - a simpler, yet better implementation of Commander, a module launcher.
+ec - the simplest way to create CLI applications.
 
 * Free software: MIT license
-
-  **Note: The docs serve as a reference, as well as act as a design guide throught the alpha version. Hence incase of an inconsistency, assume it as a work in progress.**
   
 A simple example
 -----------------
 from: `simple.py <https://github.com/Laufire/ec/blob/master/scripts/examples/simple.py>`_
 
-.. code-block:: python
-  :linenos:
+.. code:: python
   
-  from ec.ec import start, task, arg, group
+  from ec.ec import task, arg, group
 
   @task # define a task
   @arg(type=int, desc= 'Value for arg1') # add an argument with a type and a description
@@ -28,14 +25,11 @@ from: `simple.py <https://github.com/Laufire/ec/blob/master/scripts/examples/sim
     def task1(arg1): # define a task inside the group
       print arg1 + arg1
 
-  start()
-
-
 **Execute a task:** *<dispatch mode>*
 
 From the command-line enter
 
-.. code-block:: bash
+.. code:: bash
 
   $ python simple.py task1 arg1=1 arg2=2
     1 2
@@ -47,7 +41,7 @@ From the command-line enter
 
 From the command-line enter
 
-.. code-block:: bash
+.. code:: bash
 
   $ python simple.py # this will enter into ec-shell
 	

@@ -1,32 +1,14 @@
 """
-Tests the.launch_ec mode.
-
-Notes:
-  * This test is used as the base by several other tests.
+Tests the inscript calls
 """
 
 import unittest
 
-from support.helpers import shell_exec
+from ec.ec import call
 
 from support.target_script import task1, group1
+from support.helpers import RawInputHook as RIH
 
-def launch_ec(argStr='', input='', flag=''):
-  """Dispatches command to the target script."""
-  
-  if flag == '-h':
-    rest = flag
-    
-  elif flag == '-p':
-    
-    rest = '%s %s' % (flag, argStr)
-    
-  else:
-    
-    rest = argStr
-    
-  return shell_exec('python tests/support/target_script.py %s' % rest, input=input)
-    
 # Tests
 class TestInscriptCalls(unittest.TestCase):
 
@@ -37,10 +19,20 @@ class TestInscriptCalls(unittest.TestCase):
     pass
     
   def test_task_call(self):
+    """Test whether the tasks are callable as functions.
+    """
     assert(task1(1) == (1, 2))
     
   def test_group_task_call(self):
+    """Test whether the group tasks are callable as (static) functions.
+    """
     assert(group1.task1(1) == 1)
+    
+  def test_ec_call(self):
+    """Test ec.call with partial arguments
+    """
+    RIH.values(2, 3)
+    assert(call(task1, arg1=1) == (1, 2))
   
 if __name__ == '__main__':
   unittest.main()

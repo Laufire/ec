@@ -2,7 +2,7 @@ ToDo
 =====
 Tasks
 -----
-* The long description of the package seems to be broken on PyPI (Could it be because of the code block?).
+* Fix the import hooks.
 
 * Test for cross environment compatibility.
 
@@ -19,7 +19,7 @@ Tasks
 Issues
 ------
 
-* Could not exit cleanly from the shell mode of ec, when launching dirs. EOFError is not handled well.
+* *None, yet.*
 
 Fix
 ---
@@ -28,12 +28,18 @@ Fix
 
 Check
 -----
-* Allowing name-less args, especially for a better UX in the shell mode. There are several ways, including:
+* Allowing name-less (positional) args, especially for a better UX in the shell mode. There are several ways, including:
   
   * Allowing the first argument of a task to be name-less.
   * Allowing tasks with a single arg to have name-less inputs.
 
-* Automatically adding params to the doc string.
+* Automatically adding param documentation to docstrings.
+
+* A main command (as in commandify) for the module, so that a task name won't be necessary. This might be implemented in several ways:
+
+  * A separate config decorator (@default).
+  * Treating the only / first command as the default command.
+  * Instructing the user to use **ec.call** on the default function. This would require the handling of the command line arguments.
 
 * ^X in shell mode displaying help on the arg being collected.
 

@@ -18,3 +18,5 @@ ModulesQ = []
 ActiveModuleMemberQ = None # used to collect the configured members of the current module
 
 ModuleMembers = {}
+
+isExitHooked = False

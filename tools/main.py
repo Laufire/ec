@@ -43,23 +43,34 @@ def test(name=None):
     install()
     assert(run('python setup.py test') == 0)
     devLinks.create()
-  
-@task
-def spellcheck():
-  os.chdir('%s\docs' % project_root)
-  assert(run('sphinx-build -b spelling -d _build/doctrees  . _build/_spelling') == 0)
-  os.chdir(project_root)
 
-@task
-@arg(type=yn())
-def makeDocs(update=False):
-  os.chdir('%s\docs' % project_root)
-  
-  if not update:
-    rmtree('_build')
+@group
+class docs:
+  @task
+  def spellcheck():
+    os.chdir('%s\docs' % project_root)
+    assert(run('sphinx-build -b spelling -d _build/doctrees  . _build/_spelling') == 0)
+    os.chdir(project_root)
+
+  @task
+  @arg(type=yn())
+  def make(update=False):
+    os.chdir('%s\docs' % project_root)
     
-  assert(run('sphinx-build -b html -d _build/doctrees  . _build/html') == 0)
-  os.chdir(project_root)
+    if not update:
+      rmtree('_build')
+      
+    assert(run('sphinx-build -b html -d _build/doctrees  . _build/html') == 0)
+    os.chdir(project_root)
+    
+  @task
+  def check():
+    assert(run('rst-lint README.rst') == 0)
+
+  @task
+  def upload():
+    docs.check()
+    assert(run('python setup.py upload_sphinx') == 0)
   
 @task
 def dist():
@@ -79,10 +90,6 @@ def uploadPkg():
 @task
 def push():
   assert(run('git push origin master') == 0)
-
-@task
-def uploadDocs():
-  assert(run('python setup.py upload_sphinx') == 0)
 
 @group
 class devLinks:

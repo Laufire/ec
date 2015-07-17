@@ -5,8 +5,6 @@ exposed
 A module for members that are used by ec, as well as exposed to the scripts.
 
 """
-from helpers import err
-
 def get(desc, type=None, autoDesc=True, **Kwargs):
   """Helps to interactively get user input.
   
@@ -60,4 +58,5 @@ def static(cls):
   return cls
   
 # Cross dependencies
+from helpers import err
 from classes import CustomType

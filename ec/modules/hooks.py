@@ -2,11 +2,10 @@ import __builtin__
 
 import state
 from state import ModulesQ, ModuleMembers
-from helpers import getCallingModule
+from helpers import getCallingModule, getFullName
 import core
 
 # State
-isExitHooked = False
 EcModuleName = None # would be set by ec.ec
 origImp = __builtin__.__import__
 
@@ -18,17 +17,43 @@ def hookIntoImport():
   if isImportHooked():
     return
   
+  def getModuleFullName(Module, globals):
+    
+    module_name = Module.__name__
+    
+    if '.' in module_name:
+      return module_name
+      
+    if not globals:
+      return module_name
+      
+    pkg_name = globals.get("__name__")
+    
+    if not pkg_name:
+      return module_name
+      
+    if globals.has_key("__path__"):
+      return '%s.%s' % (pkg_name, module_name)
+      
+    last_dot_pos = pkg_name.rfind('.')
+    
+    if last_dot_pos > -1:
+      return '%s.%s' % (pkg_name[:last_dot_pos], module_name)
+      
+    return module_name
+
   # hook into __import__ to register modules when they import ec.
-  def newImp(name, *rest):
+  def newImp(name, globals=None, *rest, **kwargs):
     if name == EcModuleName:
       core.setActiveModule(getCallingModule())
       
-      return origImp(name, *rest)
+      return origImp(name, globals, *rest, **kwargs)
     
     else:
-      imported = origImp(name, *rest)
+      imported = origImp(name, globals, *rest, **kwargs)
       
-      if imported.__name__ in ModulesQ:
+      module_name = getModuleFullName(imported, globals)
+      if module_name in ModulesQ:
         core.processModule(imported)
         core.resetActiveModuleToNext()
         
@@ -41,12 +66,10 @@ def registerExitCall():
   
     The core would be started after the main module is loaded. Ec would be exited from the core.
   """
-  global isExitHooked
-  
-  if isExitHooked:
+  if state.isExitHooked:
     return
     
-  isExitHooked = True
+  state.isExitHooked = True
   
   from atexit import register
   

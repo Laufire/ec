@@ -63,15 +63,15 @@ Log
   * 1735  Registered the package at PiPy.
   * 2145  Shell mode now supports **None** inputs, through the \0 (^z) char.
   * 2005  Command routes are now separated by '/', instead of ' '; in order to closely emulate query strings.
-  * 2005  Dispatch mode now  **None** inputs, through omitted '=' signs after the arg names. ie: in *task1 a b=1*, the value of **a** will be **None**.
+  * 2005  Dispatch mode now supports **None** inputs, through omitted '=' signs after the arg names. ie: in *task1 a b=1*, the value of **a** will be **None**.
   
-* 20150702
+* 20150703
   
   * 1830  Tuned config processing to be cleaner.
   * 1925  Aliases introduced.
   * 1935  docs/dev_notes.rst added.
   
-* 20150702
+* 20150704
   
   * 1310  Introduced ec.utils, with a set of utility functions for the scripts.
   * 1340  Introduced ec.utils.get, that helps to interactively get user input.
@@ -106,7 +106,7 @@ Log
 * 20150709
 
   * 0205  Tuned the error reporting process (~30 mins).
-  * 0415  Tried, but failed to arrange the members in their order of decalration, due to the failure in finding the lineno for the classes (it was found for functions in co_firstlineno).
+  * 0415  Tried, but failed to arrange the members in their order of declaration, due to the failure in finding the lineno for the classes (it was found for functions in co_firstlineno).
   * 0500  Added types.path.
   * 0520  Added types.adv.chain.
   * 0540  Bug fixed: arg configurations without names weren't processed properly.
@@ -150,6 +150,13 @@ Log
 * 20150716
   
   * 0305  Redid the core to support the new API.
-  * 0500  Simplified the static method concersions of the group.
+  * 0500  Simplified the static method conversions of the groups.
   * 0725  Tuned and linted.
+  * 0900  Added test_utils.py.
+  * 0955  Made README.rst to be compatible with PyPI. To ensure compatibility the file is now linted before uploads.
+  * 1945  Bug fixed: In modules.hooks.hookIntoImport.newImp module names weren't processed correctly.
+  
+* 20150717
+
+  * 0945  Bug fixed: Exiting from exit hook (from the shell mode) caused errors, when stdlib.threading is imported. It took ~5hrs, of which ~4hrs is spent to spot the bug.
   

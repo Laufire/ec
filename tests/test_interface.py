@@ -1,5 +1,8 @@
 """
-Test ec.interface.
+Tests ec.interface.
+
+Note:
+  This test might fail when tested over the devlopment dir (or its symlinks), hence it should be run on the installed package.  
 """
 import unittest
 
@@ -21,16 +24,11 @@ class TestInterface(unittest.TestCase):
     assert(interface.call('task1 arg1=1') == (1, 2))
     
   def test_call_with_input(self):
-    # Hook into existing raw_input
-    import __builtin__
-    origCall = __builtin__.raw_input
-    __builtin__.raw_input = lambda dummy: 2
+    from support.helpers import RawInputHook as RIH
+    RIH.values(2,3)
     
-    # test the call
     assert(interface.call('task1 arg1=1', True) == (1, 2))
     
-    # remove the hook
-    __builtin__.raw_input = origCall
     
   def test_resolve(self):
     assert(interface.resolve('task1').Config['name'] == 'task1')

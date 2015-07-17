@@ -3,17 +3,30 @@ Helpers
 
   Generic helpers for the modules.
 """
+import os
 import sys
 import shlex
 from os import path
 from types import ClassType, ModuleType, FunctionType
+
+import state
 
 def err(message, exit_code=None):
   sys.stderr.write('%s\n' % message)
   
   if exit_code is not None:
     exit(exit_code)
+
+def exit(exit_code=0):
+  """A function to support eiting from exit hooks.
+  """
+  if state.isExitHooked and not hasattr(sys, 'exitfunc'): # the function is called from the exit hook
+    sys.stderr.flush()
+    sys.stdout.flush()
+    os._exit(exit_code) #pylint: disable=W0212
     
+  sys.exit(exit_code)
+  
 def getCallingModule():
   return sys.modules[sys._getframe().f_back.f_back.f_globals['__name__']] #pylint: disable=W0212
 
@@ -66,6 +79,11 @@ def split(line):
   except ValueError:
     raise HandledException('<command not understood>')
     
+def getFullName(Module):
+  pkg = Module.__package__
+  
+  return '%s%s' % (('%s.' % pkg) if pkg else '', Module.__name__)
+  
 # inspect helpers
 def isunderlying(object):
   return isinstance(object, (FunctionType, ClassType, ModuleType))

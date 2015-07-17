@@ -1,7 +1,7 @@
 """Helper import for demonstrating advanced examples.
 """
 
-from ec.ec import start, task, arg, group
+from ec.ec import task, arg, group
 
 @task
 @arg('arg1', type=int, desc= 'Value for arg1 (int)')
@@ -15,5 +15,3 @@ class group1:
 	@arg('arg1')
 	def task1(arg1):
 		print arg1 + arg1
-
-start()

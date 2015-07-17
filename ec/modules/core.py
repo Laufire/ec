@@ -8,7 +8,7 @@ from collections import OrderedDict
 
 import state
 from state import Settings, ModulesQ, ModuleMembers
-from helpers import err, list2dict, isfunction, isclass, ismodule, isunderlying
+from helpers import err, list2dict, isfunction, isclass, ismodule, isunderlying, getFullName
 
 # State
 BaseGroup = None
@@ -90,6 +90,7 @@ def getDescendant(Ancestor, RouteParts):
 def setActiveModule(Module):
   """Helps with collecting the members of the imported modules.
   """
+  # module_name = getFullName(Module)
   module_name = Module.__name__
   
   if module_name not in ModuleMembers:

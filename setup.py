@@ -32,7 +32,7 @@ setup(
     install_requires=requirements,
     license="MIT",
     zip_safe=False,
-    keywords='ec command line cli interactive launch argument script dir shell dispatch',
+    keywords='ec command line cli interactive launch argument script dir shell dispatch decorator task arg group sub-commands type custom-type',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',

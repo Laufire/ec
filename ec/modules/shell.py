@@ -6,7 +6,7 @@ import shlex
 from state import Settings
 from core import execCommand, BaseGroup
 from classes import HandledException, Group
-from helpers import err, split
+from helpers import err, split, exit
 
 def init():
   if Settings.get('helper_tasks', True):

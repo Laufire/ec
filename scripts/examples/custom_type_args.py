@@ -1,4 +1,4 @@
-from ec.ec import start, task, arg
+from ec.ec import task, arg
 
 from ec.types.regex import email
 
@@ -7,4 +7,3 @@ from ec.types.regex import email
 def add(email_id):
   print email_id
   
-start()
