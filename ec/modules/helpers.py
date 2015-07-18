@@ -35,9 +35,10 @@ def load_module(module_path):
   parent_path, name = path.split(module_path)
   name, dummy = path.splitext(name)
   
-  sys.path.insert(0, parent_path)
+  if not parent_path in sys.path:
+    sys.path.insert(0, parent_path)
+    
   imported = __import__(name)
-  sys.path.pop(0)
   
   return imported
 

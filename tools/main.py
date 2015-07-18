@@ -4,7 +4,7 @@ from ec.ec import task, arg, group, module, settings
 from ec.types.basics import yn
 from ec.types import path as path_type
 
-from modules.helpers import shell_exec, rmtree, get_relative, run, make_link, rmdir
+from modules.helpers import shell_exec, rmtree, get_relative, run, make_link, rmdir, err
 
 # Globals
 project_root = get_relative(__file__, '/../')
@@ -54,12 +54,16 @@ class docs:
 
   @task
   @arg(type=yn())
-  def make(update=False):
+  @arg(type=yn())
+  def make(check=True, update=False):
     os.chdir('%s\docs' % project_root)
     
+    if check:
+      docs.check()
+
     if not update:
       rmtree('_build')
-      
+    
     assert(run('sphinx-build -b html -d _build/doctrees  . _build/html') == 0)
     os.chdir(project_root)
     
@@ -72,25 +76,44 @@ class docs:
     docs.check()
     assert(run('python setup.py upload_sphinx') == 0)
   
-@task
-def dist():
-  # Clean the build related dirs
-  for dir in ['build', 'dist']:
-    rmtree(dir)
+@group
+class pkg:
+  @task
+  def make():
+    # Clean the build related dirs
+    for dir in ['build', 'dist']:
+      rmtree(dir)
 
-  # Shell the build commands
-  for command in ['build', 'install', 'test', 'sdist']:
-    assert(shell_exec('python setup.py %s' % command)['code'] == 0)
-    print '%s done' % command
+    test()
     
-@task
-def uploadPkg():
-  assert(run('python setup.py sdist upload') == 0)
+    Result = shell_exec('python setup.py sdist')
+    
+    try:
+      assert(Result['code'] == 0)
+      
+      print 'dist done!'
+      
+    except Exception :
+      err(Result['err'], Result['code'])
+      
+  @task
+  def upload():
+    assert(run('python setup.py sdist upload') == 0)
+    
+  @task
+  def test(name=None):
+    """Tests the deployed package (from PyPI).
+    """
+    devLinks.clear() # clear all the dev links to avoid module mixing
+    assert(run('pip uninstall -y ec') == 0)
+    assert(run('pip install --upgrade ec') == 0)
+    assert(run('python setup.py test') == 0)
+    devLinks.create()
 
 @task
 def push():
   assert(run('git push origin master') == 0)
-
+  
 @group
 class devLinks:
   """Handles the linking to the package dir from various dev dirs, so that the package under development can be the source of ec.

@@ -1,6 +1,6 @@
 History
 =======
-v0.1.4 (2015-07-09 0645 +0530)
+v0.2.0 (2015-07-18 2200 +0530)
 ------------------------------
 
 Log
@@ -162,4 +162,11 @@ Log
   * 1030  __info__.py removed.
   * 1535  Bettered import hooking.
   * 1610  Added tests\test_configuration.py.
+  * 1925  Added tests\test_entry_point_launch.py.
+  * 2100  Added tests\test_module_launch.py.
+  * 2200  v0.2.0 released with changes to the API.
+  
+* 20150718
+
+  * 0220  Bettered tools\main.py
   

@@ -1,4 +1,5 @@
 import os
+import sys
 from os import path
 import shlex
 from subprocess import Popen, STDOUT, PIPE
@@ -13,6 +14,12 @@ def shell_exec(command, path='.'): # from gitapi.py
   out, err = [x.decode("utf-8") for x in  proc.communicate()]
 
   return {'out': out, 'err': err, 'code': proc.returncode}
+
+def err(message, exit_code=None):
+  sys.stderr.write('%s\n' % message)
+  
+  if exit_code is not None:
+    exit(exit_code)
 
 def run(command, **kwargs):
   """Excecutes the given command while transfering control, till the execution is complete.

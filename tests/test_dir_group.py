@@ -32,5 +32,25 @@ test_dispatch.launch_ec = launch_ec # replace the.launch_ec function of test_dis
 
 TestDirGroup = test_dispatch.TestDispatch # assign the test to a variable so that unittest could find it
 
+class TestDirGroupOnLaunchers(unittest.TestCase):
+
+  def setUp(self):
+    pass
+
+  def tearDown(self):
+    pass
+    
+  def test_entry_point_launch(self):
+    Result = shell_exec('ec tests/support target_script/task1 arg1=1')
+    
+    assert(Result['code'] == 0)
+    assert(Result['out'].strip() == '1 2')
+    
+  def test_module_launch(self):
+    Result = shell_exec('python -m ec tests/support target_script/task1 arg1=1')
+    
+    assert(Result['code'] == 0)
+    assert(Result['out'].strip() == '1 2')
+
 if __name__ == '__main__':
   unittest.main()
