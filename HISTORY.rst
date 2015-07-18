@@ -159,4 +159,7 @@ Log
 * 20150717
 
   * 0945  Bug fixed: Exiting from exit hook (from the shell mode) caused errors, when stdlib.threading is imported. It took ~5hrs, of which ~4hrs is spent to spot the bug.
+  * 1030  __info__.py removed.
+  * 1535  Bettered import hooking.
+  * 1610  Added tests\test_configuration.py.
   

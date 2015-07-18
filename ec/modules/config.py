@@ -76,7 +76,7 @@ def group(Underlying, **Config):
   """
   _Group = Group(Underlying, Config)
   
-  if isclass(Underlying): # conver the method of the class ro static methods so that they could be accessed like object methods; ir: g1/t1(...).
+  if isclass(Underlying): # conver the method of the class to static methods so that they could be accessed like object methods; ir: g1/t1(...).
     static(Underlying)
     
   state.ActiveModuleMemberQ.insert(0, _Group)
@@ -88,7 +88,7 @@ def module(**Config):
   """Helps with adding configs to Modules.
   """
   Underlying = getCallingModule()
-  Group(Underlying, Config)
+  Underlying.__ec_member__.Config.update(**Config)
   
 def member(Imported, **Config):
   """Helps with adding imported members to Scripts.

@@ -1,2 +1,4 @@
 
-from __info__ import __author__, __email__, __version__
+__author__ = 'Laufire Technologies'
+__email__ = 'laufiretechnologies@gmail.com'
+__version__ = '0.1.4'

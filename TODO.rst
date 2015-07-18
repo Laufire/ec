@@ -2,8 +2,6 @@ ToDo
 =====
 Tasks
 -----
-* Fix the import hooks.
-
 * Test for cross environment compatibility.
 
 * Add usage document for shell mode.

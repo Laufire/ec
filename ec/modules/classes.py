@@ -27,7 +27,7 @@ class Task(Member):
   def __init__(self, Underlying, Args, Config):
     
     if not 'name' in Config:
-      Config['name'] = Underlying.func_name
+      Config['name'] = Underlying.func_name.rsplit('.', 1)[-1]
       
     Member.__init__(self, Underlying, Config)
     
@@ -155,7 +155,7 @@ class Group(Member):
   """
   def __init__(self, Underlying, Config):
     if not 'name' in Config:
-      Config['name'] = Underlying.__name__
+      Config['name'] = Underlying.__name__.rsplit('.', 1)[-1]
     
     Member.__init__(self, Underlying, Config or {})
     

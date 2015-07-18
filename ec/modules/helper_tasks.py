@@ -42,7 +42,7 @@ def help(member):
 # Main
 def main():
   ThisModule = sys.modules[__name__]
-  core.processModule(ThisModule)
+  core.processModule(__name__)
   
   __ec_member__ = ThisModule.__ec_member__
   

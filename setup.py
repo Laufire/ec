@@ -17,15 +17,15 @@ test_requirements = [
     # TODO: put package test requirements here
 ]
 
-from ec import __info__
+import ec
 
 setup(
     name='ec',
-    version=__info__.__version__,
+    version=ec.__version__,
     description="ec - a simpler, yet better implementation of Commander, a module launcher.",
     long_description=readme,
-    author=__info__.__author__,
-    author_email=__info__.__email__,
+    author=ec.__author__,
+    author_email=ec.__email__,
     url='https://github.com/Laufire/ec',
     packages=find_packages(),
     include_package_data=True,

@@ -18,18 +18,17 @@ is_dev_mode = None
 def start():
   """Starts ec.
   """
-  Argv = sys.argv[1:]
-  
-  if not state.main_module_name in ModulesQ: # don't start the core when main is not Ec-ed
-    return
-    
-  MainModule = sys.modules[state.main_module_name]
-  
   processPendingModules()
+  
+  if not state.main_module_name in ModuleMembers: # don't start the core when main is not Ec-ed
+    return
+  
+  MainModule = sys.modules[state.main_module_name]
   
   global BaseGroup
   BaseGroup =  MainModule.__ec_member__
   
+  Argv = sys.argv[1:]
   global mode
   mode = 'd' if Argv else 's' # dispatch / shell mode
   
@@ -90,7 +89,6 @@ def getDescendant(Ancestor, RouteParts):
 def setActiveModule(Module):
   """Helps with collecting the members of the imported modules.
   """
-  # module_name = getFullName(Module)
   module_name = Module.__name__
   
   if module_name not in ModuleMembers:
@@ -111,19 +109,19 @@ def processPendingModules():
   """Processes the modules left unprocessed by the import hook.
   """
   for name in ModulesQ[:]:
-    processModule(sys.modules[name])
+    processModule(name)
     ModulesQ.pop()
   
-def processModule(Module):
+def processModule(module_name):
   """Builds a command tree out of the configured members of a module.
   """
+  Module = sys.modules[module_name]
   MembersTarget = []
   ClassQ = []
   Cls = None
   ClsGrpMembers = []
   
-  for Member in ModuleMembers[Module.__name__]:
-    
+  for Member in ModuleMembers[module_name]:
     Underlying = Member.Underlying
     member_name = Member.Config['name']
     member_alias = Member.Config.get('alias', None)

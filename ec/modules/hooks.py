@@ -1,4 +1,5 @@
 import __builtin__
+import sys
 
 import state
 from state import ModulesQ, ModuleMembers
@@ -17,6 +18,11 @@ def hookIntoImport():
   if isImportHooked():
     return
   
+  def processModule(module_name):
+    if module_name in ModulesQ:
+      core.processModule(module_name)
+      core.resetActiveModuleToNext()
+      
   def getModuleFullName(Module, globals):
     
     module_name = Module.__name__
@@ -43,19 +49,22 @@ def hookIntoImport():
     return module_name
 
   # hook into __import__ to register modules when they import ec.
-  def newImp(name, globals=None, *rest, **kwargs):
+  def newImp(name, globals=None, locals=None, fromlist=None, *rest):
     if name == EcModuleName:
       core.setActiveModule(getCallingModule())
       
-      return origImp(name, globals, *rest, **kwargs)
+      return origImp(name, globals, locals, fromlist, *rest)
     
     else:
-      imported = origImp(name, globals, *rest, **kwargs)
-      
+      imported = origImp(name, globals, locals, fromlist, *rest)
       module_name = getModuleFullName(imported, globals)
-      if module_name in ModulesQ:
-        core.processModule(imported)
-        core.resetActiveModuleToNext()
+      
+      if fromlist and sys.modules.has_key('%s.%s' % (module_name, fromlist[0])): # several modules from a package are being imported in a single statement. Ex: from pkg import m1, m2
+        for item in fromlist:
+          processModule('%s.%s' % (module_name, item))
+        
+      else:
+        processModule(module_name)
         
       return imported
 
