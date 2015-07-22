@@ -54,7 +54,7 @@ def arg(name=None, **Config): # wraps the _arg decorator, in order to allow unna
   Notes:
     * It always follows a @task or an @arg.
   """
-  if name is not None:
+  if name is not None: # allow name as a positional arg
     Config['name'] = name
     
   return lambda decorated: _arg(decorated, **Config)

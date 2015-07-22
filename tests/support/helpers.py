@@ -2,6 +2,8 @@ import __builtin__
 import shlex
 from subprocess import Popen, STDOUT, PIPE
 
+from ec.modules.classes import HandledException
+
 # Exports
 __all__ = ['shell_exec', 'RawInputHook']
 
@@ -32,3 +34,17 @@ class RawInputHook:
     __builtin__.raw_input = self._hookOnce
 
 RawInputHook = RawInputHook()
+
+def expect_exception(call, *ExTypes):
+  """Calls the given call and excepts an exception from the given ExTypes.
+  
+  Args:
+    *ExTypes (tuple / Exception): One or more exception types.
+  """
+  try:
+    call()
+    
+  except Exception as e:
+    
+    return isinstance(e, ExTypes)
+    

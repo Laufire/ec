@@ -3,29 +3,32 @@ All the classes of ec.
 """
 from collections import OrderedDict
 
-from helpers import err, ismodule
-
 class Member():
   """The base class for the classes Task and Group.
   
-    Brands the given underlying with the __ec_member__ attr, which is used to identify the Underlying as processable by ec.
+    It brands the given underlying with the __ec_member__ attr, which is used to identify the Underlying as processable by ec.
   """
   def __init__(self, Underlying, Config):
     __ec_member__ = getattr(Underlying, '__ec_member__', None)
     
-    if not __ec_member__:
-      Underlying.__ec_member__ = self
-      self.Underlying = Underlying
-      self.Config = Config
+    if __ec_member__:
+      __ec_member__.Config.update(Config)
+      self.Config = __ec_member__.Config
       
     else:
-      __ec_member__.Config.update(Config)  
+      Underlying.__ec_member__ = self
+      self.Config = Config
+      
+    self.Underlying = Underlying
 
 class Task(Member):
   """A callable class that allows the calling of the underlying function as a task.
   """
-  def __init__(self, Underlying, Args, Config):
+  def __init__(self, Underlying, Args, Config=None):
     
+    if Config is None:
+      Config = {}
+      
     if not 'name' in Config:
       Config['name'] = Underlying.func_name.rsplit('.', 1)[-1]
       
@@ -153,7 +156,10 @@ class Group(Member):
   Note:
     Groups that have modules as their underlying would have it's members loaded by ec.start.
   """
-  def __init__(self, Underlying, Config):
+  def __init__(self, Underlying, Config=None):
+    if Config is None:
+      Config = {}
+    
     if not 'name' in Config:
       Config['name'] = Underlying.__name__.rsplit('.', 1)[-1]
     
@@ -207,3 +213,4 @@ def _getFuncArgs(func):
   
 # Cross dependencies
 from exposed import get, static
+from helpers import err, ismodule

@@ -2,7 +2,6 @@ import __builtin__
 import sys
 
 import state
-from state import ModulesQ, ModuleMembers
 from helpers import getCallingModule, getFullName
 import core
 
@@ -17,6 +16,8 @@ def isImportHooked():
 def hookIntoImport():
   if isImportHooked():
     return
+  
+  from state import ModulesQ
   
   def processModule(module_name):
     if module_name in ModulesQ:

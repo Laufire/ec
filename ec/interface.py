@@ -7,10 +7,13 @@ Allows the importing of ec, as a module.
 import shlex
 
 from modules import core
-from modules.core import execCommand, getDescendant, processPendingModules
+from modules.core import _execCommand, getDescendant, processPendingModules
 from modules import hooks
+from modules.state import ModuleMembers
+from modules.classes import Task, Group, HandledException
+from modules.helpers import getCallingModule, isfunction
 
-__all__ = ['setBase', 'resolve', 'call']
+__all__ = ['setBase', 'resolve', 'call', 'force_config', 'add']
 
 # Exports
 def setBase(Underlying):
@@ -39,13 +42,32 @@ def call(command, collect_missing=False):
   Returns:
     The return value of the called command.
   """
-  return execCommand(shlex.split(command), collect_missing)
+  return _execCommand(shlex.split(command), collect_missing)
+  
+  
+def force_config():
+  """Forces the configuration of the members of the calling module. So that the configured members would be available for manipulation.
+  
+  Note:
+    A call to this function will only be necessary when modifying an ec script witihin itself, as scripts are implicitly configured after their import.
+  """
+  core.processModule(getCallingModule().__name__)
+  
+
+def add(ParentUL, ChildUL, Config=None, Args=None):
+  """Adds members to existing groups.
+  """
+  Member = Task(ChildUL, Args or {}, Config) if isfunction(ChildUL) else Group(ChildUL, Config)
+  ParentMembers = ParentUL.__ec_member__.Members
+  
+  ParentMembers[Member.Config['name']] = Member
+  
+  alias = Member.Config.get('alias')
+  if alias:
+    ParentMembers[alias] = Member
   
 # main
-if hooks.isImportHooked(): # import hooks has been added by ec.FirstCaller, hence it wouldn't be processed automatically
-  processPendingModules()
-  
-else:
+if not hooks.isImportHooked():
   hooks.EcModuleName = '%s.ec' % __name__[:__name__.rfind('.')]
   hooks.hookIntoImport()
   

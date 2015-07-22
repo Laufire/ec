@@ -14,6 +14,11 @@ Tasks
 
 * More documentation for the custom types.
 
+Features
+--------
+
+* **-t**, a dispatch mode flag to show the entire command tree.
+
 Issues
 ------
 
@@ -26,6 +31,10 @@ Fix
 
 Check
 -----
+* Allowing positional args (which will need the circumvention of passing None as args (it could be passed with the help of some special chars).
+
+* A ec.main decorator to act as the entry point for the modules, to allow the pre-processing of the modules etc.
+
 * Allowing name-less (positional) args, especially for a better UX in the shell mode. There are several ways, including:
   
   * Allowing the first argument of a task to be name-less.
@@ -41,6 +50,12 @@ Check
 
 * ^X in shell mode displaying help on the arg being collected.
 
+* Extensions:
+
+  * Automatic aliases.
+  
+  * An **all** task on groups, with ***** as thier alias.
+  
 Later
 -----
 * An autodoc extension, to document tasks and groups instead of methods and classes: There are some issues with using autodoc, for example a renamed task is still being documented under the original function name.

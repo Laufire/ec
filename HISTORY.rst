@@ -170,3 +170,11 @@ Log
 
   * 0220  Bettered tools\main.py
   
+* 20150722
+
+  * 2240  Added **force_config**, **add** to ec.interface.
+  
+* 20150723
+
+  * 0045  ec.interface.call now passes the raised exceptions to the calling script; previously it was processed within ec.  
+  

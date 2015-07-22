@@ -43,8 +43,8 @@ def start():
     import dispatch
     dispatch.init(Argv)
  
-def execCommand(Argv, collect_missing):
-  """Executes the given task with parameters.
+def _execCommand(Argv, collect_missing):
+  """Worker of execCommand.
   """
   if not Argv:
     raise HandledException('Please specify a command!')
@@ -57,8 +57,13 @@ def execCommand(Argv, collect_missing):
   if not isinstance(ResolvedMember, Task):
     raise HandledException('No such task.')
     
+  return ResolvedMember.__collect_n_call__(**Args) if collect_missing else ResolvedMember(**Args)
+
+def execCommand(Argv, collect_missing):
+  """Executes the given task with parameters.
+  """
   try:
-    return ResolvedMember.__collect_n_call__(**Args) if collect_missing else ResolvedMember(**Args)
+    return _execCommand(Argv, collect_missing)
     
   except Exception as e:
     if is_dev_mode: # log the trace
@@ -143,7 +148,7 @@ def processModule(module_name):
         ClsGrpMembers.insert(0, (member_name, Member))
         continue
         
-      elif Cls: # we've finished adding chidren to the previous class
+      elif Cls: # we've finished adding children to the previous class
         ClsGroup.Members = OrderedDict(ClsGrpMembers)
         ClsGrpMembers = []
         ClassQ.pop()
@@ -158,7 +163,10 @@ def processModule(module_name):
       if isclass(Underlying):
         ClassQ.append(Underlying.__ec_member__)
         
-  Module.__ec_member__.Members = OrderedDict(MembersTarget)
+  ModuleMembers[module_name] = []  # remove the existing members from the cache so that they won't be processed again
+  
+  if not hasattr(Module.__ec_member__, 'Members'):
+    Module.__ec_member__.Members = OrderedDict(MembersTarget)
   
 # Cross dependencies
 from classes import Group, Task, HandledException
