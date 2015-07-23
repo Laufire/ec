@@ -59,7 +59,7 @@ class Task(Member):
         if not FuncArgs:
           raise HandledException('Excess args while configuring "%s".' % self.Config['name'])
           
-        FuncArg = FuncArgs.iteritems().next() # get the first item
+        FuncArg = FuncArgs.iteritems().next() # get the next free arg
         argName = FuncArg[0]
         FuncArg = FuncArg[1]
         
@@ -89,7 +89,7 @@ class Task(Member):
           InArgs[name] = Arg['default']
           
         else:
-          raise HandledException('Missing argument: %s.' % name)
+          raise HandledException('Missing argument: %s.' % name, Member=self)
         
       else:
         _type = Arg.get('type')
@@ -98,7 +98,7 @@ class Task(Member):
             InArgs[name] = _type(InArgs[name])
             
           except (ValueError, TypeError):
-            raise HandledException('Invalid value for "%s", expected %s; got "%s".' % (name, _type, InArgs[name]))
+            raise HandledException('Invalid value for "%s", expected %s; got "%s".' % (name, _type, InArgs[name]), help_type='task', Member=self)
     
   def __get_arg__(self, argName):
     """Gets user input for a single arg.
@@ -129,7 +129,7 @@ class Task(Member):
     
     for k in InArgs.keys():
       if k not in ArgKeys:
-        raise HandledException('Unknown arg: %s.' % k)
+        raise HandledException('Unknown arg: %s.' % k, Member=self)
   
   def __collect_n_call__(self, **InArgs):
     """Helps with collecting all the args and call the Task.
@@ -181,8 +181,8 @@ class HandledException(Exception):
   """A custom error class for ec's interanl exceptions, which are handled within ec.
   """
   
-  def __init__(self, e, *args):
-    self.args = args
+  def __init__(self, e, **Info):
+    self.Info = Info
     super(HandledException, self).__init__(getattr(e, 'message', e))
 
 # Helpers

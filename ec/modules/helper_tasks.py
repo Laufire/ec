@@ -8,9 +8,8 @@ from ec.ec import task, arg, group, module
 
 from state import Settings
 import core
-from core import getDescendant, processModule
-from classes import Group, Task
-from helpers import err, listMemberHelps
+from core import processModule
+from helpers import err, getRouteHelp
 
 module(desc= 'Shell mode Tasks.')
 
@@ -22,22 +21,19 @@ def clear():
   os.system('cls' if os.name == 'nt' else 'clear')
   
 @task(alias='h', desc='Displays help on the available tasks and groups.')
-def help(member):
-  """Displays help for the given member.
+def help(route):
+  """Displays help for the given route.
   
   Args:
-    member (str): A route that resolves a member.
+    route (str): A route that resolves a member.
   """
-  Resolved = getDescendant(core.BaseGroup, member.split(' ')) if member else core.BaseGroup
+  help_text = getRouteHelp(route.split('/') if route else [])
   
-  if isinstance(Resolved, Group):
-    return '\n%s\n' % '\n\n'.join([('%s  %s' % (name, desc))[:60] for name, desc in listMemberHelps(Resolved)])
-    
-  elif isinstance(Resolved, Task):
-    return '\n%s\n' % _getTaskHelp(Resolved)
+  if help_text is None:
+    err('Can\'t help :(')
     
   else:
-    err('Can\'t help :(')
+    print '\n%s' % help_text
     
 # Main
 def main():
@@ -54,35 +50,3 @@ def main():
     
   else:
     core.BaseGroup.Members.update(__ec_member__.Members.iteritems())
-
-# Helpers
-def _getTaskHelp(_Task):
-  Ret = []
-  
-  for k in ['name', 'desc']:
-    v = _Task.Config.get(k)
-    
-    if v is not None:
-      Ret.append('%s: %s' % (k, v))
-  
-  Args = _Task.Args
-  
-  if Args:
-    Ret.append('\nArgs:')
-    Props = ['desc', 'type', 'default']
-    
-    for argName, Arg in Args.items():
-      Ret.append('  name: %s' % argName)
-      
-      for k in Props:
-        v = Arg.get(k)
-        
-        if v is not None:
-          Ret.append('  %s: %s' % (k, v))
-      
-      Ret.append('')
-      
-    Ret.pop()
-    
-  return '\n'.join(Ret)
-  

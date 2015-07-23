@@ -177,4 +177,6 @@ Log
 * 20150723
 
   * 0045  ec.interface.call now passes the raised exceptions to the calling script; previously it was processed within ec.  
+  * 1035  Bettered help on both modes.
+  * 1235  Mode, dispatch, now shows help on some HandledException-s.
   

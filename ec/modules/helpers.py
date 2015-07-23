@@ -56,23 +56,19 @@ def list2dict(lst, splitter='='):
   
   return Dict
   
-def listMemberHelps(TargetGroup):
-  """Gets help on a group's children.
-  """
-  Members = []
-  
-  for Member in TargetGroup.Members.values(): # get unique children (by discarding aliases)
-    if Member not in Members:
-      Members.append(Member)
+# mode helpers
+def getMemberHelp(Target):
+  if isinstance(Target, Group):
+    return getGroupHelp(Target)
     
-  Ret = []
+  elif isinstance(Target, Task):
+    return getTaskHelp(Target)
+    
+def getRouteHelp(route_parts):
+  Resolved = core.getDescendant(core.BaseGroup, route_parts) if route_parts else core.BaseGroup
   
-  for Member in Members:
-    Config = Member.Config
-    Ret.append(('%s%s' % (Config['name'], ', %s' % Config['alias'] if 'alias' in Config else ''), Config.get('desc', '')))
-  
-  return Ret
-  
+  return getMemberHelp(Resolved)
+
 def split(line):
   try:
     return shlex.split(line)
@@ -98,5 +94,60 @@ def ismodule(object):
 def isfunction(object):
   return isinstance(object, FunctionType)
 
+# Helpers
+def listMemberHelps(TargetGroup):
+  """Gets help on a group's children.
+  """
+  Members = []
+  
+  for Member in TargetGroup.Members.values(): # get unique children (by discarding aliases)
+    if Member not in Members:
+      Members.append(Member)
+    
+  Ret = []
+  
+  for Member in Members:
+    Config = Member.Config
+    Ret.append(('%s%s' % (Config['name'], ', %s' % Config['alias'] if 'alias' in Config else ''), Config.get('desc', '')))
+  
+  return Ret
+  
+def getGroupHelp(_Group):
+  return '\n\n'.join([('%s  %s' % (name, desc))[:60] for name, desc in listMemberHelps(_Group)])
+
+def getTaskHelp(_Task):
+  """Gets help on the given task member.
+  """
+  Ret = []
+  
+  for k in ['name', 'desc']:
+    v = _Task.Config.get(k)
+    
+    if v is not None:
+      Ret.append('%s: %s' % (k, v))
+  
+  Args = _Task.Args
+  
+  if Args:
+    Ret.append('\nArgs:')
+    Props = ['desc', 'type', 'default']
+    
+    for argName, Arg in Args.items():
+      Ret.append('  name: %s' % argName)
+      
+      for k in Props:
+        v = Arg.get(k)
+        
+        if v is not None:
+          Ret.append('  %s: %s' % (k, v))
+      
+      Ret.append('')
+      
+    Ret.pop()
+    
+  return '\n'.join(Ret)
+  
+
 # Cross Dependencies
-from classes import HandledException
+import core
+from classes import HandledException, Group, Task

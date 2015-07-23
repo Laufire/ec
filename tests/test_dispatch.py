@@ -10,20 +10,18 @@ import unittest
 from support.helpers import shell_exec
 
 def launch_ec(argStr='', input='', flag=''):
-  """Dispatches command to the target script."""
+  """Dispatches command to the target script.
+  """  
+  command = 'python tests/support/target_script.py'
   
-  if flag == '-h':
-    rest = flag
+  if flag:
+    command += ' %s' % flag
     
-  elif flag == '-p':
+  if argStr:
     
-    rest = '%s %s' % (flag, argStr)
+    command += ' %s' % argStr
     
-  else:
-    
-    rest = argStr
-    
-  return shell_exec('python tests/support/target_script.py %s' % rest, input=input)
+  return shell_exec(command, input=input)
     
 # Tests
 class TestDispatch(unittest.TestCase):
@@ -51,6 +49,24 @@ class TestDispatch(unittest.TestCase):
     
     assert(Result['code'] == 0)
     assert(Result['out'].strip()[:5] == 'Usage')
+    
+  def test_flag_help_task(self):
+    Result = launch_ec(flag='-h', argStr='task1')
+    
+    assert(Result['code'] == 0)
+    assert(Result['out'].find('Args:') > -1)
+  
+  def test_flag_help_group(self):
+    Result = launch_ec(flag='-h', argStr='group1')
+    
+    assert(Result['code'] == 0)
+    assert(Result['out'].find('task1') > -1)
+  
+  def test_flag_help_subgroup(self):
+    Result = launch_ec(flag='-h', argStr='group1/task1')
+    
+    assert(Result['code'] == 0)
+    assert(Result['out'].find('Args:') > -1)
   
   def test_flag_partial(self):
     Result = launch_ec('task1 arg1=1', '1', '-p')
@@ -63,6 +79,7 @@ class TestDispatch(unittest.TestCase):
     
     assert(Result['code'] == 1)
     assert(Result['err'].strip()[:2] == 'No')
+    assert(Result['err'].find('target_script') > -1) # check whether a help string is presented
     
   def test_nested_task(self):
     Result = launch_ec('group1/task1 arg1=1')

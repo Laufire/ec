@@ -13,20 +13,18 @@ from support.helpers import shell_exec
 import test_dispatch
 
 def launch_ec(argStr='', input='', flag=''):
-  """Dispatches command to the entry poin binary."""
+  """Dispatches command to ec (loaded as a module).
+  """  
+  command = 'python -m ec tests/support/target_script.py'
   
-  if flag == '-h':
-    rest = flag
+  if flag:
+    command += ' %s' % flag
     
-  elif flag == '-p':
+  if argStr:
     
-    rest = '%s %s' % (flag, argStr)
+    command += ' %s' % argStr
     
-  else:
-    
-    rest = argStr
-    
-  return shell_exec('python -m ec tests/support/target_script.py %s' % rest, input=input)
+  return shell_exec(command, input=input)
 
 test_dispatch.launch_ec = launch_ec
 

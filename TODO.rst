@@ -2,6 +2,8 @@ ToDo
 =====
 Tasks
 -----
+** Allow positional args.
+
 * Test for cross environment compatibility.
 
 * Add usage document for shell mode.
@@ -31,8 +33,6 @@ Fix
 
 Check
 -----
-* Allowing positional args (which will need the circumvention of passing None as args (it could be passed with the help of some special chars).
-
 * A ec.main decorator to act as the entry point for the modules, to allow the pre-processing of the modules etc.
 
 * Allowing name-less (positional) args, especially for a better UX in the shell mode. There are several ways, including:

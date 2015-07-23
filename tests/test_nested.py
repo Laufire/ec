@@ -13,21 +13,18 @@ from support.helpers import shell_exec
 import test_dispatch
 
 def launch_ec(argStr='', input='', flag=''):
-  """Dispatches command to the target script.
+  """Dispatches command to a nested script.
   """
-  if flag == '-h':
-    rest = flag
+  command = 'python tests/support/nester.py'
     
-  elif flag == '-p':
+  if flag:
+    command += ' %s' % flag
     
-    rest = '%s target_script/%s' % (flag, argStr)
+  if argStr:
     
-  else:
+    command += ' target_script/%s' % argStr
     
-    rest = 'target_script/%s' % argStr
-    
-  return shell_exec('python tests/support/nester.py %s' % rest, input=input)
-    
+  return shell_exec(command, input=input)
 
 test_dispatch.launch_ec = launch_ec
 

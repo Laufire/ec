@@ -54,8 +54,11 @@ def _execCommand(Argv, collect_missing):
   
   ResolvedMember = getDescendant(BaseGroup, RouteParts[:])
   
+  if isinstance(ResolvedMember, Group):
+    raise HandledException('Please specify a task.', Member=ResolvedMember)
+    
   if not isinstance(ResolvedMember, Task):
-    raise HandledException('No such task.')
+    raise HandledException('No such task.', Member=BaseGroup)
     
   return ResolvedMember.__collect_n_call__(**Args) if collect_missing else ResolvedMember(**Args)
 
@@ -72,8 +75,11 @@ def execCommand(Argv, collect_missing):
       
       message = ''.join(traceback.format_exception(etype, value, tb))[:-1]
       
-    else: # provide a succinct error message
-      message = str(e)
+    else: 
+      if isinstance(e, HandledException): # let the modes handle the HandledException
+        raise e
+        
+      message = str(e) # provide a succinct error message
       
     raise HandledException(message)
 

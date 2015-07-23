@@ -12,16 +12,14 @@ from support.helpers import shell_exec
 def launch_ec(argStr='', input='', flag=''):
   """Launches the support dir.
   """
-  if flag == '-h':
-    command = 'ec tests/support -h'
+  command = 'ec tests/support'
     
-  elif flag == '-p':
+  if flag:
+    command += ' %s' % flag
     
-    command = 'ec tests/support -p target_script/%s' % argStr
+  if argStr:
     
-  else:
-    
-    command = 'ec tests/support target_script/%s' % argStr
+    command += ' target_script/%s' % argStr
     
   return shell_exec(command, input=input)
 

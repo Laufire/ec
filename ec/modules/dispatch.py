@@ -2,33 +2,51 @@
 A module to handle the dispatch mode.
 """
 
-from core import execCommand, BaseGroup
+from core import execCommand
 from classes import HandledException
-from helpers import err, listMemberHelps
+from helpers import err, getMemberHelp, getRouteHelp
 
 def init(argv):
   flag = argv.pop(0) if argv[0][0] == '-' else None
   
   if flag == '-h':
-    print get_help_text()
-    return
+    help_text = get_help_text(argv)
     
-  try:
-    execCommand(argv, flag == '-p')
-    # Check: Should the dispatch mode log the return value? It isn't logging it now to keep the console from excess output.
+    if help_text is None:
+      err('Can\'t help :(')
+      
+    else:
+      print help_text
+      
+  else:      
+    try:
+      execCommand(argv, flag == '-p')
+      # Check: Should the dispatch mode log the return value? It isn't logging it now to keep the console from excess output.
+      
+    except HandledException as e:
+      Member = e.Info.get('Member')
+      
+      if Member:
+        alias = Member.Config.get('alias')
+        label = '%s%s' % (Member.Config['name'], ', %s' % alias if alias else '')
+        e = '%s\n\n%s\n%s\n%s' % (str(e), label, '-' * len(label), getMemberHelp(Member))
+        
+      err(e, 1)
     
-  except HandledException as e:
-    err(e, 1)
+def get_help_text(argv):
+  if argv:
     
-def get_help_text():
-  text = '\n'.join(['Usage:',
-    '  $ ec module_path [flag] <command route> [args]',
-    '\nFlags',
-    ' -h    show help.',
-    ' -p    execute a command with partial args.',
-    '\nMembers\n',
-  ]
-  ) + '  ' + '\n  '.join([('%s  %s' % (name, desc))[:60] for name, desc in listMemberHelps(BaseGroup)])
+    return getRouteHelp(argv[0].split('/'))
+    
+  else:
   
-  return text
-  
+    return '\n'.join(['Usage:',
+      '  $ ec module_path [flag] <command route> [args]',
+      '\nFlags',
+      ' -h    show help.',
+      ' -p    execute a command with partial args.',
+      '\nMembers\n-------\n',
+      getRouteHelp([]),
+    ]
+    )
+    
