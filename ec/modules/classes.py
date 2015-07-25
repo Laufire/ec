@@ -34,23 +34,14 @@ class Task(Member):
       
     Member.__init__(self, Underlying, Config)
     
-    try:
-      self.Args = self.__load_args__(Args)
+    self.Args = self.__load_args__(Args)
     
-    except HandledException as e:
-      err(e, 1)
-      
-  def __call__(self, **Args):    
-    self.__digest__(Args)
-    
-    return self.Underlying(**Args)
-    
-  
   def __load_args__(self, Args):
     """Prepares the task for excecution.
     """
     FuncArgs = _getFuncArgs(self.Underlying)
-    OrderedArgs = OrderedDict() # the order of configuration (through decorators) is prefered over the order of declaration (within the function body)
+    
+    OrderedArgs = OrderedDict() # Note: the order of configuration (through decorators) is prefered over the order of declaration (within the function body)
     
     for Arg in Args:
       argName = Arg.get('name')
@@ -69,36 +60,13 @@ class Task(Member):
         if FuncArg is None:
           raise HandledException('Unknown arg "%s" while configuring "%s".' % (argName, self.Config['name']))
           
-      FuncArg.update(**Arg) # prefer Args config over the values given while defining the function.
+      FuncArg.update(Arg) # prefer Args config over the values given while defining the function.
       OrderedArgs[argName] = FuncArg
       del FuncArgs[argName]
       
     OrderedArgs.update(FuncArgs.iteritems()) # add any unconfigured args
     
     return OrderedArgs
-    
-  def __digest__(self, InArgs):
-    """A helper for __call__ that digests the provided Args.
-    """
-    self.__confirm_known_args__(InArgs)
-    
-    for name, Arg in self.Args.items():
-      if not name in InArgs:
-        
-        if 'default' in Arg:
-          InArgs[name] = Arg['default']
-          
-        else:
-          raise HandledException('Missing argument: %s.' % name, Member=self)
-        
-      else:
-        _type = Arg.get('type')
-        if _type:
-          try:
-            InArgs[name] = _type(InArgs[name])
-            
-          except (ValueError, TypeError):
-            raise HandledException('Invalid value for "%s", expected %s; got "%s".' % (name, _type, InArgs[name]), help_type='task', Member=self)
     
   def __get_arg__(self, argName):
     """Gets user input for a single arg.
@@ -131,24 +99,67 @@ class Task(Member):
       if k not in ArgKeys:
         raise HandledException('Unknown arg: %s.' % k, Member=self)
   
-  def __collect_n_call__(self, **InArgs):
-    """Helps with collecting all the args and call the Task.
+  def __digest_args__(self, InArgs, InKwArgs):
+    """Digests the given Args and KwArgs and return a singele KwArgs dictionary.
     """
-    self.__confirm_known_args__(InArgs)
+    KwArgs = {}
+    ArgKeys = self.Args.keys()
+    
+    for arg in InArgs:
+      key = ArgKeys.pop(0)
+      
+      if key in InKwArgs:
+        raise HandledException('Multiple assignments for the arg "%s".' % key)
+        
+      KwArgs[key] = arg
+    
+    KwArgs.update(InKwArgs)
+    
+    self.__confirm_known_args__(KwArgs)
+    
+    return KwArgs
+  
+  def __call__(self, *InArgs, **InKwArgs):
+    
+    KwArgs = self.__digest_args__(InArgs, InKwArgs)
     
     for name, Arg in self.Args.items():
-      if not name in InArgs:
-        InArgs[name] = self.__get_arg__(name)
+      if not name in KwArgs:
+        if 'default' in Arg:
+          KwArgs[name] = Arg['default']
+          
+        else:
+          raise HandledException('Missing argument: %s.' % name, Member=self)
+        
+      else:
+        _type = Arg.get('type')
+        if _type:
+          try:
+            KwArgs[name] = _type(KwArgs[name])
+            
+          except (ValueError, TypeError):
+            raise HandledException('Invalid value for "%s", expected %s; got "%s".' % (name, _type, KwArgs[name]), help_type='task', Member=self)
+    
+    return self.Underlying(**KwArgs)
+  
+  def __collect_n_call__(self, *InArgs, **InKwArgs):
+    """Helps with collecting all the args and call the Task.
+    """
+    KwArgs = self.__digest_args__(InArgs, InKwArgs)
+    
+    for name, Arg in self.Args.items():
+      if not name in KwArgs:
+        KwArgs[name] = self.__get_arg__(name)
         
       else:
         _type = Arg.get('type')
         try:
-          InArgs[name] = _type(InArgs[name]) if _type else InArgs[name]
+          KwArgs[name] = _type(KwArgs[name]) if _type else KwArgs[name]
           
         except (ValueError, TypeError):
-          InArgs[name] = self.__get_arg__(name)
+          KwArgs[name] = self.__get_arg__(name)
       
-    return self.Underlying(**InArgs)
+    return self.Underlying(**KwArgs)
     
 class Group(Member):
   """Groups can contain other Members (Tasks / Groups).

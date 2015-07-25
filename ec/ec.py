@@ -31,7 +31,7 @@ def settings(**NewSettings):
     
   Settings.update(**NewSettings)
   
-def call(__ec_func__, **KwArgs):
+def call(__ec_func__, *Args, **KwArgs):
   """Helps with calling the tasks with partial arguments (within the script being configured).
   
   The unavailable args will be collected before calling the function.
@@ -43,7 +43,7 @@ def call(__ec_func__, **KwArgs):
   Notes:
     * The param name **__ec_func__** is chosen, in order to avoid collision with the **KwArgs**.
   """
-  return __ec_func__.__ec_member__.__collect_n_call__(**KwArgs)
+  return __ec_func__.__ec_member__.__collect_n_call__(*Args, **KwArgs)
 
   
 # Main

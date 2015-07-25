@@ -8,7 +8,7 @@ from collections import OrderedDict
 
 import state
 from state import Settings, ModulesQ, ModuleMembers
-from helpers import err, list2dict, isfunction, isclass, ismodule, isunderlying, getFullName
+from helpers import err, getDigestableArgs, isfunction, isclass, ismodule, isunderlying, getFullName
 
 # State
 BaseGroup = None
@@ -43,25 +43,6 @@ def start():
     import dispatch
     dispatch.init(Argv)
  
-def _execCommand(Argv, collect_missing):
-  """Worker of execCommand.
-  """
-  if not Argv:
-    raise HandledException('Please specify a command!')
-    
-  RouteParts = Argv[0].split('/')
-  Args = list2dict(Argv[1:])
-  
-  ResolvedMember = getDescendant(BaseGroup, RouteParts[:])
-  
-  if isinstance(ResolvedMember, Group):
-    raise HandledException('Please specify a task.', Member=ResolvedMember)
-    
-  if not isinstance(ResolvedMember, Task):
-    raise HandledException('No such task.', Member=BaseGroup)
-    
-  return ResolvedMember.__collect_n_call__(**Args) if collect_missing else ResolvedMember(**Args)
-
 def execCommand(Argv, collect_missing):
   """Executes the given task with parameters.
   """
@@ -174,5 +155,25 @@ def processModule(module_name):
   if not hasattr(Module.__ec_member__, 'Members'):
     Module.__ec_member__.Members = OrderedDict(MembersTarget)
   
+# Helpers
+def _execCommand(Argv, collect_missing):
+  """Worker of execCommand.
+  """
+  if not Argv:
+    raise HandledException('Please specify a command!')
+    
+  RouteParts = Argv[0].split('/')
+  Args, KwArgs = getDigestableArgs(Argv[1:])
+  
+  ResolvedMember = getDescendant(BaseGroup, RouteParts[:])
+  
+  if isinstance(ResolvedMember, Group):
+    raise HandledException('Please specify a task.', Member=ResolvedMember)
+    
+  if not isinstance(ResolvedMember, Task):
+    raise HandledException('No such task.', Member=BaseGroup)
+    
+  return ResolvedMember.__collect_n_call__(*Args, **KwArgs) if collect_missing else ResolvedMember(*Args, **KwArgs)
+
 # Cross dependencies
 from classes import Group, Task, HandledException

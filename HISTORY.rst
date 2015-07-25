@@ -1,6 +1,6 @@
 History
 =======
-v0.2.0 (2015-07-18 2200 +0530)
+v0.2.1 (2015-07-25 1340 +0530)
 ------------------------------
 
 Log
@@ -12,7 +12,7 @@ Log
   
 * 20150625
 
-  * 1000  Decided to use a single dictionary arg as the way to provide data to the functions, over using multiple args (the common python way), as the former is more elegant. And also because kwargs aren't available on other platforms, thus making the implementation of the API, hard.
+  * 1000  Decided to use a single dictionary arg as the way to provide data to the functions, over using multiple args (the common python way), as the former is more elegant. And also because kwargs aren't available on other platforms, t2hus making the implementation of the API, hard.
   * 1745  The development of the library is suspended, as the intended improvements over commander are added to commander itself.
   
 * 20150629
@@ -179,4 +179,10 @@ Log
   * 0045  ec.interface.call now passes the raised exceptions to the calling script; previously it was processed within ec.  
   * 1035  Bettered help on both modes.
   * 1235  Mode, dispatch, now shows help on some HandledException-s.
+  
+* 20150725
+
+  * 1200  Removed the ways to pass **None** as the value for args, as the existing command line format, which allows *None* as values meddled didn't allow positional args. As of now the only way to have **None** values is to pass them as the defaults of the configs.
+  * 1335  Positional args are supported. It took ~3hrs, mainly due to the change being very close to the core (4 modules had to be altered).
+  * 1340 v0.2.1 released.
   

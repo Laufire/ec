@@ -6,6 +6,7 @@ Helpers
 import os
 import sys
 import shlex
+import re
 from os import path
 from types import ClassType, ModuleType, FunctionType
 
@@ -18,7 +19,7 @@ def err(message, exit_code=None):
     exit(exit_code)
 
 def exit(exit_code=0):
-  """A function to support eiting from exit hooks.
+  """A function to support exiting from exit hooks.
   """
   if state.isExitHooked and not hasattr(sys, 'exitfunc'): # the function is called from the exit hook
     sys.stderr.flush()
@@ -42,20 +43,25 @@ def load_module(module_path):
   
   return imported
 
-def list2dict(lst, splitter='='):
-  Dict = {}
+KWARG_PATTERN = re.compile('.+(?<!\\\\)=')
+def getDigestableArgs(Argv):
+  """Splits the given Argv into *Args and **KwArgs.
+  """
+  first_kwarg_pos = 0
   
-  for item in lst:
-    split_pos = item.find(splitter)
-    
-    if split_pos == -1:
-      Dict[item] = None # consider entries without an equal sign as an item with a value of None.
+  for arg in Argv:
+    if KWARG_PATTERN.search(arg):
+      break
       
     else:
-      Dict[item[:split_pos]] = item[split_pos+1:]
+      first_kwarg_pos += 1
   
-  return Dict
-  
+  for arg in Argv[first_kwarg_pos:]: # ensure that the kwargs are valid
+    if not KWARG_PATTERN.search(arg):
+      raise HandledException('Could not parse the arg "%s".' % arg)
+      
+  return Argv[:first_kwarg_pos], list2dict(Argv[first_kwarg_pos:])
+
 # mode helpers
 def getMemberHelp(Target):
   if isinstance(Target, Group):
@@ -95,6 +101,20 @@ def isfunction(object):
   return isinstance(object, FunctionType)
 
 # Helpers
+def list2dict(lst, splitter='='):
+  Dict = {}
+  
+  for item in lst:
+    split_pos = item.find(splitter)
+    
+    if split_pos == -1:
+      Dict[item] = None # consider entries without an equal sign as an item with a value of None.
+      
+    else:
+      Dict[item[:split_pos]] = item[split_pos+1:]
+  
+  return Dict
+  
 def listMemberHelps(TargetGroup):
   """Gets help on a group's children.
   """

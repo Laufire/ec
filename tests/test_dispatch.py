@@ -44,6 +44,18 @@ class TestDispatch(unittest.TestCase):
     assert(Result['code'] == 0)
     assert(Result['out'].strip() == '1 1')
     
+  def test_positional_args(self):
+    Result = launch_ec('task1 1')
+    
+    assert(Result['code'] == 0)
+    assert(Result['out'].strip() == '1 2')
+    
+  def test_mixed_args(self):
+    Result = launch_ec('task1 1 arg2=1')
+    
+    assert(Result['code'] == 0)
+    assert(Result['out'].strip() == '1 1')
+    
   def test_flag_help(self):
     Result = launch_ec(flag='-h')
     
@@ -79,7 +91,7 @@ class TestDispatch(unittest.TestCase):
     
     assert(Result['code'] == 1)
     assert(Result['err'].strip()[:2] == 'No')
-    assert(Result['err'].find('target_script') > -1) # check whether a help string is presented
+    assert(Result['err'].find('Members') > -1) # check whether a help string is presented
     
   def test_nested_task(self):
     Result = launch_ec('group1/task1 arg1=1')

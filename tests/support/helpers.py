@@ -10,7 +10,8 @@ __all__ = ['shell_exec', 'RawInputHook']
 def shell_exec(command, path='.', input=''): # from gitapi.py
   proc = Popen(shlex.split(command), stdin=PIPE, stdout=PIPE, stderr=PIPE, cwd=path)
   
-  out, err = [x.decode("utf-8") for x in proc.communicate(input)]
+  proc.stdin.write(input)
+  out, err = [x.decode("utf-8") for x in proc.communicate()]
   
   return {'out': out, 'err': err, 'code': proc.returncode}
   

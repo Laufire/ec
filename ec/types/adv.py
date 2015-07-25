@@ -6,7 +6,7 @@ Advanced types.
 import shlex
 
 from ..modules.classes import CustomType, HandledException
-from ..modules.helpers import list2dict
+from ..modules.helpers import getDigestableArgs
 
 class t2t(CustomType):
   """Convert a ec task into a type.
@@ -14,20 +14,21 @@ class t2t(CustomType):
   Args:
     __ec__task__: Any ec task.
   """
-  def __init__(self, __ec__task__, **InArgs):
+  def __init__(self, __ec__task__, **Defaults):
     __ec_member__ = __ec__task__.__ec_member__
     Config = __ec_member__.Config
     
     CustomType.__init__(self, desc=Config['desc'] if 'desc' in Config else None)
     
     self.Task = __ec_member__
-    self.InArgs = InArgs
+    self.Defaults = Defaults
   
   def __call__(self, val):
-    Args = self.InArgs.copy()
-    Args.update(**list2dict(shlex.split(val)))
+    KwArgs = self.Defaults.copy()
+    DigestableArgs = getDigestableArgs(shlex.split(val))
+    KwArgs.update(**DigestableArgs[1])
     
-    return self.Task.__collect_n_call__(**Args)
+    return self.Task.__collect_n_call__(*DigestableArgs[0], **KwArgs)
     
 class chain(CustomType):
   """Combines mutiple types into one.

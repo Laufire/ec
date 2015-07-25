@@ -28,7 +28,12 @@ def init(argv):
       
       if Member:
         alias = Member.Config.get('alias')
-        label = '%s%s' % (Member.Config['name'], ', %s' % alias if alias else '')
+        name = Member.Config['name']
+        
+        if name == '__main__':
+          name = 'Members'
+          
+        label = '%s%s' % (name, ', %s' % alias if alias else '')
         e = '%s\n\n%s\n%s\n%s' % (str(e), label, '-' * len(label), getMemberHelp(Member))
         
       err(e, 1)

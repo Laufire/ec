@@ -23,18 +23,16 @@ def get(desc, type=None, autoDesc=True, **Kwargs):
   
   while True:
     try:
-      line = raw_input(label)
+      got = raw_input(label)
       
-      if has_default and not line:
-        return default
-      
-      got = line
-      
-    except EOFError: # consider ^z as None
+    except EOFError:
     
-      got = None
+      got = ''
       
     try:
+      if has_default and not got:
+        return default
+      
       return type(got) if type else got
       
     except ValueError:

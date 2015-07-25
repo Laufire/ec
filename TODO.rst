@@ -2,13 +2,13 @@ ToDo
 =====
 Tasks
 -----
-** Allow positional args.
-
 * Test for cross environment compatibility.
 
-* Add usage document for shell mode.
+* Add usage document for the UI. ie: shell mode, partial args, positonal args etc.
 
 * Add api docs and more docstrings.
+
+* Test all the cases of HandledException-s.
 
 * Test custom types (doctest?).
 
@@ -34,6 +34,8 @@ Fix
 Check
 -----
 * A ec.main decorator to act as the entry point for the modules, to allow the pre-processing of the modules etc.
+
+* Reallowing **None** values as args. It might be done using escape sequences like **\0**. **Caution:** it might not be advisable to allow them, as no other cli seems to allow **None** as an argument.
 
 * Allowing name-less (positional) args, especially for a better UX in the shell mode. There are several ways, including:
   

@@ -25,6 +25,12 @@ class TestInterface(unittest.TestCase):
   def test_call(self):
     assert(interface.call('task1 arg1=1') == (1, 2))
     
+  def test_positional_args(self):
+    assert(interface.call('task1 1') == (1, 2))
+    
+  def test_mixed_args(self):
+    assert(interface.call('task1 1 arg2=1') == (1, 1))
+  
   def test_handled_exception(self):
     assert(expect_exception(lambda: interface.call('task2'), HandledException))
     
