@@ -1,10 +1,3 @@
-ec
-===
-
-ec - the simplest way to create CLI applications.
-
-* Free software: MIT license
-
 The intenetion
 ---------------
 ec - intends to reduce the learning curve needed to expose functionality via the command line. With available options like `argparse <https://pypi.python.org/pypi/argparse>`_ and `docopt <https://pypi.python.org/pypi/docopt>`_, it might take several hours to get them right. And there is also the issue of the needed amount of extra coding to setup and process the arguments. See the following example to see how `ec <https://pypi.python.org/pypi/ec>`_ solves the issue.
@@ -37,6 +30,8 @@ ec - also supports
 
 * Shell mode (like python's interactive mode).
 
+* Named / Positional arguments.
+
 A more complete example
 -----------------------
 from: `simple.py <https://github.com/Laufire/ec/blob/master/scripts/examples/simple.py>`_
@@ -67,6 +62,9 @@ From the command-line enter
     1 2
     
   $ python simple.py group1/task1 arg1=1
+    2
+    
+  $ python simple.py group1/task1 1 # positional arguments too are supported
     2
     
 **Interactively execute tasks:** *<shell mode>*

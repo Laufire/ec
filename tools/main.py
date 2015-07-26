@@ -14,7 +14,8 @@ os.chdir(project_root) # ensure that the project_root is the CWD
 @task
 @arg(type=path_type.exists)
 def lint(target=None):
-  
+  """Lints the source.
+  """
   if not target:
     assert(run('cmd /c pylint --rcfile=ec/.pylintrc ec') == 0)
     
