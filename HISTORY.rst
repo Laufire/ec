@@ -186,3 +186,7 @@ Log
   * 1335  Positional args are supported. It took ~3hrs, mainly due to the change being very close to the core (4 modules had to be altered).
   * 1340 v0.2.1 released.
   
+* 20150726
+
+  * 0035  Bug Fixed: Default value and labels in ex.types.basics.yn weren't handled properly.
+  

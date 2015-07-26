@@ -1,5 +1,6 @@
 """
 Helpers
+=======
 
   Generic helpers for the modules.
 """
@@ -20,6 +21,8 @@ def err(message, exit_code=None):
 
 def exit(exit_code=0):
   """A function to support exiting from exit hooks.
+  
+  Could also be used to exit from the calling scripts in a thread safe manner.
   """
   if state.isExitHooked and not hasattr(sys, 'exitfunc'): # the function is called from the exit hook
     sys.stderr.flush()
