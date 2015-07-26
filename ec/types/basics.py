@@ -15,7 +15,9 @@ class yn(CustomType):
     label = desc if desc is not None else ('y/n%s' % (' (%s)' % ('y' if default else 'n') if default is not None else ''))
     
     CustomType.__init__(self, label)
-    self.default = default
+    
+    if default is not None:
+      self.default = default
   
   def __call__(self, val):
     if not val:

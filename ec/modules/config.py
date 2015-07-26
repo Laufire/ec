@@ -57,6 +57,12 @@ def arg(name=None, **Config): # wraps the _arg decorator, in order to allow unna
   if name is not None: # allow name as a positional arg
     Config['name'] = name
     
+  if 'default' not in Config:
+    _type = Config.get('type')
+    
+    if _type and hasattr(_type, 'default'):
+      Config['default'] = _type.default
+    
   return lambda decorated: _arg(decorated, **Config)
 
 @decorator  

@@ -188,5 +188,6 @@ Log
   
 * 20150726
 
-  * 0035  Bug Fixed: Default value and labels in ex.types.basics.yn weren't handled properly.
+  * 0635  Bug Fixed: Default value and labels in ex.types.basics.yn weren't handled properly.
+  * 0750  Bug fixed: Default attributes of the custom types weren't considered as the default of the arg's config.
   
