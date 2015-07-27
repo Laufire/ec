@@ -193,3 +193,6 @@ Log
   * 2120  Tuned the default value handling, in order to better the display .
   * 2140  ec.types.basics.yn now supports defaults other than 'y' and 'n'.
   
+* 20150727
+
+  * 1035  Introduced ec.utils.custom, to help with creating custom types on the fly.

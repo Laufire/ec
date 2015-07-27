@@ -3,9 +3,9 @@ Test ec.utils.
 """
 import unittest
 
-from ec.utils import get, static
+from ec.utils import get, static, custom
 
-from support.helpers import RawInputHook as RIH
+from support.helpers import RawInputHook as RIH, expect_exception
 
 # Tests
 class TestUtils(unittest.TestCase):
@@ -32,6 +32,13 @@ class TestUtils(unittest.TestCase):
         return val
         
     assert(cls.method(1) == 1)
+    
+  def test_custom(self):
+    _type = custom(lambda v: v%2==1, 'an odd number', int)
+    
+    assert(_type(1) == 1)
+    assert(expect_exception(lambda: _type(2), ValueError))
+    assert(expect_exception(lambda: _type('a'), ValueError))
   
 if __name__ == '__main__':
   unittest.main()
