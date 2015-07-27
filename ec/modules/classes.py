@@ -124,15 +124,21 @@ class Task(Member):
     KwArgs = self.__digest_args__(InArgs, InKwArgs)
     
     for name, Arg in self.Args.items():
+      _type = Arg.get('type')
+      
       if not name in KwArgs:
         if 'default' in Arg:
-          KwArgs[name] = Arg['default']
+           default = Arg['default']
+          
+        elif hasattr(_type, 'default'):
+          default = _type.default
           
         else:
           raise HandledException('Missing argument: %s.' % name, Member=self)
         
+        KwArgs[name] = default
+        
       else:
-        _type = Arg.get('type')
         if _type:
           try:
             KwArgs[name] = _type(KwArgs[name])
@@ -185,7 +191,7 @@ class CustomType:
   
   def __str__(self):
     """Used to represent the type as a string, in messages and queries."""
-    return getattr(self, 'desc', '')
+    return getattr(self, 'desc', 'custom type')
     
 # Helper Classes
 class HandledException(Exception):

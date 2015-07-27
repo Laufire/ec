@@ -25,8 +25,12 @@ def start():
   
   MainModule = sys.modules[state.main_module_name]
   
+  if not MainModule.__ec_member__.Members: # there was some error while loading script(s)
+    return
+  
   global BaseGroup
   BaseGroup =  MainModule.__ec_member__
+  
   
   Argv = sys.argv[1:]
   global mode

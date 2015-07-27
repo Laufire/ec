@@ -188,6 +188,8 @@ Log
   
 * 20150726
 
-  * 0635  Bug Fixed: Default value and labels in ex.types.basics.yn weren't handled properly.
+  * 0635  Bug Fixed: Default value and labels in ec.types.basics.yn weren't handled properly.
   * 0750  Bug fixed: Default attributes of the custom types weren't considered as the default of the arg's config.
+  * 2120  Tuned the default value handling, in order to better the display .
+  * 2140  ec.types.basics.yn now supports defaults other than 'y' and 'n'.
   
