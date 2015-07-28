@@ -49,3 +49,9 @@ def expect_exception(call, *ExTypes):
     
     return isinstance(e, ExTypes)
     
+def checkResult(self, Result, *Vals):
+  """A worker for unittest.checkResult.
+  """
+  for val in Vals:
+    self.assertTrue(val, '\ncode: {code}\nerr: {err}\nout: {out}'.format(**Result))
+  

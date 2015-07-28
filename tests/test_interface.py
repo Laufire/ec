@@ -15,7 +15,6 @@ from support.helpers import expect_exception
 interface.setBase(target_script)
 
 class TestInterface(unittest.TestCase):
-
   def setUp(self):
     pass
     

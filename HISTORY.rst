@@ -204,4 +204,6 @@ Log
   * 1625  module.exposed.get altered to support the newer CustomType handling.
   * 1635  Custom types are now more configurable.
   * 1640  v0.2.2 released.
+  * 1800  Failure logs of several tests have been improved to display more data.
+  * 2015  Bug fixed: Several tests based on test_dispatch.py weren't tested.
   

@@ -9,26 +9,22 @@ import unittest
 
 from support.helpers import shell_exec
 
-# Modifications to test_dispatch
-import test_dispatch
+from test_dispatch import TestDispatch
 
-def launch_ec(argStr='', input='', flag=''):
-  """Dispatches command to ec (loaded as a module).
-  """  
-  command = 'python -m ec tests/support/target_script.py'
-  
-  if flag:
-    command += ' %s' % flag
+class TestModuleLaunch(TestDispatch):
+  def launch_ec(self, argStr='', input='', flag=''):
+    """Dispatches command to ec (loaded as a module).
+    """  
+    command = 'python -m ec tests/support/target_script.py'
     
-  if argStr:
-    
-    command += ' %s' % argStr
-    
-  return shell_exec(command, input=input)
-
-test_dispatch.launch_ec = launch_ec
-
-TestEntryPointLaunch = test_dispatch.TestDispatch
+    if flag:
+      command += ' %s' % flag
+      
+    if argStr:
+      
+      command += ' %s' % argStr
+      
+    return shell_exec(command, input=input)
 
 if __name__ == '__main__':
   unittest.main()

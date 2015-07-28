@@ -54,6 +54,10 @@ class docs:
     os.chdir(project_root)
 
   @task
+  def check():
+    assert(run('rst-lint README.rst') == 0)
+    
+  @task
   @arg(type=yn())
   @arg(type=yn())
   def make(check=True, update=False):
@@ -68,10 +72,6 @@ class docs:
     assert(run('sphinx-build -b html -d _build/doctrees  . _build/html') == 0)
     os.chdir(project_root)
     
-  @task
-  def check():
-    assert(run('rst-lint README.rst') == 0)
-
   @task
   def upload():
     docs.check()

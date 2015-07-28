@@ -11,7 +11,6 @@ from support.helpers import RawInputHook as RIH
 
 # Tests
 class TestInscriptCalls(unittest.TestCase):
-
   def setUp(self):
     pass
 

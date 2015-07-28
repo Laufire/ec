@@ -7,7 +7,7 @@ Note:
 
 import unittest
 
-from support.helpers import shell_exec
+from support.helpers import shell_exec, checkResult
 
 def launch_ec(argStr='', input='', flag=''):
   """Launches the support dir.
@@ -33,7 +33,7 @@ TestDirGroup = test_dispatch.TestDispatch # assign the test to a variable so tha
 class TestDirGroupOnLaunchers(unittest.TestCase):
 
   def setUp(self):
-    pass
+    self.checkResult = lambda *args: checkResult(self, *args)
 
   def tearDown(self):
     pass
@@ -41,14 +41,18 @@ class TestDirGroupOnLaunchers(unittest.TestCase):
   def test_entry_point_launch(self):
     Result = shell_exec('ec tests/support target_script/task1 arg1=1')
     
-    assert(Result['code'] == 0)
-    assert(Result['out'].strip() == '1 2')
+    self.checkResult(Result,
+      Result['code'] == 0,
+      Result['out'].strip() == '1 2',
+    )
     
   def test_module_launch(self):
     Result = shell_exec('python -m ec tests/support target_script/task1 arg1=1')
     
-    assert(Result['code'] == 0)
-    assert(Result['out'].strip() == '1 2')
+    self.checkResult(Result,
+      Result['code'] == 0,
+      Result['out'].strip() == '1 2',
+    )
 
 if __name__ == '__main__':
   unittest.main()

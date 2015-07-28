@@ -6,6 +6,8 @@ Tasks
 
 * Add usage document for the UI. ie: shell mode, partial args, positonal args etc.
 
+* Add a **Change log** file that lists important changes across versions.
+
 * Add api docs and more docstrings.
 
 * Test all the cases of HandledException-s.
@@ -15,6 +17,10 @@ Tasks
 * Make nut_shell.py as the target_script for the tests.
 
 * More documentation for the custom types.
+
+* More examples. Especially for:
+
+  * Dynamic configuration of CustomTypes.
 
 Features
 --------

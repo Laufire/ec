@@ -9,7 +9,6 @@ from support.helpers import RawInputHook as RIH, expect_exception
 
 # Tests
 class TestUtils(unittest.TestCase):
-
   def setUp(self):
     pass
 

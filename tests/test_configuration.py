@@ -6,17 +6,13 @@ Note:
 """
 import unittest
 
-# from support import target_script
-
 from ec import interface
 
 from support import target_script
 
 interface.setBase(target_script)
 
-
 class TestConfiguration(unittest.TestCase):
-
   def setUp(self):
     pass
     
