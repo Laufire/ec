@@ -11,24 +11,19 @@ from ..modules.classes import CustomType
 class yn(CustomType):
   """The classic y/n input that returns a truthy/falsy value.
   """
-  def __init__(self, desc=None, **kwargs):
-    """
-    Note:
-      kwargs is used instead of an explcit var named default, as **None** too could be the default value.
-    """
-    has_default = 'default' in kwargs
-    default = kwargs['default'] if has_default else None
+  def __init__(self, **Config):
+    if not 'type_str' in Config:
+      Config['type_str'] = 'y/n%s' % (' (%s)' % ('y' if Config['default'] is True else 'n') if 'default' in Config else '')
     
-    label = desc if desc is not None else ('y/n%s' % (' (%s)' % ('y' if default is True else ('n' if default is False else default)) if has_default else ''))
+    CustomType.__init__(self, **Config)
     
-    CustomType.__init__(self, label)
+  def __ec_config__(self, ArgConfig):
+    if not 'desc' in ArgConfig:
+      ArgConfig['desc'] = ArgConfig['name']
     
-    if has_default:
-      self.default = default
-  
   def __call__(self, val):
-    if not val:
-      return self.__default__()
+    if not val: # we've got an empty string
+      raise ValueError()
       
     if val in 'yY':
       return True
@@ -36,12 +31,5 @@ class yn(CustomType):
     elif val in 'nN':
       return False
       
-    return self.__default__()
+    raise ValueError()
     
-  def __default__(self):
-    if hasattr(self, 'default'):
-      return self.default
-      
-    else:
-      raise ValueError()
-      

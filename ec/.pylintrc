@@ -36,7 +36,8 @@ dummy-variables-rqx = dummy.*$
 # W0702: No exception type(s) specified (all the exceptions should be caught)
 # W0703: Catching too general exception (even the most generic exception shoud be caught)
 
-disable = C0111, C0103, C0301,
+disable =
+  C0111, C0103, C0301,
 	I0011,
 	E1103,
   R0201, R0401, R0903, R0912, R0913, R0914, R0915,

@@ -4,9 +4,7 @@ target_script
 
 The target for testing.
 """
-from ec.ec import task, arg, group, call, module
-
-# module(name='target_script')
+from ec.ec import task, arg, group, call, module, settings
 
 @task(alias='t1')
 @arg(type=int, desc= 'Value for arg1')
@@ -31,3 +29,4 @@ def ex():
 def hex():
   task1.__ec_member__.__call__(arg1='a') # a handled exception would be raised because of mismatched type.
   
+# settings(dev_mode=True) # shortcut: enable the line to get the stack trace on exceptions

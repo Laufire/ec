@@ -138,6 +138,20 @@ def listMemberHelps(TargetGroup):
 def getGroupHelp(_Group):
   return '\n\n'.join([('%s  %s' % (name, desc))[:60] for name, desc in listMemberHelps(_Group)])
 
+def getAutoDesc(ArgConfig):
+  return '%s (%s)' % (ArgConfig['name'], ArgConfig['default']) if 'default' in ArgConfig else ArgConfig['name']
+  
+def getTypeStr(_type):
+  """Gets the string representation of the given type.
+  """
+  if isinstance(_type, CustomType):
+    return _type
+    
+  if hasattr(_type, '__name__'):
+    return _type.__name__
+    
+  return ''
+  
 def getTaskHelp(_Task):
   """Gets help on the given task member.
   """
@@ -153,7 +167,7 @@ def getTaskHelp(_Task):
   
   if Args:
     Ret.append('\nArgs:')
-    Props = ['desc', 'type', 'default']
+    Props = ['desc', 'default']
     
     for argName, Arg in Args.items():
       Ret.append('  name: %s' % argName)
@@ -166,11 +180,13 @@ def getTaskHelp(_Task):
       
       Ret.append('')
       
+      if 'type' in Arg:
+        Ret.insert(4, '  type: %s' % getTypeStr(Arg['type']))
+      
     Ret.pop()
     
   return '\n'.join(Ret)
-  
 
 # Cross Dependencies
 import core
-from classes import HandledException, Group, Task
+from classes import HandledException, Group, Task, CustomType

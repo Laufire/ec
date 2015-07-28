@@ -22,8 +22,8 @@ def add(id, email_id, gender, age, is_married):
 
 
 from ec.types.adv import invert
-@task
-@arg('arg', type=invert(int, 'anything but an integer'))
+@task(alias='t')
+@arg(type=invert(int))
 def t(arg):
   "A task to test the custom type under development."
   print arg

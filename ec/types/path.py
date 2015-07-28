@@ -8,10 +8,10 @@ from os import path
 from ..modules.classes import CustomType
 
 class PathBase(CustomType):
-  """The base class for several path types."""
-  
-  def __init__(self, func, ret=True, desc=None):
-    CustomType.__init__(self, desc)
+  """The base class for several path types.
+  """  
+  def __init__(self, func, ret=True, **Config):
+    CustomType.__init__(self, **Config)
     
     self.func = func
     self.ret = ret
@@ -21,17 +21,16 @@ class PathBase(CustomType):
       return val
       
     raise ValueError()
-    
-  def __str__(self):
-    return getattr(self, 'desc', '')
 
-exists = PathBase(path.exists, desc='an existing path')
-free = PathBase(path.exists, False, 'a free path')
-isdir = PathBase(path.isdir, desc='a dir')
-isfile = PathBase(path.isfile, desc='a file')
-isabs = PathBase(path.isabs, desc='an absolute path')
-isrelative = PathBase(path.isabs, False, 'a relative path')
+exists = PathBase(path.exists, type_str='an existing path')
+free = PathBase(path.exists, False, type_str='a free path')
+isdir = PathBase(path.isdir, type_str='a dir')
+isfile = PathBase(path.isfile, type_str='a file')
+isabs = PathBase(path.isabs, type_str='an absolute path')
+isrelative = PathBase(path.isabs, False, type_str='a relative path')
 
-def exists_in(root):
-  return PathBase(lambda val: path.exists(path.join(root, val)), desc='a path inside %s' % root)
+# ToDo: 'dynamic' a CustomType that could dynamically construct objects based on other custom types.
+
+def exists_in(root): # ToDo: Replace this function with a CustomType based class
+  return PathBase(lambda val: path.exists(path.join(root, val)), type_str='a path inside %s' % root)
   

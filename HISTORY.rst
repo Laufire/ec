@@ -1,6 +1,6 @@
 History
 =======
-v0.2.1 (2015-07-25 1340 +0530)
+v0.2.2 (2015-07-28 1640 +0530)
 ------------------------------
 
 Log
@@ -196,3 +196,12 @@ Log
 * 20150727
 
   * 1035  Introduced ec.utils.custom, to help with creating custom types on the fly.
+  
+* 20150728
+
+  * 1200  Kwarg **desc** of CustomType.__init__ is now **type_str**.
+  * 1335  Redid CustomType handling, in order to make the types more configurable.
+  * 1625  module.exposed.get altered to support the newer CustomType handling.
+  * 1635  Custom types are now more configurable.
+  * 1640  v0.2.2 released.
+  

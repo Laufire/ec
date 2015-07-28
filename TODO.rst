@@ -33,6 +33,8 @@ Fix
 
 Check
 -----
+* Checking for __init__.py before launching the dirs, to be more pythonic.
+
 * A ec.main decorator to act as the entry point for the modules, to allow the pre-processing of the modules etc.
 
 * Reallowing **None** values as args. It might be done using escape sequences like **\0**. **Caution:** it might not be advisable to allow them, as no other cli seems to allow **None** as an argument.

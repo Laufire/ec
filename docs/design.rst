@@ -69,6 +69,14 @@ Learned
 
 * Writing tests is a lot simpler than imagined.
 
+* Configurable code (code tht could be manipulated through data) is more structured.
+
+* Visualizing the data flow helps with creating better structures.
+
+* Programming is not software engineering.
+
+* Reading good code could help writting good code.
+
 Decisions
 ---------
 * The methods to be used by the loaded scripts are added to __builtins__, in order to avoid an explicit import of ec from the script; which will load a separate instance of ec and complicate the passing of data between the two instances.

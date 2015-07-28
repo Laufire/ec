@@ -6,7 +6,7 @@ Advanced types.
 import shlex
 
 from ..modules.classes import CustomType, HandledException
-from ..modules.helpers import getDigestableArgs
+from ..modules.helpers import getDigestableArgs, getTypeStr
 
 class t2t(CustomType):
   """Convert a ec task into a type.
@@ -18,7 +18,7 @@ class t2t(CustomType):
     __ec_member__ = __ec__task__.__ec_member__
     Config = __ec_member__.Config
     
-    CustomType.__init__(self, desc=Config['desc'] if 'desc' in Config else None)
+    CustomType.__init__(self, type_str=Config['desc'])
     
     self.Task = __ec_member__
     self.Defaults = Defaults
@@ -37,14 +37,14 @@ class chain(CustomType):
     *Types (Type): The types to chain.
     
   Kwargs:
-    desc (str): The description for the chain.
+    type_str (str): The description for the chain.
     
   Example:
   
-    @arg(type=chain(exists, isabs), desc="an existing abs path")
+    @arg(type=chain(exists, isabs), type_str="an existing abs path")
   """
   def __init__(self, *Types, **Kwargs):
-    CustomType.__init__(self, Kwargs.get('desc'))
+    CustomType.__init__(self, type_str=Kwargs.get('type_str', 'a chain of types (%s)' % ', '.join([getTypeStr(_type) for _type in Types])))
     
     self.Types = Types
     self.CurrentType = None
@@ -58,7 +58,7 @@ class chain(CustomType):
     return val
     
   def __str__(self):
-    return getattr(self, 'desc', str(self.CurrentType) if self.CurrentType else '')
+    return getattr(self, 'type_str', str(self.CurrentType) if self.CurrentType else '')
     
 class invert(CustomType):
   """Inverts the given type.
@@ -66,14 +66,14 @@ class invert(CustomType):
   ie: Only failed values are qualified.
   
   Args:
-    desc (str): The description for the type.
+    type_str (str): The description for the type.
     
   Example:
   
-    @arg(type=invert(exists), desc="a free path")
+    @arg(type=invert(exists), type_str="a free path")
   """
-  def __init__(self, Type, desc=None):
-    CustomType.__init__(self, desc)
+  def __init__(self, Type, type_str=None):
+    CustomType.__init__(self, type_str=type_str or 'anything but of type %s' % getTypeStr(Type))
     
     self.Type = Type
     
@@ -86,6 +86,3 @@ class invert(CustomType):
       return val
     
     raise ValueError()
-    
-  def __str__(self):
-    return getattr(self, 'desc', 'a value that is not %s' % str(self.Type))

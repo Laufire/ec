@@ -34,7 +34,7 @@ class TestUtils(unittest.TestCase):
     assert(cls.method(1) == 1)
     
   def test_custom(self):
-    _type = custom(lambda v: v%2==1, 'an odd number', int)
+    _type = custom(lambda v: v%2==1, int, type_str='an odd number')
     
     assert(_type(1) == 1)
     assert(expect_exception(lambda: _type(2), ValueError))

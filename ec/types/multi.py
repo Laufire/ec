@@ -70,7 +70,7 @@ class menu(CustomType):
     try:
       val = int(val)
       
-      if not 0 < val < len(self.choices):
+      if not 0 < val <= len(self.choices):
         raise Exception('')
       
       return self.choices[val - 1]
@@ -79,11 +79,11 @@ class menu(CustomType):
       raise ValueError()
     
   def __str__(self):
-    ret = 'Select:\n'
+    ret = 'Menu:\n'
     n = 0
     choices = self.choices
     
-    for n in range(0, len(choices) - 1):
-      ret += '\t%s: %s\n' % (n + 1, self.choices[n])
+    for n in range(0, len(choices)):
+      ret += '\t%s: %s\n' % (n + 1, choices[n])
     
     return ret

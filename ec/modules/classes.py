@@ -40,7 +40,6 @@ class Task(Member):
     """Prepares the task for excecution.
     """
     FuncArgs = _getFuncArgs(self.Underlying)
-    
     OrderedArgs = OrderedDict() # Note: the order of configuration (through decorators) is prefered over the order of declaration (within the function body)
     
     for Arg in Args:
@@ -59,36 +58,34 @@ class Task(Member):
         
         if FuncArg is None:
           raise HandledException('Unknown arg "%s" while configuring "%s".' % (argName, self.Config['name']))
-          
+        
+      FuncArg['name'] = argName
       FuncArg.update(Arg) # prefer Args config over the values given while defining the function.
-      OrderedArgs[argName] = FuncArg
+      
+      OrderedArgs[argName] = self.__config_arg__(FuncArg)
       del FuncArgs[argName]
       
-    OrderedArgs.update(FuncArgs.iteritems()) # add any unconfigured args
+    for name, Config in FuncArgs.iteritems(): # process the unconfigured arguments
+      Config['name'] = name
+      OrderedArgs[name] = self.__config_arg__(Config)
     
     return OrderedArgs
     
-  def __get_arg__(self, argName):
-    """Gets user input for a single arg.
+  def __config_arg__(self, ArgConfig):
+    """Reconfigures an arguments based on its configuration.
     """
-    Arg = self.Args[argName]
-    ArgOptions = Arg.copy()
+    _type = ArgConfig.get('type')
     
-    if 'desc' in Arg:
-      ArgOptions['autoDesc'] = False
+    if _type and hasattr(_type, '__ec_config__'):
+      Config = _type._Config.copy() #pylint: disable=W0212
+      Config.update(ArgConfig)
+      ArgConfig = Config
+      _type.__ec_config__(ArgConfig)
       
-    else:
-      ArgOptions['desc'] = self.__get_arg__desc__(argName)
-      
-    return get(**ArgOptions)
+    if not 'desc' in ArgConfig:
+      ArgConfig['desc'] = getAutoDesc(ArgConfig)
     
-  def __get_arg__desc__(self, argName):
-    """Generates a description for the input; 'argName' or 'argName (default) will be the description.
-    """
-    Arg = self.Args[argName]
-    _type = Arg.get('type')
-    
-    return '%s (%s)' % (argName, Arg['default']) if 'default' in Arg else argName
+    return ArgConfig
     
   def __confirm_known_args__(self, InArgs):
     """Confirms that only known args are passed to the underlying.
@@ -128,15 +125,11 @@ class Task(Member):
       
       if not name in KwArgs:
         if 'default' in Arg:
-           default = Arg['default']
-          
-        elif hasattr(_type, 'default'):
-          default = _type.default
+          default = Arg['default']
+          KwArgs[name] = default
           
         else:
           raise HandledException('Missing argument: %s.' % name, Member=self)
-        
-        KwArgs[name] = default
         
       else:
         if _type:
@@ -155,7 +148,7 @@ class Task(Member):
     
     for name, Arg in self.Args.items():
       if not name in KwArgs:
-        KwArgs[name] = self.__get_arg__(name)
+        KwArgs[name] = get(**Arg)
         
       else:
         _type = Arg.get('type')
@@ -163,7 +156,7 @@ class Task(Member):
           KwArgs[name] = _type(KwArgs[name]) if _type else KwArgs[name]
           
         except (ValueError, TypeError):
-          KwArgs[name] = self.__get_arg__(name)
+          KwArgs[name] = get(**Arg)
       
     return self.Underlying(**KwArgs)
     
@@ -185,17 +178,38 @@ class Group(Member):
 class CustomType:
   """The base class for custom types.
   """  
-  def __init__(self, desc=None):
-    if desc is not None:
-      self.desc = desc
+  def __init__(self, **Config):
+    self._Config = Config
+    
+    if 'type_str' in Config:
+      self.str = Config['type_str']
+      del Config['type_str'] # type_str has to be deleted as the Config might be added to that of the Arg.
   
   def __str__(self):
-    """Used to represent the type as a string, in messages and queries."""
-    return getattr(self, 'desc', 'custom type')
+    """Used to represent the type as a string, in messages and queries.
+    """
+    return getattr(self, 'str', 'custom type')
+    
+  def __ec_config__(self, ArgConfig):
+    """Used to reconfigure arg configurations.
+    
+    Args:
+      ArgConfig (dict): The configuration to be modified.
+      
+    Returns:
+      ArgConfig (dict): The modified configuration.
+    
+    Notes:
+      
+      * This method is called by Task.__config_arg__ to allow CustomTypes to modify the configuration of the calling arg.
+      * This is the signature method used for duck typing CustomType.
+      * With custom implementations the methos should return the modified ArgConfig.
+    """
+    return ArgConfig
     
 # Helper Classes
 class HandledException(Exception):
-  """A custom error class for ec's interanl exceptions, which are handled within ec.
+  """A custom error class for ec's internal exceptions, which are handled within ec.
   """
   
   def __init__(self, e, **Info):
@@ -230,4 +244,4 @@ def _getFuncArgs(func):
   
 # Cross dependencies
 from exposed import get, static
-from helpers import err, ismodule
+from helpers import err, ismodule, getAutoDesc
