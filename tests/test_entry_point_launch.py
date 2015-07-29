@@ -15,7 +15,7 @@ class TestEntryPointLaunch(TestDispatch):
   def launch_ec(self, argStr='', input='', flag=''):
     """Dispatches command to the target script.
     """
-    command = 'ec tests/support/target_script.py'
+    command = 'ec tests/targets/simple.py'
     
     if flag:
       command += ' %s' % flag

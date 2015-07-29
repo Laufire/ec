@@ -9,10 +9,10 @@ import unittest
 from ec import interface
 from ec.modules.classes import HandledException
 
-from support import target_script
+from targets import simple
 from support.helpers import expect_exception
 
-interface.setBase(target_script)
+interface.setBase(simple)
 
 class TestInterface(unittest.TestCase):
   def setUp(self):
@@ -74,7 +74,7 @@ class TestInterface(unittest.TestCase):
     pass
     
   def test_add(self):
-    interface.add(target_script, lambda arg1: arg1, dict(name='added'), [dict(name='arg1', type=int)])
+    interface.add(simple, lambda arg1: arg1, dict(name='added'), [dict(name='arg1', type=int)])
     
     assert(interface.call('added arg1=1') == 1)
     

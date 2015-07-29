@@ -123,7 +123,7 @@ class devLinks:
   
   Dirs = [
     'scripts/examples', 'scripts/examples/advanced', 'scripts/tests',
-    'tests', 'tests/support', 
+    'tests', 'tests/support', 'tests/targets',
     'tools', '.trial'
   ]
   

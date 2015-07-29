@@ -6,7 +6,7 @@ import unittest
 
 from ec.ec import call
 
-from support.target_script import task1, group1
+from targets.simple import task1, group1
 from support.helpers import RawInputHook as RIH
 
 # Tests

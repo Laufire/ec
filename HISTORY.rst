@@ -211,4 +211,5 @@ Log
 
   * 0700  utils.custom is now a CustomType (was a function). The change is made to allow dynamic configuration.
   * 1010  Improved the API docs.
+  * 1425  Moved the test targets from tests/support to tests/targets.
   

@@ -7,13 +7,16 @@ from ec.modules.classes import HandledException
 # Exports
 __all__ = ['shell_exec', 'RawInputHook']
 
-def shell_exec(command, path='.', input=''): # from gitapi.py
-  proc = Popen(shlex.split(command), stdin=PIPE, stdout=PIPE, stderr=PIPE, cwd=path)
+def shell_exec(command, cwd='.', input=''): # from gitapi.py
+  proc = Popen(shlex.split(command), stdin=PIPE, stdout=PIPE, stderr=PIPE, cwd=cwd)
   
   proc.stdin.write(input)
   out, err = [x.decode("utf-8") for x in proc.communicate()]
   
-  return {'out': out, 'err': err, 'code': proc.returncode}
+  return dict(
+    out=out, err=err, code=proc.returncode,
+    command=command, cwd=cwd, input=input
+  )
   
 # Hook into existing raw_input
 class RawInputHook:
@@ -53,5 +56,5 @@ def checkResult(self, Result, *Vals):
   """A worker for unittest.checkResult.
   """
   for val in Vals:
-    self.assertTrue(val, '\ncode: {code}\nerr: {err}\nout: {out}'.format(**Result))
+    self.assertTrue(val, '\ncode: {code}\nerr: {err}\nout: {out}\n--------------------\ncommand: {command}\ninput: {input}'.format(**Result))
   

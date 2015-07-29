@@ -16,14 +16,14 @@ class TestNested(TestDispatch):
     """Dispatches command to a nested script.
     """
     
-    command = 'python tests/support/nester.py'
+    command = 'python tests/targets/nester.py'
     
     if flag:
       command += ' %s' % flag
       
     if argStr:
       
-      command += ' target_script/%s' % argStr
+      command += ' simple/%s' % argStr
       
     return shell_exec(command, input=input)
 

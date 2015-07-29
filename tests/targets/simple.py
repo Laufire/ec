@@ -1,8 +1,8 @@
 """
-target_script
-=============
+simple
+======
 
-The target for testing.
+A simple testing target script.
 """
 from ec.ec import task, arg, group, call, module, settings
 

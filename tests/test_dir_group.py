@@ -10,16 +10,16 @@ import unittest
 from support.helpers import shell_exec, checkResult
 
 def launch_ec(argStr='', input='', flag=''):
-  """Launches the support dir.
+  """Launches the targets dir.
   """
-  command = 'ec tests/support'
+  command = 'ec tests/targets'
     
   if flag:
     command += ' %s' % flag
     
   if argStr:
     
-    command += ' target_script/%s' % argStr
+    command += ' simple/%s' % argStr
     
   return shell_exec(command, input=input)
 
@@ -39,7 +39,7 @@ class TestDirGroupOnLaunchers(unittest.TestCase):
     pass
     
   def test_entry_point_launch(self):
-    Result = shell_exec('ec tests/support target_script/task1 arg1=1')
+    Result = shell_exec('ec tests/targets simple/task1 arg1=1')
     
     self.checkResult(Result,
       Result['code'] == 0,
@@ -47,7 +47,7 @@ class TestDirGroupOnLaunchers(unittest.TestCase):
     )
     
   def test_module_launch(self):
-    Result = shell_exec('python -m ec tests/support target_script/task1 arg1=1')
+    Result = shell_exec('python -m ec tests/targets simple/task1 arg1=1')
     
     self.checkResult(Result,
       Result['code'] == 0,

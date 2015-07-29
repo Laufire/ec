@@ -21,7 +21,7 @@ class TestDispatch(unittest.TestCase):
   def launch_ec(self, argStr='', input='', flag=''):
     """Dispatches command to the target script.
     """  
-    command = 'python tests/support/target_script.py'
+    command = 'python tests/targets/simple.py'
     
     if flag:
       command += ' %s' % flag

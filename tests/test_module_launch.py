@@ -15,7 +15,7 @@ class TestModuleLaunch(TestDispatch):
   def launch_ec(self, argStr='', input='', flag=''):
     """Dispatches command to ec (loaded as a module).
     """  
-    command = 'python -m ec tests/support/target_script.py'
+    command = 'python -m ec tests/targets/simple.py'
     
     if flag:
       command += ' %s' % flag
