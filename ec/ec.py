@@ -8,12 +8,12 @@ import sys
 
 from modules.state import Settings, ModulesQ
 from modules.helpers import getCallingModule
-from modules.config import task, arg, group, module, member
+from modules.config import task, arg, group, module, member, exit_hook
 from modules import hooks
   
 # Exports
 __all__ = [
-  'task', 'arg', 'group', 'module', 'member',
+  'task', 'arg', 'group', 'module', 'member', 'exit_hook',
   'settings', 'call',
 ]
 
@@ -46,7 +46,6 @@ def call(__ec_func__, *Args, **KwArgs):
   """
   return __ec_func__.__ec_member__.__collect_n_call__(*Args, **KwArgs)
 
-  
 # Main
 hooks.EcModuleName = __name__
 

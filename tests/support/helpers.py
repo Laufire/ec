@@ -52,9 +52,10 @@ def expect_exception(call, *ExTypes):
     
     return isinstance(e, ExTypes)
     
+shell_exec_format_string = '\ncode: {code}\nerr: {err}\nout: {out}\n--------------------\ncommand: {command}\ninput: {input}'
 def checkResult(self, Result, *Vals):
   """A worker for unittest.checkResult.
   """
   for val in Vals:
-    self.assertTrue(val, '\ncode: {code}\nerr: {err}\nout: {out}\n--------------------\ncommand: {command}\ninput: {input}'.format(**Result))
+    self.assertTrue(val, shell_exec_format_string.format(**Result))
   

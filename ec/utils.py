@@ -15,7 +15,7 @@ class custom(CustomType):
   Args:
     validator (callable): Validates the input.
     converter (callable): Converts the input. Defaults to None.
-    **Config  (kwargs): The configuration of the CustomType
+    **Config  (kwargs): The configuration of the CustomType.
   """
   def __init__(self, validator, converter=None, **Config):
     CustomType.__init__(self, **Config)

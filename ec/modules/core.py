@@ -7,7 +7,7 @@ import traceback
 from collections import OrderedDict
 
 import state
-from state import Settings, ModulesQ, ModuleMembers
+from state import Settings, ModulesQ, ModuleMembers, ExitHooks
 from helpers import err, getDigestableArgs, isfunction, isclass, ismodule, isunderlying, getFullName
 
 # State
@@ -31,7 +31,6 @@ def start():
   global BaseGroup
   BaseGroup =  MainModule.__ec_member__
   
-  
   Argv = sys.argv[1:]
   global mode
   mode = 'd' if Argv else 's' # dispatch / shell mode
@@ -46,6 +45,8 @@ def start():
   else:
     import dispatch
     dispatch.init(Argv)
+    
+  processExitHooks()
  
 def execCommand(Argv, collect_missing):
   """Executes the given task with parameters.
@@ -159,6 +160,10 @@ def processModule(module_name):
   if not hasattr(Module.__ec_member__, 'Members'):
     Module.__ec_member__.Members = OrderedDict(MembersTarget)
   
+def processExitHooks():
+  for hook in ExitHooks:
+    hook()
+
 # Helpers
 def _execCommand(Argv, collect_missing):
   """Worker of execCommand.

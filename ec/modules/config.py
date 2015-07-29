@@ -4,7 +4,7 @@ Provides the decorators and functions for the configuration of the args, tasks, 
 import sys
 
 import state
-from state import Settings
+from state import Settings, ExitHooks
 from classes import Task, Group, HandledException
 from helpers import getCallingModule
 from helpers import isclass
@@ -24,12 +24,12 @@ def wrap(func, with_func): # Check: Is wrapping of the decorator needed? They se
 def decorator(func):
   """Makes the passed decorators to support optional args.
   """
-  def wrapper(__decorated__=None, **Config):
-    if __decorated__ is None: # some configration is available through the decorator
-      return lambda _func: func(_func, **Config)
+  def wrapper(__decorated__=None, *Args, **KwArgs):
+    if __decorated__ is None: # some args is available through the decorator
+      return lambda _func: func(_func, *Args, **KwArgs)
       
     else:
-      return func(__decorated__, **Config)
+      return func(__decorated__, *Args, **KwArgs)
     
   return wrap(wrapper, func)
 
@@ -69,7 +69,7 @@ def arg(name=None, **Config): # wraps the _arg decorator, in order to allow unna
     
   return lambda decorated: _arg(decorated, **Config)
 
-@decorator  
+@decorator
 def _arg(__decorated__, **Config):
   """The worker for the arg decorator.
   """
@@ -97,7 +97,24 @@ def group(__decorated__, **Config):
   state.ActiveModuleMemberQ.insert(0, _Group)
   
   return _Group.Underlying
+
+@decorator
+def exit_hook(callable, once=True):
+  """A decorator that makes the decorated function to run while ec exits.
   
+  Args:
+    callable (callable): The target callable.
+    once (bool): Avoids adding a func to the hooks, if it has been added already. Defaults to True.
+    
+  Note:
+    Hooks are processedd in a LIFO order.
+  """
+  if once and callable in ExitHooks:
+    return
+    
+  ExitHooks.append(callable)
+  
+
 # Methods
 def module(**Config):
   """Helps with adding configs to Modules.

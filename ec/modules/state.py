@@ -20,3 +20,5 @@ ActiveModuleMemberQ = None # used to collect the configured members of the curre
 ModuleMembers = {}
 
 isExitHooked = False
+
+ExitHooks = []

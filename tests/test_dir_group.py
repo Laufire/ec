@@ -43,7 +43,7 @@ class TestDirGroupOnLaunchers(unittest.TestCase):
     
     self.checkResult(Result,
       Result['code'] == 0,
-      Result['out'].strip() == '1 2',
+      Result['out'].strip().find('1 2') == 0,
     )
     
   def test_module_launch(self):
@@ -51,7 +51,7 @@ class TestDirGroupOnLaunchers(unittest.TestCase):
     
     self.checkResult(Result,
       Result['code'] == 0,
-      Result['out'].strip() == '1 2',
+      Result['out'].strip().find('1 2') == 0,
     )
 
 if __name__ == '__main__':

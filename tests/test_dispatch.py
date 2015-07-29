@@ -156,6 +156,14 @@ class TestDispatch(unittest.TestCase):
       Result['code'] == 1,
       Result['err'].strip() == 'integer division or modulo by zero',
     )
+    
+  def test_exit_hook(self):
+    Result = shell_exec('python tests/targets/allied.py t1 1')
+    
+    self.checkResult(Result,
+      Result['code'] == 0,
+      Result['out'].find(str(range(1, 10))) > -1,
+    )
   
 if __name__ == '__main__':
   unittest.main()
