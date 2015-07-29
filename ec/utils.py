@@ -6,8 +6,9 @@ A set of utility functions for the scripts.
 """
 from modules.exposed import get, static
 from modules.classes import CustomType
+from modules import core
 
-__all__ = ['get', 'static', 'custom']
+__all__ = ['get', 'static', 'custom', 'walk']
 
 class custom(CustomType):
   """Helps with creating dynamic CustomTypes on the fly.
@@ -32,3 +33,19 @@ class custom(CustomType):
       
     return val
     
+def walk(TargetGroup=None):
+  """Walks the members of the given target, recursively.
+  
+  Args:
+    TargetGroup (Group): The target to walk. Defaults to the BaseGroup.
+  """
+  if TargetGroup is None:
+    TargetGroup = core.BaseGroup
+    
+  for Member in TargetGroup.Members.values():
+    yield Member
+    
+    if hasattr(Member, 'Members'): # we've got a Group
+      for item in walk(Member):
+        yield item
+      

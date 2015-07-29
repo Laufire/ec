@@ -3,7 +3,7 @@ Test ec.utils.
 """
 import unittest
 
-from ec.utils import get, static, custom
+from ec.utils import get, static, custom, walk
 
 from support.helpers import RawInputHook as RIH, expect_exception
 
@@ -39,5 +39,19 @@ class TestUtils(unittest.TestCase):
     assert(expect_exception(lambda: _type(2), ValueError))
     assert(expect_exception(lambda: _type('a'), ValueError))
   
+  def test_walk(self):
+    from targets import simple
+    from ec import interface
+    
+    interface.setBase(simple)
+    
+    expected = set(['task1', 'group1', 'ex', 'hex'])
+    got = set()
+    
+    for Member in walk(simple.__ec_member__):
+      got.add(Member.Config['name'])
+      
+    assert(expected == got)
+    
 if __name__ == '__main__':
   unittest.main()

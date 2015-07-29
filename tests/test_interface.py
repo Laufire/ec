@@ -12,6 +12,7 @@ from ec.modules.classes import HandledException
 from targets import simple
 from support.helpers import expect_exception
 
+# Main
 interface.setBase(simple)
 
 class TestInterface(unittest.TestCase):
@@ -79,6 +80,8 @@ class TestInterface(unittest.TestCase):
     assert(interface.call('added arg1=1') == 1)
     
     assert(expect_exception(lambda: interface.call('added arg1=a'), HandledException))
+    
+    del simple.__ec_member__.Members['added'] # remove the added member
     
 if __name__ == '__main__':
   unittest.main()

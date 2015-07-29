@@ -213,4 +213,5 @@ Log
   * 1010  Improved the API docs.
   * 1425  Moved the test targets from tests/support to tests/targets.
   * 1455  Introduced ec.exit_hook, a decorator that helps with adding **cleanup** functions.
+  * 1930  utils.walk introduced.
   
