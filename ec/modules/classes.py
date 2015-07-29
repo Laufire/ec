@@ -77,9 +77,7 @@ class Task(Member):
     _type = ArgConfig.get('type')
     
     if _type and hasattr(_type, '__ec_config__'):
-      Config = _type._Config.copy() #pylint: disable=W0212
-      Config.update(ArgConfig)
-      ArgConfig = Config
+      ArgConfig = dict(_type._Config, **ArgConfig) #pylint: disable=W0212
       _type.__ec_config__(ArgConfig)
       
     if not 'desc' in ArgConfig:
@@ -177,6 +175,15 @@ class Group(Member):
     
 class CustomType:
   """The base class for custom types.
+  
+  Args:
+    **Config (kwargs): Configuration for the custom type.
+    
+  Config:
+    type_str (str, optional): The string representation of the type.
+    
+  Note:
+    Config supports the same keywords as config.arg, with some additions to it. While inheriting the class, these keywords shouldn't be used as variable name.
   """  
   def __init__(self, **Config):
     self._Config = Config

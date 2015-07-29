@@ -18,6 +18,9 @@ __all__ = ['setBase', 'resolve', 'call', 'force_config', 'add']
 # Exports
 def setBase(Underlying):
   """Sets the base for the interface to work on.
+  
+  Args:
+    Underlying (Group): The Group set as the base, from which all the commands are resolved.
   """
   core.processPendingModules()
   core.BaseGroup = Underlying.__ec_member__
@@ -38,6 +41,7 @@ def call(command, collect_missing=False):
   
   Args:
     command (str): A route followed by params (as if it were entered in the shell).
+    collect_missing (bool): Collects any missing argument for the command through the shell. Defaults to False.
     
   Returns:
     The return value of the called command.
@@ -54,11 +58,17 @@ def force_config():
   core.processModule(getCallingModule().__name__)
   
 
-def add(ParentUL, ChildUL, Config=None, Args=None):
-  """Adds members to existing groups.
+def add(TargetGroup, NewMember, Config=None, Args=None):
+  """Adds members to an existing group.
+  
+  Args:
+    TargetGroup (Group): The target group for the addition.
+    NewMember (Group / Task): The member to be added.
+    Config (dict): The config for the member.
+    Args (OrderedDict): ArgConfig for the NewMember, if it's a task (optional).
   """
-  Member = Task(ChildUL, Args or {}, Config) if isfunction(ChildUL) else Group(ChildUL, Config)
-  ParentMembers = ParentUL.__ec_member__.Members
+  Member = Task(NewMember, Args or {}, Config) if isfunction(NewMember) else Group(NewMember, Config)
+  ParentMembers = TargetGroup.__ec_member__.Members
   
   ParentMembers[Member.Config['name']] = Member
   

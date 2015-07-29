@@ -19,8 +19,8 @@ could be accessed from the command line, like:
   $ python hello.py say_hello
     Hello, world!
   
-ec - also supports
-------------------
+Features
+--------
 
 * Typed arguments.
 

@@ -6,6 +6,8 @@ Tasks
 
 * Add usage document for the UI. ie: shell mode, partial args, positonal args etc.
 
+* Add usage documents for the API.
+
 * Add a **Change log** file that lists important changes across versions.
 
 * Add api docs and more docstrings.
@@ -14,7 +16,7 @@ Tasks
 
 * Test custom types (doctest?).
 
-* Make nut_shell.py as the target_script for the tests.
+* Make nut_shell.py the target_script for the tests.
 
 * More documentation for the custom types.
 
@@ -22,8 +24,8 @@ Tasks
 
   * Dynamic configuration of CustomTypes.
 
-Features
---------
+Later
+-----
 
 * **-t**, a dispatch mode flag to show the entire command tree.
 
@@ -39,6 +41,8 @@ Fix
 
 Check
 -----
+* hepler_tasks.reload, which reload the app (while in shell mode), in order to ease development.
+
 * Checking for __init__.py before launching the dirs, to be more pythonic.
 
 * A ec.main decorator to act as the entry point for the modules, to allow the pre-processing of the modules etc.

@@ -57,11 +57,11 @@ class intro:
     """
     print message
     
-  name = 'intro' #: Groups could even have ec variables.
+  name = 'intro' # Groups could even have variables.
   
 # importing other modules
 import simple
-member(simple)
+member(simple) # member is used to expose imported members as the children of the current module
 
 module(desc='A module to test decorator based configuration.') # module is an optional call, used to configure the group that wraps current module.
 

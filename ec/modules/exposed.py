@@ -13,7 +13,7 @@ def get(desc='', type=None, **KwArgs):
     type (type / CustomType): The type of the input (defaults to None).
     
   Notes:
-    * The arg **default** is made to be a part pf KwArgs, rather than an explicit argument, in order to allow the declaration of 'None' as the default value.
+    * When a description is not provided, the Kwarg 'name' is expected; which will be used along with the keys 'default' and 'type' to generate a description.
     * KwArgs acts as a data container for unexpected attibutes that are used by underlying helpers.
   """
   if not desc:
@@ -39,8 +39,7 @@ def get(desc='', type=None, **KwArgs):
       err('<invalid value>')
   
 def static(cls):
-  """Converts the given class into a 
-  one, by changing all the methods of it into static methods.
+  """Converts the given class into a static one, by changing all the methods of it into static methods.
   
   Args:
     cls (class): The class to be converted.

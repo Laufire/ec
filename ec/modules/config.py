@@ -37,6 +37,11 @@ def decorator(func):
 @decorator
 def task(__decorated__=None, **Config):
   """A decorator to make tasks out of functions.
+  
+  Config:
+    * name (str): The name of the task. Defaults to __decorated__.__name__.
+    * desc (str): The description of the task (optional).
+    * alias (str): The alias for the task (optional).
   """
   if isinstance(__decorated__, tuple):  # the task has some args
     _Task = Task(__decorated__[0], __decorated__[1], Config=Config)
@@ -51,6 +56,11 @@ def task(__decorated__=None, **Config):
 def arg(name=None, **Config): # wraps the _arg decorator, in order to allow unnamed args
   """A decorator to configure an argument of a task.
   
+  Config:
+    * name (str): The name of the arg. When ommited the agument will be identified through the order of configuration.
+    * desc (str): The description of the arg (optional).
+    * type (type, CustomType, callable): The alias for the task (optional).
+    
   Notes:
     * It always follows a @task or an @arg.
   """
@@ -71,13 +81,18 @@ def _arg(__decorated__, **Config):
     return __decorated__, [Config] # this decorator is the first arg decorator
   
 @decorator
-def group(Underlying, **Config):
+def group(__decorated__, **Config):
   """A decorator to make groups out of classes.
-  """
-  _Group = Group(Underlying, Config)
   
-  if isclass(Underlying): # conver the method of the class to static methods so that they could be accessed like object methods; ir: g1/t1(...).
-    static(Underlying)
+  Config:
+    * name (str): The name of the group. Defaults to __decorated__.__name__.
+    * desc (str): The description of the group (optional).
+    * alias (str): The alias for the group (optional).
+  """
+  _Group = Group(__decorated__, Config)
+  
+  if isclass(__decorated__): # conver the method of the class to static methods so that they could be accessed like object methods; ir: g1/t1(...).
+    static(__decorated__)
     
   state.ActiveModuleMemberQ.insert(0, _Group)
   
@@ -86,12 +101,18 @@ def group(Underlying, **Config):
 # Methods
 def module(**Config):
   """Helps with adding configs to Modules.
+  
+  Note:
+    Config is a same as that of **group**.
   """
   Underlying = getCallingModule()
   Underlying.__ec_member__.Config.update(**Config)
   
 def member(Imported, **Config):
   """Helps with adding imported members to Scripts.
+  
+  Note:
+    Config depends upon the Imported. It could be that of a **task** or a **group**.
   """
   __ec_member__ = Imported.__ec_member__
   __ec_member__.Config.update(**Config)

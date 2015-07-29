@@ -207,3 +207,8 @@ Log
   * 1800  Failure logs of several tests have been improved to display more data.
   * 2015  Bug fixed: Several tests based on test_dispatch.py weren't tested.
   
+* 20150729
+
+  * 0700  utils.custom is now a CustomType (was a function). The change is made to allow dynamic configuration.
+  * 1010  Improved the API docs.
+  

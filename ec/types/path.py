@@ -3,12 +3,17 @@ path
 ====
 Types for handling paths.
 """
-from os import path
+from os import path, sep
 
 from ..modules.classes import CustomType
 
 class PathBase(CustomType):
   """The base class for several path types.
+  
+  Args:
+    func (callable): The function to process the value.
+    ret : The expected return value from func. The values that ail the expectation are invalid.
+    **Config (kwargs): Configuration for the custom type.
   """  
   def __init__(self, func, ret=True, **Config):
     CustomType.__init__(self, **Config)
@@ -28,8 +33,7 @@ isdir = PathBase(path.isdir, type_str='a dir')
 isfile = PathBase(path.isfile, type_str='a file')
 isabs = PathBase(path.isabs, type_str='an absolute path')
 isrelative = PathBase(path.isabs, False, type_str='a relative path')
-
-# ToDo: 'dynamic' a CustomType that could dynamically construct objects based on other custom types.
+ischild = PathBase(path.isabs, False, type_str='a relative path')
 
 def exists_in(root): # ToDo: Replace this function with a CustomType based class
   return PathBase(lambda val: path.exists(path.join(root, val)), type_str='a path inside %s' % root)

@@ -13,8 +13,8 @@ from modules import hooks
   
 # Exports
 __all__ = [
+  'task', 'arg', 'group', 'module', 'member',
   'settings', 'call',
-  'task', 'arg', 'group', 'module', 'member'
 ]
 
 def settings(**NewSettings):
@@ -38,7 +38,8 @@ def call(__ec_func__, *Args, **KwArgs):
   
   Args:
     __ec_func__: A function that has been configured for ec.
-    **KwArgs: Partial args for the function.
+    **Args: Partial args for the function.
+    **KwArgs: Partial kwargs for the function.
     
   Notes:
     * The param name **__ec_func__** is chosen, in order to avoid collision with the **KwArgs**.
