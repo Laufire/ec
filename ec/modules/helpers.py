@@ -173,25 +173,13 @@ def getTaskHelp(_Task):
   
   if Args:
     Ret.append('\nArgs:')
-    Props = ['desc', 'default']
     
     for argName, Arg in Args.items():
-      Ret.append('  name: %s' % argName)
+      Ret.append('  %s: %s' % (argName, Arg.get('desc', Arg['type_str'])))
       
-      for k in Props:
-        v = Arg.get(k)
-        
-        if v is not None:
-          Ret.append('  %s: %s' % (k, v))
-      
-      Ret.append('')
-      
-      if 'type' in Arg:
-        Ret.insert(4, '  type: %s' % getTypeStr(Arg['type']))
-      
-    Ret.pop()
+    Ret.append('')
     
-  return '\n'.join(Ret)
+  return '\n'.join(Ret).rstrip()
 
 # Cross Dependencies
 import core

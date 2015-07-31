@@ -13,15 +13,15 @@ def get(desc='', type=None, **KwArgs):
     type (type / CustomType): The type of the input (defaults to None).
     
   Notes:
-    * When a description is not provided, the Kwarg 'name' is expected; which will be used along with the keys 'default' and 'type' to generate a description.
+    * When 'desc' is not provided, the Kwarg 'name' and 'type_str' are expected; which will be used to generate a description.
     * KwArgs acts as a data container for unexpected attibutes that are used by underlying helpers.
   """
   if not desc:
-    desc = '%s%s: ' % (getAutoDesc(KwArgs), ', %s' % type if isinstance(type, CustomType) else '')
-  
+    desc = '{name}, {type_str}'.format(**KwArgs)
+    
   while True:
     try:
-      got = raw_input(desc)
+      got = raw_input('%s: ' % desc)
       
     except EOFError:
       got = None
@@ -52,5 +52,5 @@ def static(cls):
   return cls
   
 # Cross dependencies
-from helpers import err, getAutoDesc
+from helpers import err
 from classes import CustomType

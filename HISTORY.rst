@@ -222,5 +222,9 @@ Log
 * 20150731
 
   * 0700  Config['name'] is now validated.
-  
+  * 1300  Introduced eccontrib.sphinxdoc: An autodoc inspired sphinx exetnsion, that could document ec based scripts and their members.
+  * 1640  CustomTypes doesn't require the 'default' value during construction, anymore.
+  * 1700  Bettered the handling of descriptions, by ensuring the availabiliy of 'type_str' in all arg config.
+  * 1825  Class, **types.basics.yn** is now **YN**. And **yn** is now the default singleton of YN.
+  * 1950  Realigned tools/main.py to be more readable. Thus setting an example for readable writing.
   

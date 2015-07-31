@@ -36,5 +36,5 @@ isrelative = PathBase(path.isabs, False, type_str='a relative path')
 ischild = PathBase(path.isabs, False, type_str='a relative path')
 
 def exists_in(root): # ToDo: Replace this function with a CustomType based class
-  return PathBase(lambda val: path.exists(path.join(root, val)), type_str='a path inside %s' % root)
+  return PathBase(lambda val: path.exists(path.join(root, val)), type_str='a path under %s' % root)
   

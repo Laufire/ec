@@ -77,6 +77,8 @@ Learned
 
 * Reading good code could help writting good code.
 
+* Data inputs should be preserved, they might have additions, but not editions or deletions.
+
 Decisions
 ---------
 * The methods to be used by the loaded scripts are added to __builtins__, in order to avoid an explicit import of ec from the script; which will load a separate instance of ec and complicate the passing of data between the two instances.

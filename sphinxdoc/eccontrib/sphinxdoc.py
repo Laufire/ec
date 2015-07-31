@@ -14,7 +14,7 @@ from sphinx.addnodes import desc, desc_name, desc_addname, desc_content, desc_si
 def getArgDesc(Arg):
   _type = Arg.get('type')
   
-  return '- %s%s' % (Arg['desc'], ', %s.' % _type if _type and hasattr(_type, '__ec_config__') else '')
+  return Arg.get('desc', Arg['type_str'])
 
 def getArgLabel(Arg):
   return (desc_parameter if not 'default' in Arg else desc_optional)('', Arg['name'])
@@ -24,8 +24,8 @@ def getArgsContent(Args):
   
   for name, Arg in Args.items():
     Content = desc_content()
-    Content.append(desc_name(text=name))
-    Content.append(compact_paragraph(text=getArgDesc(Arg)))
+    Content.append(desc_name(text='%s: ' % name))
+    Content.append(compact_paragraph(text='%s.' % getArgDesc(Arg)))
     Container.append(Content)
     
   return Container

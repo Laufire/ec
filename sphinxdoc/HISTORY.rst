@@ -12,4 +12,5 @@ Log
 * 150731
 
   * 1000  Made an installable package.
+  * 1740  Incorporated changes from ec.
   

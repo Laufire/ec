@@ -77,13 +77,19 @@ class Task(Member):
     """
     _type = ArgConfig.get('type')
     
-    if _type and hasattr(_type, '__ec_config__'):
-      ArgConfig = dict(_type._Config, **ArgConfig) #pylint: disable=W0212
-      _type.__ec_config__(ArgConfig)
-      
-    if not 'desc' in ArgConfig:
-      ArgConfig['desc'] = getAutoDesc(ArgConfig)
+    if _type:
+      if hasattr(_type, '__ec_config__'): # pass the ArgConfig to the CustomType
+        _type.__ec_config__(ArgConfig)
+        
+      else:
+        ArgConfig['type_str'] = _type.__name__ if isinstance(_type, type) else 'custom type'
+        
+        if 'default' in ArgConfig:
+          ArgConfig['type_str'] += ' (%s)' % ArgConfig['default']
     
+    else:
+      ArgConfig['type_str'] = 'str (%s)' % ArgConfig['default'] if 'default' in ArgConfig else ''
+      
     return ArgConfig
     
   def __confirm_known_args__(self, InArgs):
@@ -182,10 +188,7 @@ class CustomType:
   """  
   def __init__(self, **Config):
     self._Config = Config
-    
-    if 'type_str' in Config:
-      self.str = Config['type_str']
-      del Config['type_str'] # type_str has to be deleted as the Config might be added to that of the Arg.
+    self.str = Config['type_str'] if 'type_str' in Config else 'custom type'
   
   def __str__(self):
     """Used to represent the type as a string, in messages and queries.
@@ -205,8 +208,13 @@ class CustomType:
       
       * This method is called by Task.__config_arg__ to allow CustomTypes to modify the configuration of the calling arg.
       * This is the signature method used for duck typing CustomType.
-      * With custom implementations the methos should return the modified ArgConfig.
+      * With custom implementations the method should return the modified ArgConfig.
     """
+    if 'default' in ArgConfig:
+      self.str += ' (%s)' % ArgConfig['default']
+      
+    ArgConfig['type_str'] = self.str
+    
     return ArgConfig
     
 # Helper Classes
@@ -246,4 +254,4 @@ def _getFuncArgs(func):
   
 # Cross dependencies
 from exposed import get, static
-from helpers import err, ismodule, getAutoDesc, validateName
+from helpers import err, ismodule, validateName
