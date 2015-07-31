@@ -22,7 +22,6 @@ import os
 #sys.path.insert(0, os.path.abspath('.'))
 
 # Get the project root dir, which is the parent dir of this
-cwd = os.getcwd()
 project_root = os.path.abspath("../")
 
 # Insert the project root dir as the first element in the PYTHONPATH.
@@ -39,7 +38,7 @@ import ec
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc', 'sphinxcontrib.napoleon', 'sphinx.ext.viewcode', 'sphinxcontrib.spelling']
+extensions = ['sphinx.ext.autodoc', 'sphinxcontrib.napoleon', 'sphinx.ext.viewcode', 'sphinxcontrib.spelling', 'eccontrib.sphinxdoc']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

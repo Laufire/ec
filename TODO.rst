@@ -1,5 +1,6 @@
 ToDo
 =====
+
 Tasks
 -----
 * Test for cross environment compatibility.
@@ -15,6 +16,8 @@ Tasks
 * Test all the cases of HandledException-s.
 
 * Test custom types (doctest?).
+
+* Extract **sphinxdoc** as a separate package.
 
 * Make nut_shell.py the target_script for the tests.
 
@@ -73,6 +76,4 @@ Check
   
 Later
 -----
-* An autodoc extension, to document tasks and groups instead of methods and classes: There are some issues with using autodoc, for example a renamed task is still being documented under the original function name.
-
 * Externally adding params to modules that weren't designed for ec.

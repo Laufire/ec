@@ -16,6 +16,7 @@ Contents:
    usage
    api
    todo
+   sphinxdoc
    design
    dev_notes
    authors
