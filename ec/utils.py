@@ -38,14 +38,24 @@ def walk(TargetGroup=None):
   
   Args:
     TargetGroup (Group): The target to walk. Defaults to the BaseGroup.
+    
+  Yields:
+    Member
   """
   if TargetGroup is None:
     TargetGroup = core.BaseGroup
     
-  for Member in TargetGroup.Members.values():
+  return _walk_worker(TargetGroup)
+  
+# Helpers
+def _walk_worker(TargetGroup): # Check: Could the generator yield Member, Parent?
+  for name, Member in TargetGroup.Members.items():
+    if Member.Config.get('alias') == name: # don't process aliases
+      continue
+      
     yield Member
     
     if hasattr(Member, 'Members'): # we've got a Group
-      for item in walk(Member):
+      for item in _walk_worker(Member):
         yield item
-      
+        

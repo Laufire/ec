@@ -31,13 +31,14 @@ Later
 
 Issues
 ------
-
-* *None, yet.*
-
-Fix
----
-
 * In the API docs - the decorators, task, arg, group etc are listed as functions.
+
+
+* Adding a reference to the parent Group on the Members.
+
+* On missing tasks, the help lists the members of the base, instead of the last resolved group.
+
+* Missing scripts does not error. Ex: python -m ec tests/support simple/task1 arg1=1.
 
 Check
 -----

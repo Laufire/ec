@@ -215,3 +215,12 @@ Log
   * 1455  Introduced ec.exit_hook, a decorator that helps with adding **cleanup** functions.
   * 1930  utils.walk introduced.
   
+* 20150730
+
+  * 1700  Bug fixed: utils.walk was walking over aliases too.
+  
+* 20150731
+
+  * 0700  Config['name'] is now validated.
+  
+  

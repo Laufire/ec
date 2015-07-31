@@ -11,6 +11,12 @@ class Member():
   def __init__(self, Underlying, Config):
     __ec_member__ = getattr(Underlying, '__ec_member__', None)
     
+    if 'name' in Config:
+      validateName(Config['name'])
+      
+    else:
+      Config['name'] = getattr(Underlying, 'func_name', Underlying.__name__).rsplit('.', 1)[-1]
+    
     if __ec_member__:
       __ec_member__.Config.update(Config)
       self.Config = __ec_member__.Config
@@ -24,14 +30,7 @@ class Member():
 class Task(Member):
   """A callable class that allows the calling of the underlying function as a task.
   """
-  def __init__(self, Underlying, Args, Config=None):
-    
-    if Config is None:
-      Config = {}
-      
-    if not 'name' in Config:
-      Config['name'] = Underlying.func_name.rsplit('.', 1)[-1]
-      
+  def __init__(self, Underlying, Args, Config):
     Member.__init__(self, Underlying, Config)
     
     self.Args = self.__load_args__(Args)
@@ -54,6 +53,8 @@ class Task(Member):
         FuncArg = FuncArg[1]
         
       else:
+        validateName(argName)
+        
         FuncArg = FuncArgs.get(argName)
         
         if FuncArg is None:
@@ -164,13 +165,7 @@ class Group(Member):
   Note:
     Groups that have modules as their underlying would have it's members loaded by ec.start.
   """
-  def __init__(self, Underlying, Config=None):
-    if Config is None:
-      Config = {}
-    
-    if not 'name' in Config:
-      Config['name'] = Underlying.__name__.rsplit('.', 1)[-1]
-    
+  def __init__(self, Underlying, Config):
     Member.__init__(self, Underlying, Config or {})
     
 class CustomType:
@@ -251,4 +246,4 @@ def _getFuncArgs(func):
   
 # Cross dependencies
 from exposed import get, static
-from helpers import err, ismodule, getAutoDesc
+from helpers import err, ismodule, getAutoDesc, validateName

@@ -10,11 +10,11 @@ with open('README.rst') as readme_file:
     readme = readme_file.read()
 
 requirements = [
-    # TODO: put package requirements here
+    # ToDo: put package requirements here
 ]
 
 test_requirements = [
-    # TODO: put package test requirements here
+    # ToDo: put package test requirements here
 ]
 
 import ec
@@ -27,7 +27,9 @@ setup(
     author=ec.__author__,
     author_email=ec.__email__,
     url='https://github.com/Laufire/ec',
+    download_url='https://pypi.python.org/pypi/ec',
     packages=find_packages(),
+    platforms='any',
     include_package_data=True,
     install_requires=requirements,
     license="MIT",
@@ -35,13 +37,17 @@ setup(
     keywords='ec command line cli interactive launch argument script dir shell dispatch decorator task arg group sub-commands type custom-type',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
+        'Environment :: Console',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
+        'Operating System :: OS Independent',
         'Natural Language :: English',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
+        'Topic :: Software Development',
+        'Topic :: Utilities',
     ],
     entry_points={
         'console_scripts': [

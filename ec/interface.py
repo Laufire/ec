@@ -67,7 +67,7 @@ def add(TargetGroup, NewMember, Config=None, Args=None):
     Config (dict): The config for the member.
     Args (OrderedDict): ArgConfig for the NewMember, if it's a task (optional).
   """
-  Member = Task(NewMember, Args or {}, Config) if isfunction(NewMember) else Group(NewMember, Config)
+  Member = Task(NewMember, Args or {}, Config or {}) if isfunction(NewMember) else Group(NewMember, Config or {})
   ParentMembers = TargetGroup.__ec_member__.Members
   
   ParentMembers[Member.Config['name']] = Member
