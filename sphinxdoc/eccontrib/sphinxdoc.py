@@ -8,9 +8,22 @@ __version__ = '0.0.1'
 from docutils import nodes
 from docutils.nodes import paragraph
 from docutils.parsers.rst import Directive
+from docutils.core import publish_doctree
+
 from sphinx.addnodes import desc, desc_name, desc_addname, desc_content, desc_signature, desc_parameterlist, desc_parameter, desc_optional, compact_paragraph
 
 # Helpers
+def getNodeTreeFromStr(string):
+  """Gets a node tree from the given string.
+  
+  Check:
+  
+    * Is there a better implementation? The current one seems a bit hackish.
+  """
+  document = publish_doctree(string)
+  
+  return list([node for node in document.traverse()[1:] if node.parent == document]) # we've to return the chidren of the document, as returning the document itself, seems to duplicate the content of the current file being processed.
+  
 def getArgDesc(Arg):
   _type = Arg.get('type')
   
@@ -39,7 +52,8 @@ def getMemberContent(Member, *Children):
   
   doc = Member.Underlying.__doc__
   if doc:
-    Content.insert(0, paragraph(text=doc))
+    Content.insert(0, getNodeTreeFromStr(doc)) # add the parsed docstring to the content.
+    
   
   if 'desc' in Config:
     Content.insert(0, paragraph(text=Config['desc']))

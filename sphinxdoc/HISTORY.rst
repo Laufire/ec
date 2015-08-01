@@ -11,6 +11,9 @@ Log
 
 * 150731
 
-  * 1000  Made an installable package.
-  * 1740  Incorporated changes from ec.
-  
+	* 1000	Made an installable package.
+	* 1740	Incorporated changes from ec.
+	
+* 150801
+
+	* 1715	DocStrings of the Members are now parsed as simple RST and added to the documentation. It took ~12hrs, chiefly due to the ineperience with the underlying APIs.
