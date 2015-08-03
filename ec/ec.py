@@ -38,8 +38,8 @@ def call(__ec_func__, *Args, **KwArgs):
   
   Args:
     __ec_func__: A function that has been configured for ec.
-    **Args: Partial args for the function.
-    **KwArgs: Partial kwargs for the function.
+    \*Args: Partial args for the function.
+    \*\*KwArgs: Partial kwargs for the function.
     
   Notes:
     * The param name **__ec_func__** is chosen, in order to avoid collision with the **KwArgs**.

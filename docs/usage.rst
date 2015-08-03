@@ -40,7 +40,13 @@ From the command line enter
     1 2
     
   $ python simple.py group1/task1 arg1=1
-    2
+    11
+    
+  $ python simple.py group1/task1 1 # positional arg
+    11
+    
+  $ python simple.py group1/task1 +\=1 # escape '=' with a '\' when it's a part of a positional argument
+    +=1+=1
     
     
 An advanced example (wrapping ec to extend it)
@@ -57,7 +63,7 @@ A nut shell example
 
 Documentation of nut_shell.py
 +++++++++++++++++++++++++++++
-.. automodule:: nut_shell
+.. ec_module:: nut_shell
     :members:
     :undoc-members:
     :show-inheritance:

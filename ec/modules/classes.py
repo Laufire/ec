@@ -102,7 +102,7 @@ class Task(Member):
         raise HandledException('Unknown arg: %s.' % k, Member=self)
   
   def __digest_args__(self, InArgs, InKwArgs):
-    """Digests the given Args and KwArgs and return a singele KwArgs dictionary.
+    """Digests the given Args and KwArgs and returns a KwArgs dictionary.
     """
     KwArgs = {}
     ArgKeys = self.Args.keys()

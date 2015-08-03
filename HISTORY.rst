@@ -228,3 +228,7 @@ Log
   * 1825  Class, **types.basics.yn** is now **YN**. And **yn** is now the default singleton of YN.
   * 1950  Realigned tools/main.py to be more readable. Thus setting an example for readable writing.
   
+* 20150801
+
+  * 0110  Ec now uses the development version of sphinxdoc, through the link **docs/eccontrib**.
+  

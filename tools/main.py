@@ -137,7 +137,6 @@ class devLinks:
     'tools', '.trial'
   ]
   
-  
   @task(desc='Creates link to the main ec dir for developing convinience.')
   def create(dir=None):
     """
@@ -151,11 +150,14 @@ class devLinks:
       for dir in devLinks.EcDirs:
         devLinks.linkEc(dir)
     
+    make_link('sphinxdoc/eccontrib', 'docs/eccontrib-dev')
     
   @task(desc='Clears the links to the ec dir, under all devLinks.EcDirs.')
   def clear():
     for dir in devLinks.EcDirs:
       rmdir('%s/ec' % dir)
+      
+    rmdir('docs/eccontrib-dev')
   
   # Helpers
   def linkEc(dir):
@@ -163,5 +165,3 @@ class devLinks:
     
 # Main
 os.chdir(project_root) # ensure that the project_root is the CWD
-
-settings(dev_mode=True) # we need a detailed trace, hence this is a developer tool.

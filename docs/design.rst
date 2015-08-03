@@ -61,6 +61,8 @@ Thoughts
 --------
 * **scriptlets** - plugin like mini-programs that could accomplish specific tasks.
 
+* Example script to serve as the documentation, as well as the targets for the tests. To keep it DRY.
+
 Learned
 -------
 * With experience errors get reduced.
@@ -78,6 +80,9 @@ Learned
 * Reading good code could help writting good code.
 
 * Data inputs should be preserved, they might have additions, but not editions or deletions.
+
+* Complex and humongus classes makes the implementation inflexible and complex to understand. In a flexible design classes should be simple, with most processing happens in flow *(the path of functions, through which the objects of the classes pass through)*. In other words: A program with a more functions that handle simple objects is more flexible than a programm that combines classes to achieve the same.
+
 
 Decisions
 ---------

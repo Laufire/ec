@@ -28,7 +28,8 @@ project_root = os.path.abspath("../")
 # This lets us ensure that the source package is imported, and that its
 # version is used.
 sys.path.insert(0, project_root)
-sys.path.insert(0, os.path.abspath("../scripts/examples")) # allow autodoc on nut_shell.py
+sys.path.insert(0, os.path.abspath("../scripts/examples")) # allow autodoc and sphinxdoc on nut_shell.py
+sys.path.insert(0, os.path.abspath('.'))
 
 import ec
 # -- General configuration ---------------------------------------------
@@ -38,7 +39,10 @@ import ec
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc', 'sphinxcontrib.napoleon', 'sphinx.ext.viewcode', 'sphinxcontrib.spelling', 'eccontrib.sphinxdoc']
+extensions = ['sphinx.ext.autodoc', 'sphinx.ext.viewcode', 'sphinxcontrib.spelling',
+  
+  'eccontrib-dev.sphinxdoc' # the suffix, -dev has been added to the name to make sure that sphinx gets the extension from the development copy (the extension resolution of sphinx differs from generic module resolution)
+]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

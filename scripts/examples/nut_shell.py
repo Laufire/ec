@@ -1,7 +1,5 @@
 """
-nut_shell
-=========
-  Everything about using ec: this module is designed to be a nut shell guide to ec and as a way to enable test driven development.
+Everything about using ec. this module is designed to be a nut shell guide to ec and as a way to enable test driven development.
   
 Notes
 -----
@@ -24,10 +22,9 @@ def task1(arg1, arg3=3, arg2=2):
   """
   print arg1, arg2, arg3
 
-@group(alias='i', desc = 'Description for group1.')
+@group(alias='i', desc = 'A group.')
 class intro:
-  """A group.
-  
+  """
     Groups can contain tasks and other groups within them.
     This group has an alias; thus could be identified as **intro** or **i**. Tasks to could have aliases.
   """
@@ -53,7 +50,7 @@ class intro:
     print get(desc='Email id', type=regex.email)
     
   def log(message):
-    """Helper methods, are intended to help the tasks. They are often declared as static methods, due to them being members of unintantiated classes.
+    """A helper method.
     """
     print message
     
@@ -61,7 +58,7 @@ class intro:
   
 # importing other modules
 import simple
-member(simple) # member is used to expose imported members as the children of the current module
+member(simple) # member() is used to expose imported members as the children of the current module
 
 @exit_hook
 def clean_up(): # exit hooks are called when ec exits. There may be more than one hook.

@@ -5,6 +5,8 @@ Tasks
 -----
 * Test for cross environment compatibility.
 
+* Make the development possible with other platforms. The current structre depends upon some windows only features like dir junctions.
+
 * Add usage document for the UI. ie: shell mode, partial args, positonal args etc.
 
 * Add usage documents for the API.
@@ -32,6 +34,8 @@ Later
 
 * **-t**, a dispatch mode flag to show the entire command tree.
 
+* Coverage for tests.
+
 Issues
 ------
 * In the API docs - the decorators, task, arg, group etc are listed as functions.
@@ -45,6 +49,12 @@ Issues
 
 Check
 -----
+* Supporting \*args. Though it's possible to implement it with a minimum effort, the following things need to be considered.
+  
+  * How to implement \*args in the shell mode? Posibblly using ^Z to specify the ending?
+  
+  * How to other packages handle \*args? Ex: **argparse.nargs**.
+  
 * hepler_tasks.reload, which reload the app (while in shell mode), in order to ease development.
 
 * Checking for __init__.py before launching the dirs, to be more pythonic.
