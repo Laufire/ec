@@ -30,7 +30,11 @@ def getArgDesc(Arg):
   return Arg.get('desc', Arg['type_str'])
 
 def getArgLabel(Arg):
-  return (desc_parameter if not 'default' in Arg else desc_optional)('', Arg['name'])
+  if 'default' in Arg:
+    return desc_optional('', '{name}={default}'.format(**Arg))
+    
+  else:
+    return (desc_parameter if not 'default' in Arg else desc_optional)('', Arg['name'])
 
 def getArgsContent(Args):
   Container = desc('', desc_signature(text='Args'), objtype="Args")
@@ -114,7 +118,7 @@ def getModuleTree(Module, prefix):
   
   Section = nodes.section()
   Section  += nodes.title(text=getMemberTitle(Module.Config))
-  Section += getChildren(Module, prefix)
+  Section += getMemberContent(Module, *getChildren(Module, prefix))
   
   return Elms + [Section]
   

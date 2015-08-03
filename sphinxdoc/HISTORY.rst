@@ -17,3 +17,9 @@ Log
 * 150801
 
 	* 1715	DocStrings of the Members are now parsed as simple RST and added to the documentation. It took ~12hrs, chiefly due to the ineperience with the underlying APIs.
+	
+* 150803
+
+	* 1730	Titles of the Task members, now show the default values too.
+	* 1745	Bug fixed: DocStrings of the Modules weren't processed.
+	

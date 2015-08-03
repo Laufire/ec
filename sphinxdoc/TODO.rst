@@ -13,3 +13,8 @@ Check
 -----
 
 * Using absolute paths like rst's **include** directive, instead of autodoc styled imports. Beware of module path collisions.
+
+Issues
+------
+
+* An error is raised when the doctstrings have a title.
