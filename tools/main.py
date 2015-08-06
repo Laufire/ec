@@ -54,14 +54,19 @@ def test(name=None):
     
 @group(desc='Doc handling tasks.')
 class docs:
-  @task
+
+  @task(desc='Check the docs for spelling mistakes.')
   def spellcheck():
+    
     assert(run('sphinx-build -b spelling -d _build/doctrees  . _build/_spelling', cwd='docs') == 0)
 
-  @task
-  def check():
-    assert(run('rst-lint README.rst') == 0)
     
+  @task(desc='Check the docs for errors.')
+  def check():
+  
+    assert(run('rst-lint README.rst') == 0)
+  
+  
   @task(desc='Makes the docs.')
   @arg(type=yn)
   @arg(type=yn)
@@ -123,6 +128,7 @@ class pkg:
 
 @task(desc='Pushes the repo to origin.')
 def push():
+
   assert(run('git push origin master') == 0)
   
 @group(desc='Create / Clear devLinks.')
@@ -151,6 +157,7 @@ class devLinks:
         devLinks.linkEc(dir)
     
     make_link('sphinxdoc/eccontrib', 'docs/eccontrib-dev')
+    
     
   @task(desc='Clears the links to the ec dir, under all devLinks.EcDirs.')
   def clear():

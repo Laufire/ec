@@ -1,6 +1,6 @@
 History
 =======
-v0.2.2 (2015-07-28 1640 +0530)
+v0.2.3 (2015-08-06 1555 +0530)
 ------------------------------
 
 Log
@@ -235,5 +235,6 @@ Log
 * 20150806
 
   * 0255  modules.helpers.exit is exposed as utils.exit, to allow the scripts to exit in a thread safe manner.
-  
+  * 1535  Bug fixed: core.processModule wasn't adding group members to the groups that were the first member of their module.
+  * 1555  v0.2.3 released.
   

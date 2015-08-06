@@ -61,7 +61,7 @@ def execCommand(Argv, collect_missing):
       
       message = ''.join(traceback.format_exception(etype, value, tb))[:-1]
       
-    else: 
+    else:
       if isinstance(e, HandledException): # let the modes handle the HandledException
         raise e
         
@@ -116,6 +116,7 @@ def processModule(module_name):
   MembersTarget = []
   ClassQ = []
   Cls = None
+  ClsGroup = None
   ClsGrpMembers = []
   
   for Member in ModuleMembers[module_name]:
@@ -144,7 +145,8 @@ def processModule(module_name):
         ClsGroup.Members = OrderedDict(ClsGrpMembers)
         ClsGrpMembers = []
         ClassQ.pop()
-        Cls = None        
+        Cls = None
+        ClsGroup = None
     
     if isunderlying(Underlying):
       if member_alias:
@@ -155,6 +157,9 @@ def processModule(module_name):
       if isclass(Underlying):
         ClassQ.append(Underlying.__ec_member__)
         
+  if ClsGroup:
+    ClsGroup.Members = OrderedDict(ClsGrpMembers)
+  
   ModuleMembers[module_name] = []  # remove the existing members from the cache so that they won't be processed again
   
   if not hasattr(Module.__ec_member__, 'Members'):
