@@ -7,8 +7,9 @@ A set of utility functions for the scripts.
 from modules.exposed import get, static
 from modules.classes import CustomType
 from modules import core
+from modules.helpers import exit
 
-__all__ = ['get', 'static', 'custom', 'walk']
+__all__ = ['get', 'static', 'custom', 'walk', 'exit']
 
 class custom(CustomType):
   """Helps with creating dynamic CustomTypes on the fly.

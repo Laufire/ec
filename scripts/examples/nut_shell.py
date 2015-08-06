@@ -41,12 +41,14 @@ class intro:
     
   @task
   def wrapper():
-    """Calls nut_shell.simple with some arguments, the args that aren't provided will be collected."""
+    """Calls nut_shell.simple with some arguments, the args that aren't provided will be collected.
+    """
     call(simple, arg1=1, arg2=2)
     
   @task
   def get():
-    """Get user input through utils.get."""
+    """Get user input through utils.get.
+    """
     print get(desc='Email id', type=regex.email)
     
   def log(message):

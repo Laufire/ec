@@ -73,7 +73,7 @@ class Task(Member):
     return OrderedArgs
     
   def __config_arg__(self, ArgConfig):
-    """Reconfigures an arguments based on its configuration.
+    """Reconfigures an argument based on its configuration.
     """
     _type = ArgConfig.get('type')
     
@@ -82,7 +82,7 @@ class Task(Member):
         _type.__ec_config__(ArgConfig)
         
       else:
-        ArgConfig['type_str'] = _type.__name__ if isinstance(_type, type) else 'custom type'
+        ArgConfig['type_str'] = _type.__name__ if isinstance(_type, type) else 'unspecified type'
         
         if 'default' in ArgConfig:
           ArgConfig['type_str'] += ' (%s)' % ArgConfig['default']
@@ -208,7 +208,7 @@ class CustomType:
       
       * This method is called by Task.__config_arg__ to allow CustomTypes to modify the configuration of the calling arg.
       * This is the signature method used for duck typing CustomType.
-      * With custom implementations the method should return the modified ArgConfig.
+      * With custom implementations the method should set the key 'type_str', as well as return the modified ArgConfig.
     """
     if 'default' in ArgConfig:
       self.str += ' (%s)' % ArgConfig['default']

@@ -29,9 +29,18 @@ def getArgDesc(Arg):
   
   return Arg.get('desc', Arg['type_str'])
 
+def getReadableValue(val):
+  if val == '':
+    return "''"
+    
+  if val is None:
+    return '<None>'
+  
+  return val
+  
 def getArgLabel(Arg):
   if 'default' in Arg:
-    return desc_optional('', '{name}={default}'.format(**Arg))
+    return desc_optional('', '{}={}'.format(Arg['name'], getReadableValue(Arg['default'])))
     
   else:
     return (desc_parameter if not 'default' in Arg else desc_optional)('', Arg['name'])
@@ -42,7 +51,7 @@ def getArgsContent(Args):
   for name, Arg in Args.items():
     Content = desc_content()
     Content.append(desc_name(text='%s: ' % name))
-    Content.append(compact_paragraph(text='%s.' % getArgDesc(Arg)))
+    Content.append(compact_paragraph(text=getArgDesc(Arg)))
     Container.append(Content)
     
   return Container
@@ -56,8 +65,7 @@ def getMemberContent(Member, *Children):
   
   doc = Member.Underlying.__doc__
   if doc:
-    Content.insert(0, getNodeTreeFromStr(doc)) # add the parsed docstring to the content.
-    
+    Content.insert(0, getNodeTreeFromStr(doc)) # add the parsed docstring to the content.    
   
   if 'desc' in Config:
     Content.insert(0, paragraph(text=Config['desc']))

@@ -22,7 +22,7 @@ import ec
 setup(
   name='ec',
   version=ec.__version__,
-  description="ec - a simpler, yet better implementation of Commander, a module launcher.",
+  description="ec - a cli interface for python modules.",
   long_description=readme,
   author=ec.__author__,
   author_email=ec.__email__,

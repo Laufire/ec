@@ -232,3 +232,8 @@ Log
 
   * 0110  Ec now uses the development version of sphinxdoc, through the link **docs/eccontrib**.
   
+* 20150806
+
+  * 0255  modules.helpers.exit is exposed as utils.exit, to allow the scripts to exit in a thread safe manner.
+  
+  
