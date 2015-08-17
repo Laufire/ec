@@ -14,7 +14,7 @@ project_root = get_relative(__file__, '/../')
 @arg(type=path_type.exists)
 def lint(target='./ec'):
   
-  assert(run('cmd /c pylint --rcfile=ec/.pylintrc "%s"' % target) == 0)
+  assert(run('pylint --rcfile=ec/.pylintrc "%s"' % target) == 0)
   
   
 @task(desc='Installs ec.')

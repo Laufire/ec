@@ -45,6 +45,12 @@ docs/_build
 # Standard
 .*
 
+# DevLinks
+**/ec
+
+# Virtual environment
+/venv
+
 # Exceptions
 !./.editorconfig
 !.git*

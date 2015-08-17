@@ -251,3 +251,7 @@ Log
   * 2225  Bug fixed: tests were added to the package.
   * 2355  Tuned the packging.
   
+* 150818
+
+  * 0345  Added tools/setup.py to install build requirements.
+  * 0350  ec is now developed in a virtual env, located at **venv**.

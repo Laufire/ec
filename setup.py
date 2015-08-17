@@ -5,13 +5,9 @@ from setuptools import setup, find_packages
 with open('README.rst') as readme_file:
   readme = readme_file.read()
 
-requirements = [
-  # ToDo: put package requirements here
-]
+requirements = []
 
-test_requirements = [
-  # ToDo: put package test requirements here
-]
+test_requirements = []
 
 import ec
 

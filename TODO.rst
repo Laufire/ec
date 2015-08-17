@@ -15,6 +15,7 @@ Tasks
   
   * When the arg has a default, use a tuple instead of a list, as the default lists might be accidentally modified.
   
+* Make tools/main.py cross-platform.
 
 * Test for cross environment compatibility.
 
