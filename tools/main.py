@@ -99,7 +99,9 @@ class pkg:
 
     test()
     
+    devLinks.clear()
     Result = shell_exec('python setup.py sdist')
+    devLinks.create()
     
     try:
       assert(Result['code'] == 0)

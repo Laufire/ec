@@ -1,10 +1,6 @@
 #!/usr/bin/env python
 
-try:
-  from setuptools import setup, find_packages
-except ImportError:
-  from distutils.core import setup
-
+from setuptools import setup, find_packages
 
 with open('README.rst') as readme_file:
   readme = readme_file.read()
@@ -28,7 +24,7 @@ setup(
   author_email=ec.__email__,
   url='https://github.com/Laufire/ec',
   download_url='https://pypi.python.org/pypi/ec',
-  packages=find_packages(),
+  packages=find_packages(exclude=['tests', 'tests.*']),
   platforms='any',
   include_package_data=True,
   install_requires=requirements,

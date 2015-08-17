@@ -41,11 +41,17 @@ def load_module(module_path):
   parent_path, name = path.split(module_path)
   name, dummy = path.splitext(name)
   
+  path_added = False
+  
   if not parent_path in sys.path:
+    path_added = True
     sys.path.insert(0, parent_path)
     
   imported = __import__(name)
   
+  if path_added:
+    sys.path.pop(0)
+    
   return imported
 
 KWARG_VALIDATOR = re.compile('.+(?<!\\\\)=')
@@ -145,7 +151,12 @@ def getGroupHelp(_Group):
   return '\n\n'.join([('%s:  %s' % (name, desc))[:60] for name, desc in listMemberHelps(_Group)]) # ToDo: Better formatting of the help instead of chopping the text.
 
 def getAutoDesc(ArgConfig):
-  return '%s (%s)' % (ArgConfig['name'], ArgConfig['default']) if 'default' in ArgConfig else ArgConfig['name']
+  desc = '{name}, {type_str}'.format(**ArgConfig)
+  
+  if 'default' in ArgConfig:
+    desc += ' (%s)' % ArgConfig['default']
+  
+  return desc
   
 def getTypeStr(_type):
   """Gets the string representation of the given type.

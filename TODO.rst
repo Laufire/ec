@@ -3,6 +3,19 @@ ToDo
 
 Tasks
 -----
+* Support positional args. With the following guide lines.
+  
+  * Collect the args as a tuple under a normal arg, rather than a \*arg. As this would allow the arg to have defaults as well as allow the **@arg** decorator could be used to configure the argument.
+  
+  * The *@arg* decorator gets a new kwarg, **count**, a **(min, max)** tuple that represents the number of arguments to be collected. **None** could be used as the value fo min / max. Instead of a tuple a single argument too could be provide which would both be the min and the max values.
+  
+  * In the shell mutilple arguments are to be input as *shlex* strings.
+  
+  * In the dispatch mode the end of the items is marked with the beginning of the next named arg. This design is to remove the ambiguity when mentioning multiple multi-args. This would also allow the metioning of the first multi-arg without a name, thus enhancing the UX.
+  
+  * When the arg has a default, use a tuple instead of a list, as the default lists might be accidentally modified.
+  
+
 * Test for cross environment compatibility.
 
 * Make the development possible with other platforms. The current structre depends upon some windows only features like dir junctions.
@@ -49,12 +62,12 @@ Issues
 
 Check
 -----
-* Supporting \*args. Though it's possible to implement it with a minimum effort, the following things need to be considered.
-  
-  * How to implement \*args in the shell mode? Posibblly using ^Z to specify the ending?
-  
-  * How to other packages handle \*args? Ex: **argparse.nargs**.
-  
+* Replacing the flag, **-h** with a task, **help** (like pip). This would also allow the impementaion of custom help through overriding.
+
+* Optionally turning of the hooks, and requiring an explicit *start_ec()* call to register the members of the modules.
+
+* At entry_hook, might be needed, structurally, as ec is designed to launch multiple scripts. It could have an option to run it only when the script is main, or else it could have another hook named if_main.
+
 * hepler_tasks.reload, which reload the app (while in shell mode), in order to ease development.
 
 * Checking for __init__.py before launching the dirs, to be more pythonic.
