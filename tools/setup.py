@@ -1,5 +1,5 @@
 """
-Installs the required modules for this tools.
+Installs the required modules for the tools to work properly.
 """  
 import os
 from os.path import dirname

@@ -26,16 +26,6 @@ def install():
     assert(run('python setup.py %s' % command) == 0)
   
   
-@task(alias='instSpd', desc='Install sphinxdoc.')
-def installSphinxDoc():
-
-  wd = '%s/sphinxdoc' % project_root
-  rmtree('%s/build' % wd)
-  
-  for command in ['build', 'install']:
-    assert(run('python setup.py %s' % command, cwd=wd) == 0)
-  
-  
 @task(desc='Tests the package.')
 def test(name=None):
   """
@@ -158,15 +148,11 @@ class devLinks:
       for dir in devLinks.EcDirs:
         devLinks.linkEc(dir)
     
-    make_link('sphinxdoc/eccontrib', 'docs/eccontrib-dev')
-    
     
   @task(desc='Clears the links to the ec dir, under all devLinks.EcDirs.')
   def clear():
     for dir in devLinks.EcDirs:
       rmdir('%s/ec' % dir)
-      
-    rmdir('docs/eccontrib-dev')
   
   # Helpers
   def linkEc(dir):

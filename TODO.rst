@@ -33,8 +33,6 @@ Tasks
 
 * Test custom types (doctest?).
 
-* Extract **sphinxdoc** as a separate package.
-
 * Make nut_shell.py the target_script for the tests.
 
 * More documentation for the custom types.

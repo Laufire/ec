@@ -255,3 +255,4 @@ Log
 
   * 0345  Added tools/setup.py to install build requirements.
   * 0350  ec is now developed in a virtual env, located at **venv**.
+  * 0525	Extracted sphinxdoc as a separate repo from ec.

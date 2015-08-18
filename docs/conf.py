@@ -39,10 +39,7 @@ import ec
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.viewcode', 'sphinxcontrib.spelling',
-  
-  'eccontrib-dev.sphinxdoc' # the suffix, -dev has been added to the name to make sure that sphinx gets the extension from the development copy (the extension resolution of sphinx differs from generic module resolution)
-]
+extensions = ['sphinx.ext.autodoc', 'sphinx.ext.viewcode', 'sphinxcontrib.spelling', 'eccontrib.sphinxdoc']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

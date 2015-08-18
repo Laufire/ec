@@ -4,6 +4,7 @@ Babel==1.3
 colorama==0.3.3
 docutils==0.12
 ec==0.2.3
+eccontrib-sphinxdoc==0.0.1
 Jinja2==2.7.3
 logilab-common==1.0.2
 MarkupSafe==0.23
