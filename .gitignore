@@ -46,11 +46,13 @@ docs/_build
 .*
 
 # DevLinks
-**/ec
+ec
+!/ec
 
 # Virtual environment
 /venv
 
 # Exceptions
-!./.editorconfig
+!.editorconfig
 !.git*
+!.pylintrc

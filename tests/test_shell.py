@@ -1,4 +1,4 @@
-"""
+r"""
 Tests the shell mode.
 """
 

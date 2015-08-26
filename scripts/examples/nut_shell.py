@@ -1,4 +1,4 @@
-"""
+r"""
 Everything about using ec. this module is designed to be a nut shell guide to ec and as a way to enable test driven development.
   
 Notes
@@ -14,7 +14,7 @@ from ec.types import regex
 @arg(type=int, desc='Some int') # configure the first arg
 @arg('arg2', type=int) # configure the arg named 'arg2'.
 def task1(arg1, arg3=3, arg2=2):
-  """A simple task, at the root of the script.
+  r"""A simple task, at the root of the script.
   
     * Note that the order of input collection will follow the order of configuration (in this case arg1 and then arg2).
     * Any unconfigured args will be collected after the collection of the configured args (hence arg3 will be collected as the last arg).
@@ -22,16 +22,16 @@ def task1(arg1, arg3=3, arg2=2):
   """
   print arg1, arg2, arg3
 
-@group(alias='i', desc = 'A group.')
+@group(alias='i', desc='A group.')
 class intro:
-  """
+  r"""
     Groups can contain tasks and other groups within them.
     This group has an alias; thus could be identified as **intro** or **i**. Tasks to could have aliases.
   """
   @task(name='simple')
   @arg('arg1', desc='Some string')
   def renamed_task(arg1):
-    """A task within a group.
+    r"""A task within a group.
     
       * This task can be accessed as intro/simple.
       * Notice the missing **self** arg.
@@ -41,18 +41,18 @@ class intro:
     
   @task
   def wrapper():
-    """Calls nut_shell.simple with some arguments, the args that aren't provided will be collected.
+    r"""Calls nut_shell.simple with some arguments, the args that aren't provided will be collected.
     """
     call(simple, arg1=1, arg2=2)
     
   @task
   def get():
-    """Get user input through utils.get.
+    r"""Get user input through utils.get.
     """
     print get(desc='Email id', type=regex.email)
     
   def log(message):
-    """A helper method.
+    r"""A helper method.
     """
     print message
     

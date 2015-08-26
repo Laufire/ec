@@ -1,4 +1,4 @@
-"""
+r"""
 Test ec.utils.
 """
 import unittest
@@ -26,14 +26,14 @@ class TestUtils(unittest.TestCase):
     
   def test_static(self):
     @static
-    class cls:
+    class cls: #pylint: disable=W0232
       def method(val):
         return val
         
     assert(cls.method(1) == 1)
     
   def test_custom(self):
-    _type = custom(lambda v: v%2==1, int, type_str='an odd number')
+    _type = custom(lambda v: v%2 == 1, int, type_str='an odd number')
     
     assert(_type(1) == 1)
     assert(expect_exception(lambda: _type(2), ValueError))

@@ -1,4 +1,4 @@
-"""
+r"""
 ec
 ==
 
@@ -18,7 +18,7 @@ __all__ = [
 ]
 
 def settings(**NewSettings):
-  """Sets the settings of ec.
+  r"""Sets the settings of ec.
   
   Settings:
     * helper_tasks (bool): Allow helper tasks ($/\*) in the shell (defaults to True).
@@ -32,7 +32,7 @@ def settings(**NewSettings):
   Settings.update(**NewSettings)
   
 def call(__ec_func__, *Args, **KwArgs):
-  """Helps with calling the tasks with partial arguments (within the script being configured).
+  r"""Helps with calling the tasks with partial arguments (within the script being configured).
   
   The unavailable args will be collected before calling the function.
   

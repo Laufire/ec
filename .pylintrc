@@ -1,0 +1,67 @@
+[MASTER]
+profile = no
+
+
+[VARIABLES]
+dummy-variables-rqx = dummy.*$
+# additional-builtins = log, warn, log_error, debug, verbose
+
+
+[MESSAGES CONTROL]
+# C101: Line too long (The c1* errors need to be reconsidered)
+# C0111: Missing docstring
+# C0103: Invalid name
+# C0301: Line too long
+# C0303: Trailing whitespace (pylint seems to miss read empty line on indented levels)
+# C0325: Unnecessary parens after %r keyword (asserts are written as functions)
+# C0330: Wrong hanging indentation.
+# C1001: Old-style class defined.
+# E0211: Method has no argument (we use ec, which doesn't have a "self" argument on its methods used for group tasks)
+# E0213: Method should have "self" as first argument (we use ec, which uses static methods as tasks)
+# E0611: No name '' in module '' (pylint can't process the module win32 and related and related modules)
+# E1101: Module '' has no '' member (pylint can't process the module win32 and related and related modules)
+# E1103: Instance of '...' has no '...' member (buggy: some types could not be inferred)
+# E1120: No value passed for parameter '...' in function call (pylint can't comprehend decorators)
+# E1121: Too many positional arguments for function call
+# F0401: Unable to import '' (pylint can't process the module win32 and related and related modules)
+# I0011: Locally disabling ...
+# R0201: Method could be a function (test use a lot of self less calls)
+# R0401: Cyclic import
+# R0801: Similar lines (some test scripts use slightly modified methods)
+# R0903: Too few public methods (custom types tend to have only a few methods)
+# R0912: Too many branches
+# R0913: Too many arguments
+# R0914: Too many local variables
+# R0915: Too many statements (there are a few monoliths that have to have a lot of statements)
+# R0923: Interface not implemented
+# W0232: Class has no __init__ method (we use ec, which uses classes as groups)
+# W0311: Bad indentation. Found 2 spaces, expected 4. (we use 2 spaces)
+# W0312: Found indentation with tabs instead of spaces
+# W0142: Used * or ** magic
+# W0401: Wildcard import
+# W0403: Relative import 'module', should be 'package.module'. (Doesn't seem to be necessary)
+# W0603: Using the global statement (Some times it seems to be necessary)
+# W0611: Unused import Command (Several modules have cross dependencies that have to be imported at the end of the module)
+# W0614: Unused import from wildcard import
+# W0621: Redefining name from outer scope (the implementation is buggy, it doesn't consider the global statement)
+# W0622: Redefining built-in 'type' (skipped because some names are chosen for redability) 
+# W0633: Attempting to unpack a non-sequence defined at line %d (Buggy)
+# W0702: No exception type(s) specified
+# W0703: Catching too general exception
+# W1201: Specify string format arguments as logging function parameters (it's just one more thing to remember)
+
+# Note: disable can't have inline comments
+disable =
+	C0111, C0103, C0301, C0303, C0325, C0330, C1001,
+	I0011,
+	E0211, E0213, E1103, E1120,
+	R0201, R0401, R0801, R0903, R0923,
+	W0232,W0311, W0403, W0603, W0611, W0621, W0622,
+	
+
+[REPORTS]
+output-format = text
+files-output = no
+reports = no
+comment = no
+msg-template={line}: {msg_id} - {msg}

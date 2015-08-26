@@ -1,10 +1,10 @@
-"""
+r"""
 All the classes of ec.
 """
 from collections import OrderedDict
 
 class Member():
-  """The base class for the classes Task and Group.
+  r"""The base class for the classes Task and Group.
   
     It brands the given underlying with the __ec_member__ attr, which is used to identify the Underlying as processable by ec.
   """
@@ -28,7 +28,7 @@ class Member():
     self.Underlying = Underlying
 
 class Task(Member):
-  """A callable class that allows the calling of the underlying function as a task.
+  r"""A callable class that allows the calling of the underlying function as a task.
   """
   def __init__(self, Underlying, Args, Config):
     Member.__init__(self, Underlying, Config)
@@ -36,7 +36,7 @@ class Task(Member):
     self.Args = self.__load_args__(Args)
     
   def __load_args__(self, Args):
-    """Prepares the task for excecution.
+    r"""Prepares the task for excecution.
     """
     FuncArgs = _getFuncArgs(self.Underlying)
     OrderedArgs = OrderedDict() # Note: the order of configuration (through decorators) is prefered over the order of declaration (within the function body)
@@ -72,8 +72,8 @@ class Task(Member):
     
     return OrderedArgs
     
-  def __config_arg__(self, ArgConfig):
-    """Reconfigures an argument based on its configuration.
+  def __config_arg__(self, ArgConfig): #pylint: disable=R0201
+    r"""Reconfigures an argument based on its configuration.
     """
     _type = ArgConfig.get('type')
     
@@ -83,17 +83,14 @@ class Task(Member):
         
       else:
         ArgConfig['type_str'] = _type.__name__ if isinstance(_type, type) else 'unspecified type'
-        
-        if 'default' in ArgConfig:
-          ArgConfig['type_str'] += ' (%s)' % ArgConfig['default']
     
     else:
-      ArgConfig['type_str'] = 'str (%s)' % ArgConfig['default'] if 'default' in ArgConfig else ''
+      ArgConfig['type_str'] = 'str'
       
     return ArgConfig
     
   def __confirm_known_args__(self, InArgs):
-    """Confirms that only known args are passed to the underlying.
+    r"""Confirms that only known args are passed to the underlying.
     """
     ArgKeys = self.Args.keys()
     
@@ -102,7 +99,7 @@ class Task(Member):
         raise HandledException('Unknown arg: %s.' % k, Member=self)
   
   def __digest_args__(self, InArgs, InKwArgs):
-    """Digests the given Args and KwArgs and returns a KwArgs dictionary.
+    r"""Digests the given Args and KwArgs and returns a KwArgs dictionary.
     """
     KwArgs = {}
     ArgKeys = self.Args.keys()
@@ -147,7 +144,7 @@ class Task(Member):
     return self.Underlying(**KwArgs)
   
   def __collect_n_call__(self, *InArgs, **InKwArgs):
-    """Helps with collecting all the args and call the Task.
+    r"""Helps with collecting all the args and call the Task.
     """
     KwArgs = self.__digest_args__(InArgs, InKwArgs)
     
@@ -166,7 +163,7 @@ class Task(Member):
     return self.Underlying(**KwArgs)
     
 class Group(Member):
-  """Groups can contain other Members (Tasks / Groups).
+  r"""Groups can contain other Members (Tasks / Groups).
   
   Note:
     Groups that have modules as their underlying would have it's members loaded by ec.start.
@@ -175,7 +172,7 @@ class Group(Member):
     Member.__init__(self, Underlying, Config or {})
     
 class CustomType:
-  """The base class for custom types.
+  r"""The base class for custom types.
   
   Args:
     **Config (kwargs): Configuration for the custom type.
@@ -191,12 +188,12 @@ class CustomType:
     self.str = Config['type_str'] if 'type_str' in Config else 'custom type'
   
   def __str__(self):
-    """Used to represent the type as a string, in messages and queries.
+    r"""Used to represent the type as a string, in messages and queries.
     """
     return getattr(self, 'str', 'custom type')
     
   def __ec_config__(self, ArgConfig):
-    """Used to reconfigure arg configurations.
+    r"""Used to reconfigure arg configurations.
     
     Args:
       ArgConfig (dict): The configuration to be modified.
@@ -219,7 +216,7 @@ class CustomType:
     
 # Helper Classes
 class HandledException(Exception):
-  """A custom error class for ec's internal exceptions, which are handled within ec.
+  r"""A custom error class for ec's internal exceptions, which are handled within ec.
   """
   
   def __init__(self, e, **Info):
@@ -228,7 +225,7 @@ class HandledException(Exception):
 
 # Helpers
 def _getFuncArgs(func):
-  """Gives the details on the args of the given func.
+  r"""Gives the details on the args of the given func.
   
   Args:
     func (function): The function to get details on.

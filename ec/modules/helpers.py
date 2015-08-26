@@ -1,4 +1,4 @@
-"""
+r"""
 Helpers
 =======
 
@@ -20,7 +20,7 @@ def err(message, exit_code=None):
     exit(exit_code)
 
 def exit(exit_code=0):
-  """A function to support exiting from exit hooks.
+  r"""A function to support exiting from exit hooks.
   
   Could also be used to exit from the calling scripts in a thread safe manner.
   """
@@ -56,7 +56,7 @@ def load_module(module_path):
 
 KWARG_VALIDATOR = re.compile('.+(?<!\\\\)=')
 def getDigestableArgs(Argv):
-  """Splits the given Argv into *Args and **KwArgs.
+  r"""Splits the given Argv into *Args and **KwArgs.
   """
   first_kwarg_pos = 0
   
@@ -75,7 +75,7 @@ def getDigestableArgs(Argv):
 
 NAME_VALIDATOR = re.compile('[\\w_]+')
 def validateName(name):
-  assert(NAME_VALIDATOR.search(name))
+  assert NAME_VALIDATOR.search(name)
   
 # mode helpers
 def getMemberHelp(Target):
@@ -131,7 +131,7 @@ def list2dict(lst, splitter='='):
   return Dict
   
 def listMemberHelps(TargetGroup):
-  """Gets help on a group's children.
+  r"""Gets help on a group's children.
   """
   Members = []
   
@@ -159,7 +159,7 @@ def getAutoDesc(ArgConfig):
   return desc
   
 def getTypeStr(_type):
-  """Gets the string representation of the given type.
+  r"""Gets the string representation of the given type.
   """
   if isinstance(_type, CustomType):
     return _type
@@ -170,7 +170,7 @@ def getTypeStr(_type):
   return ''
   
 def getTaskHelp(_Task):
-  """Gets help on the given task member.
+  r"""Gets help on the given task member.
   """
   Ret = []
   

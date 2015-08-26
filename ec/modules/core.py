@@ -1,4 +1,4 @@
-"""
+r"""
 Handles the execution and the resolution of the tasks.
 """
 import sys
@@ -16,7 +16,7 @@ mode = None
 is_dev_mode = None
 
 def start():
-  """Starts ec.
+  r"""Starts ec.
   """
   processPendingModules()
   
@@ -29,7 +29,7 @@ def start():
     return
   
   global BaseGroup
-  BaseGroup =  MainModule.__ec_member__
+  BaseGroup = MainModule.__ec_member__
   
   Argv = sys.argv[1:]
   global mode
@@ -49,7 +49,7 @@ def start():
   processExitHooks()
  
 def execCommand(Argv, collect_missing):
-  """Executes the given task with parameters.
+  r"""Executes the given task with parameters.
   """
   try:
     return _execCommand(Argv, collect_missing)
@@ -70,7 +70,7 @@ def execCommand(Argv, collect_missing):
     raise HandledException(message)
 
 def getDescendant(Ancestor, RouteParts):
-  """Resolves a descendant, of the given Ancestor, as pointed by the RouteParts.
+  r"""Resolves a descendant, of the given Ancestor, as pointed by the RouteParts.
   """
   if not RouteParts:
     return Ancestor
@@ -84,7 +84,7 @@ def getDescendant(Ancestor, RouteParts):
     return Resolved
     
 def setActiveModule(Module):
-  """Helps with collecting the members of the imported modules.
+  r"""Helps with collecting the members of the imported modules.
   """
   module_name = Module.__name__
   
@@ -103,14 +103,14 @@ def resetActiveModuleToNext():
     state.ActiveModuleMemberQ = ModuleMembers[ModulesQ[-1]]
   
 def processPendingModules():
-  """Processes the modules left unprocessed by the import hook.
+  r"""Processes the modules left unprocessed by the import hook.
   """
   for name in ModulesQ[:]:
     processModule(name)
     ModulesQ.pop()
   
 def processModule(module_name):
-  """Builds a command tree out of the configured members of a module.
+  r"""Builds a command tree out of the configured members of a module.
   """
   Module = sys.modules[module_name]
   MembersTarget = []
@@ -171,7 +171,7 @@ def processExitHooks():
 
 # Helpers
 def _execCommand(Argv, collect_missing):
-  """Worker of execCommand.
+  r"""Worker of execCommand.
   """
   if not Argv:
     raise HandledException('Please specify a command!')

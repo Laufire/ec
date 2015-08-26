@@ -24,6 +24,7 @@ class RawInputHook:
   """
   def __init__(self):
     self.origCall = __builtin__.raw_input
+    self._values = None
 
   def _hookOnce(self, dummy):
     value = self._values.pop(0)
@@ -48,7 +49,7 @@ def expect_exception(call, *ExTypes):
   try:
     call()
     
-  except Exception as e:
+  except Exception as e: #pylint: disable= W0703
     
     return isinstance(e, ExTypes)
     

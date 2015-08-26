@@ -1,4 +1,4 @@
-"""
+r"""
 Helpers tasks for the shell mode.
 """
 import os
@@ -11,18 +11,18 @@ import core
 from core import processModule
 from helpers import err, getRouteHelp
 
-module(desc= 'Shell mode Tasks.')
+module(desc='Shell mode Tasks.')
 
 # Tasks
 @task(alias='c', desc='Clears the console.')
 def clear():
-  """Clears the console.
+  r"""Clears the console.
   """
   os.system('cls' if os.name == 'nt' else 'clear')
   
 @task(alias='h', desc='Displays help on the available tasks and groups.')
 def help(route):
-  """Displays help for the given route.
+  r"""Displays help for the given route.
   
   Args:
     route (str): A route that resolves a member.

@@ -1,4 +1,4 @@
-"""
+r"""
 Provides the decorators and functions for the configuration of the args, tasks, groups and modules.
 """
 import sys
@@ -13,7 +13,7 @@ __all__ = ['task', 'arg', 'group', 'module']
 
 # Helpers
 def wrap(func, with_func): # Check: Is wrapping of the decorator needed? They seem to be unnecesary.
-  """Copies the function signature from the wrapped function to the wrapping function.
+  r"""Copies the function signature from the wrapped function to the wrapping function.
   """
   func.__name__ = with_func.__name__
   func.__doc__ = with_func.__doc__
@@ -22,7 +22,7 @@ def wrap(func, with_func): # Check: Is wrapping of the decorator needed? They se
   return func
 
 def decorator(func):
-  """Makes the passed decorators to support optional args.
+  r"""Makes the passed decorators to support optional args.
   """
   def wrapper(__decorated__=None, *Args, **KwArgs):
     if __decorated__ is None: # some args is available through the decorator
@@ -36,7 +36,7 @@ def decorator(func):
 # Decorators
 @decorator
 def task(__decorated__=None, **Config):
-  """A decorator to make tasks out of functions.
+  r"""A decorator to make tasks out of functions.
   
   Config:
     * name (str): The name of the task. Defaults to __decorated__.__name__.
@@ -54,7 +54,7 @@ def task(__decorated__=None, **Config):
   return _Task.Underlying
 
 def arg(name=None, **Config): # wraps the _arg decorator, in order to allow unnamed args
-  """A decorator to configure an argument of a task.
+  r"""A decorator to configure an argument of a task.
   
   Config:
     * name (str): The name of the arg. When ommited the agument will be identified through the order of configuration.
@@ -71,7 +71,7 @@ def arg(name=None, **Config): # wraps the _arg decorator, in order to allow unna
 
 @decorator
 def _arg(__decorated__, **Config):
-  """The worker for the arg decorator.
+  r"""The worker for the arg decorator.
   """
   if isinstance(__decorated__, tuple):  # this decorator is followed by another arg decorator
     __decorated__[1].insert(0, Config)
@@ -82,7 +82,7 @@ def _arg(__decorated__, **Config):
   
 @decorator
 def group(__decorated__, **Config):
-  """A decorator to make groups out of classes.
+  r"""A decorator to make groups out of classes.
   
   Config:
     * name (str): The name of the group. Defaults to __decorated__.__name__.
@@ -100,7 +100,7 @@ def group(__decorated__, **Config):
 
 @decorator
 def exit_hook(callable, once=True):
-  """A decorator that makes the decorated function to run while ec exits.
+  r"""A decorator that makes the decorated function to run while ec exits.
   
   Args:
     callable (callable): The target callable.
@@ -117,7 +117,7 @@ def exit_hook(callable, once=True):
 
 # Methods
 def module(**Config):
-  """Helps with adding configs to Modules.
+  r"""Helps with adding configs to Modules.
   
   Note:
     Config is a same as that of **group**.
@@ -126,7 +126,7 @@ def module(**Config):
   Underlying.__ec_member__.Config.update(**Config)
   
 def member(Imported, **Config):
-  """Helps with adding imported members to Scripts.
+  r"""Helps with adding imported members to Scripts.
   
   Note:
     Config depends upon the Imported. It could be that of a **task** or a **group**.

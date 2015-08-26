@@ -1,4 +1,4 @@
-"""
+r"""
 A module to handle the dispatch mode.
 """
 

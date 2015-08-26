@@ -1,4 +1,4 @@
-"""
+r"""
 simple
 ======
 
@@ -7,13 +7,13 @@ A simple testing target script.
 from ec.ec import task, arg, group, call, module, settings
 
 @task(alias='t1')
-@arg(type=int, desc= 'Value for arg1')
+@arg(type=int, desc='Value for arg1')
 @arg('arg2', type=int)
-def task1(arg1, arg3=3, arg2=2):
+def task1(arg1, arg3=3, arg2=2): #pylint: disable=W0613
   print arg1, arg2
   return arg1, arg2
 
-@group(desc = 'Description for group1')
+@group(desc='Description for group1')
 class group1:
   @task
   @arg('arg1')
@@ -23,7 +23,7 @@ class group1:
 
 @task(desc='Throws an exception')
 def ex():
-  1 / 0
+  1 / 0 #pylint: disable=W0104
   
 @task(desc='Throws a handled exception')
 def hex():

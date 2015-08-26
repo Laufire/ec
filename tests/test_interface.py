@@ -1,4 +1,4 @@
-"""
+r"""
 Tests ec.interface.
 
 Note:
@@ -39,7 +39,7 @@ class TestInterface(unittest.TestCase):
     
   def test_call_with_input(self):
     from support.helpers import RawInputHook as RIH
-    RIH.values(2,3)
+    RIH.values(2, 3)
     
     assert(interface.call('task1 arg1=1', True) == (1, 2))
     

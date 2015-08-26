@@ -12,9 +12,19 @@ project_root = get_relative(__file__, '/../')
 # Tasks
 @task(desc='Lints the source.')
 @arg(type=path_type.exists)
-def lint(target='./ec'):
+def lint(target=None):
+  from glob2 import glob
   
-  assert(run('pylint --rcfile=ec/.pylintrc "%s"' % target) == 0)
+  devLinks.clear()
+  
+  if not target:
+    for item in ['ec', 'tests'] + glob('Scripts/**/*.py'):
+      assert(run('pylint --rcfile=.pylintrc "%s"' % item) == 0)
+      
+  else:
+    assert(run('pylint --rcfile=.pylintrc "%s"' % target) == 0)
+      
+  devLinks.create()
   
   
 @task(desc='Installs ec.')

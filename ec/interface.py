@@ -1,4 +1,4 @@
-"""
+r"""
 interface
 =========
 
@@ -17,7 +17,7 @@ __all__ = ['setBase', 'resolve', 'call', 'force_config', 'add']
 
 # Exports
 def setBase(Underlying):
-  """Sets the base for the interface to work on.
+  r"""Sets the base for the interface to work on.
   
   Args:
     Underlying (Group): The Group set as the base, from which all the commands are resolved.
@@ -26,7 +26,7 @@ def setBase(Underlying):
   core.BaseGroup = Underlying.__ec_member__
 
 def resolve(route):
-  """Resolves the member identified by the route.
+  r"""Resolves the member identified by the route.
   
   Args:
     route (str): The route route to resolve. **Ex:** *group1/task1*.
@@ -37,7 +37,7 @@ def resolve(route):
   return getDescendant(core.BaseGroup, shlex.split(route))
   
 def call(command, collect_missing=False):
-  """Calls a task, as if it were called from the command line.
+  r"""Calls a task, as if it were called from the command line.
   
   Args:
     command (str): A route followed by params (as if it were entered in the shell).
@@ -50,7 +50,7 @@ def call(command, collect_missing=False):
   
   
 def force_config():
-  """Forces the configuration of the members of the calling module. So that the configured members would be available for manipulation.
+  r"""Forces the configuration of the members of the calling module. So that the configured members would be available for manipulation.
   
   Note:
     A call to this function will only be necessary when modifying an ec script witihin itself, as scripts are implicitly configured after their import.
@@ -59,7 +59,7 @@ def force_config():
   
 
 def add(TargetGroup, NewMember, Config=None, Args=None):
-  """Adds members to an existing group.
+  r"""Adds members to an existing group.
   
   Args:
     TargetGroup (Group): The target group for the addition.

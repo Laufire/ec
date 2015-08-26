@@ -1,4 +1,4 @@
-"""
+r"""
 The global state for ec.
 
   Stores the gobal variables stored across modules.

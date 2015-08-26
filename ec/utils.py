@@ -1,4 +1,4 @@
-"""
+r"""
 utils
 =====
 
@@ -12,7 +12,7 @@ from modules.helpers import exit
 __all__ = ['get', 'static', 'custom', 'walk', 'exit']
 
 class custom(CustomType):
-  """Helps with creating dynamic CustomTypes on the fly.
+  r"""Helps with creating dynamic CustomTypes on the fly.
   
   Args:
     validator (callable): Validates the input.
@@ -35,7 +35,7 @@ class custom(CustomType):
     return val
     
 def walk(TargetGroup=None):
-  """Walks the members of the given target, recursively.
+  r"""Walks the members of the given target, recursively.
   
   Args:
     TargetGroup (Group): The target to walk. Defaults to the BaseGroup.

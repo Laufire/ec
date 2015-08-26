@@ -1,4 +1,4 @@
-"""
+r"""
 Tests the dispatch mode.
 
 Notes:
@@ -19,7 +19,7 @@ class TestDispatch(unittest.TestCase):
     pass
     
   def launch_ec(self, argStr='', input='', flag=''):
-    """Dispatches command to the target script.
+    r"""Dispatches command to the target script.
     """  
     command = 'python tests/targets/simple.py'
     
@@ -101,7 +101,7 @@ class TestDispatch(unittest.TestCase):
     
     self.checkResult(Result,
       Result['code'] == 0,
-      Result['out'][-5:-1].strip() ==  '1 1'
+      Result['out'][-5:-1].strip() == '1 1'
     )
     
   def test_absent_task(self):

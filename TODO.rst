@@ -3,18 +3,20 @@ ToDo
 
 Tasks
 -----
+* Check for the availability of a TTY brfore entering shell mode.
+
 * Support positional args. With the following guide lines.
-  
-  * Collect the args as a tuple under a normal arg, rather than a \*arg. As this would allow the arg to have defaults as well as allow the **@arg** decorator could be used to configure the argument.
-  
-  * The *@arg* decorator gets a new kwarg, **count**, a **(min, max)** tuple that represents the number of arguments to be collected. **None** could be used as the value fo min / max. Instead of a tuple a single argument too could be provide which would both be the min and the max values.
-  
-  * In the shell mutilple arguments are to be input as *shlex* strings.
-  
-  * In the dispatch mode the end of the items is marked with the beginning of the next named arg. This design is to remove the ambiguity when mentioning multiple multi-args. This would also allow the metioning of the first multi-arg without a name, thus enhancing the UX.
-  
-  * When the arg has a default, use a tuple instead of a list, as the default lists might be accidentally modified.
-  
+	
+	* Collect the args as a tuple under a normal arg, rather than a \*arg. As this would allow the arg to have defaults as well as allow the **@arg** decorator could be used to configure the argument.
+	
+	* The *@arg* decorator gets a new kwarg, **count**, a **(min, max)** tuple that represents the number of arguments to be collected. **None** could be used as the value fo min / max. Instead of a tuple a single argument too could be provide which would both be the min and the max values.
+	
+	* In the shell mutilple arguments are to be input as *shlex* strings.
+	
+	* In the dispatch mode the end of the items is marked with the beginning of the next named arg. This design is to remove the ambiguity when mentioning multiple multi-args. This would also allow the metioning of the first multi-arg without a name, thus enhancing the UX.
+	
+	* When the arg has a default, use a tuple instead of a list, as the default lists might be accidentally modified.
+	
 * Make tools/main.py cross-platform.
 
 * Test for cross environment compatibility.
@@ -39,7 +41,7 @@ Tasks
 
 * More examples. Especially for:
 
-  * Dynamic configuration of CustomTypes.
+	* Dynamic configuration of CustomTypes.
 
 Later
 -----
@@ -61,6 +63,8 @@ Issues
 
 Check
 -----
+* Passing named before unnamed args, just like named and unamed arg decorators. Though this might ease the input, it could make remembering difficult.
+
 * Replacing the flag, **-h** with a task, **help** (like pip). This would also allow the impementaion of custom help through overriding.
 
 * Optionally turning of the hooks, and requiring an explicit *start_ec()* call to register the members of the modules.
@@ -76,26 +80,26 @@ Check
 * Reallowing **None** values as args. It might be done using escape sequences like **\0**. **Caution:** it might not be advisable to allow them, as no other cli seems to allow **None** as an argument.
 
 * Allowing name-less (positional) args, especially for a better UX in the shell mode. There are several ways, including:
-  
-  * Allowing the first argument of a task to be name-less.
-  * Allowing tasks with a single arg to have name-less inputs.
+	
+	* Allowing the first argument of a task to be name-less.
+	* Allowing tasks with a single arg to have name-less inputs.
 
 * Automatically adding param documentation to docstrings.
 
 * A main command (as in commandify) for the module, so that a task name won't be necessary. This might be implemented in several ways:
 
-  * A separate config decorator (@default).
-  * Treating the only / first command as the default command.
-  * Instructing the user to use **ec.call** on the default function. This would require the handling of the command line arguments.
+	* A separate config decorator (@default).
+	* Treating the only / first command as the default command.
+	* Instructing the user to use **ec.call** on the default function. This would require the handling of the command line arguments.
 
 * ^X in shell mode displaying help on the arg being collected.
 
 * Extensions:
 
-  * Automatic aliases.
-  
-  * An **all** task on groups, with ***** as thier alias.
-  
+	* Automatic aliases.
+	
+	* An **all** task on groups, with ***** as thier alias.
+	
 Later
 -----
 * Externally adding params to modules that weren't designed for ec.

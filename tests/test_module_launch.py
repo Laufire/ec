@@ -1,4 +1,4 @@
-"""
+r"""
 Tests nested scripts.
 
 Note:
@@ -11,9 +11,9 @@ from support.helpers import shell_exec
 
 from test_dispatch import TestDispatch
 
-class TestModuleLaunch(TestDispatch):
+class TestModuleLaunch(TestDispatch): #pylint: disable=R0801
   def launch_ec(self, argStr='', input='', flag=''):
-    """Dispatches command to ec (loaded as a module).
+    r"""Dispatches command to ec (loaded as a module).
     """  
     command = 'python -m ec tests/targets/simple.py'
     

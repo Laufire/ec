@@ -1,4 +1,4 @@
-"""
+r"""
 exposed
 =======
 
@@ -6,7 +6,7 @@ A module for members that are used by ec, as well as exposed to the scripts.
 
 """
 def get(desc='', type=None, **KwArgs):
-  """Helps to interactively get user input.
+  r"""Helps to interactively get user input.
   
   Args:
     desc (str): The description for input.
@@ -39,7 +39,7 @@ def get(desc='', type=None, **KwArgs):
       err('<invalid value>')
   
 def static(cls):
-  """Converts the given class into a static one, by changing all the methods of it into static methods.
+  r"""Converts the given class into a static one, by changing all the methods of it into static methods.
   
   Args:
     cls (class): The class to be converted.

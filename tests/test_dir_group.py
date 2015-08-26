@@ -1,4 +1,4 @@
-"""
+r"""
 Tests dir group (launching dirs with all the ec based modules as groups).
 
 Note:

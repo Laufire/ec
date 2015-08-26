@@ -1,4 +1,4 @@
-"""
+r"""
 Tests nested scripts.
 
 Note:
@@ -13,7 +13,7 @@ from test_dispatch import TestDispatch
 
 class TestEntryPointLaunch(TestDispatch):
   def launch_ec(self, argStr='', input='', flag=''):
-    """Dispatches command to the target script.
+    r"""Dispatches command to the target script.
     """
     command = 'ec tests/targets/simple.py'
     

@@ -1,4 +1,4 @@
-"""
+r"""
 regex
 =====
 Types based on regular expressions.
@@ -9,7 +9,7 @@ import re
 from ..modules.classes import CustomType
 
 class pattern(CustomType):
-  """Get inputs that fit a specific pattern.
+  r"""Get inputs that fit a specific pattern.
   """
   def __init__(self, pattern, flags=0, **Config):
     self.exp = re.compile(pattern, flags)
@@ -26,8 +26,8 @@ class pattern(CustomType):
     return val
     
 # Quick Templates
-email = pattern('^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$', type_str='Email')
-username = pattern('^[a-z0-9_-]{3,16}$', type_str='Username')
-password = pattern('^[A-z0-9_-]{6,18}$', type_str='Password')
-slug = pattern('^[a-z0-9-]+$', type_str='Slug')
-number = pattern('^[0-9]+$', type_str='Number') # a positive integer
+email = pattern(r'^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$', type_str='Email')
+username = pattern(r'^[a-z0-9_-]{3,16}$', type_str='Username')
+password = pattern(r'^[A-z0-9_-]{6,18}$', type_str='Password')
+slug = pattern(r'^[a-z0-9-]+$', type_str='Slug')
+number = pattern(r'^[0-9]+$', type_str='Number') # a positive integer

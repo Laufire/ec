@@ -72,7 +72,7 @@ def hookIntoImport():
   __builtin__.__import__ = newImp
 
 def registerExitCall():
-  """Registers an exit call to start the core.
+  r"""Registers an exit call to start the core.
   
     The core would be started after the main module is loaded. Ec would be exited from the core.
   """
