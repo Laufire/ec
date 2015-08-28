@@ -6,4 +6,3 @@ from ec.types.regex import email
 @arg('email_id', type=email, desc='email')
 def add(email_id):
   print email_id
-  

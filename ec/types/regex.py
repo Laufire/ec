@@ -13,18 +13,18 @@ class pattern(CustomType):
   """
   def __init__(self, pattern, flags=0, **Config):
     self.exp = re.compile(pattern, flags)
-    
+
     if not 'type_str' in Config:
       Config['type_str'] = 'a string matching the pattern \'%s\'' % self.exp.pattern
-      
+
     CustomType.__init__(self, **Config)
-    
+
   def __call__(self, val):
     if not self.exp.match(val):
       raise ValueError()
-      
+
     return val
-    
+
 # Quick Templates
 email = pattern(r'^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$', type_str='Email')
 username = pattern(r'^[a-z0-9_-]{3,16}$', type_str='Username')

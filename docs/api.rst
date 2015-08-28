@@ -5,7 +5,7 @@ API
 	:members:
 	:undoc-members:
 	:show-inheritance:
-	
+
 .. automodule:: ec.utils
 	:members:
 	:undoc-members:

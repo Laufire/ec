@@ -24,9 +24,9 @@ class group1:
 @task(desc='Throws an exception')
 def ex():
   1 / 0 #pylint: disable=W0104
-  
+
 @task(desc='Throws a handled exception')
 def hex():
   task1.__ec_member__.__call__(arg1='a') # a handled exception would be raised because of mismatched type.
-  
+
 # settings(dev_mode=True) # shortcut: enable the line to get the stack trace on exceptions

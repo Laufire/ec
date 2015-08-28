@@ -270,3 +270,5 @@ Log
 
 	* 0510	Bug fixed: Initial type_str generation was buggy.
 	* 0510	types.multi updated.
+	* 1250	Trimmed trailing spaces and unified the line-endings to **lf**.
+	

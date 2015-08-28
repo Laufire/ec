@@ -16,14 +16,14 @@ class TestEntryPointLaunch(TestDispatch):
     r"""Dispatches command to the target script.
     """
     command = 'ec tests/targets/simple.py'
-    
+
     if flag:
       command += ' %s' % flag
-      
+
     if argStr:
-      
+
       command += ' %s' % argStr
-      
+
     return shell_exec(command, input=input)
 
 if __name__ == '__main__':

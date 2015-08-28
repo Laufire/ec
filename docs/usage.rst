@@ -9,21 +9,21 @@ To enter shell mode
 .. code-block:: bash
 
 	$ python script_path
-	
+
 To dispatch commands
 
 .. code-block:: bash
 
 	$ python script groupX/taskX [arg1=value arg2=value ...] # execute a task
-	
+
 	$ python script -p groupX/taskX arg1=value # execute a task, with partial args.
-	
+
 To launch a scriptlet/dir
 
 .. code-block:: bash
 
 	$ ec scriptlet/dir [flag] groupX/taskX [args ...]
-	
+
 Examples
 ---------
 A simple example
@@ -38,17 +38,17 @@ From the command line enter
 
 	$ python simple.py task1 arg1=1 arg2=2
 		1 2
-		
+
 	$ python simple.py group1/task1 arg1=1
 		11
-		
+
 	$ python simple.py group1/task1 1 # positional arg
 		11
-		
+
 	$ python simple.py group1/task1 +\=1 # escape '=' with a '\' when it's a part of a positional argument
 		+=1+=1
-		
-		
+
+
 An advanced example (wrapping ec to extend it)
 ####################################################
 .. literalinclude:: ../scripts/examples/advanced/wrapping.py

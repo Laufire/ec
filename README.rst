@@ -5,20 +5,20 @@ ec - intends to reduce the learning curve needed to expose functionality via the
 A simple example
 ----------------
 .. code:: python
-	
+
 	from ec.ec import task
-	
+
 	@task
 	def say_hello():
 		print 'Hello, world!'
-	
+
 could be accessed from the command line, like:
 
 .. code:: bash
 
 	$ python hello.py say_hello
 		Hello, world!
-	
+
 Features
 --------
 
@@ -37,7 +37,7 @@ A more complete example
 from: `simple.py <https://github.com/Laufire/ec/blob/master/scripts/examples/simple.py>`_
 
 .. code:: python
-	
+
 	from ec.ec import task, arg, group
 
 	@task # define a task
@@ -60,13 +60,13 @@ From the command-line enter
 
 	$ python simple.py task1 arg1=1 arg2=2
 		1 2
-		
+
 	$ python simple.py group1/task1 arg1=1
 		2
-		
+
 	$ python simple.py group1/task1 1 # positional arguments too are supported
 		2
-		
+
 **Interactively execute tasks:** *<shell mode>*
 
 From the command-line enter
@@ -74,20 +74,20 @@ From the command-line enter
 .. code:: bash
 
 	$ python simple.py # this will enter into ec-shell
-	
+
 	>task1
 	Value for arg1: 1
 	arg2 (1): 2
 	1 2
-	
+
 	>group1/task1 # execute task1 under group1
 	arg1: 1
 	11
-	
+
 	>task1 arg1=1 # arguments can be given while calling the task, the missing arguments will be collected from the user
 	arg2 (1): 2
 	1 2
-	
+
 	>^Z # exit the shell
 
 

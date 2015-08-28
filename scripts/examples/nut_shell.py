@@ -1,6 +1,6 @@
 r"""
 Everything about using ec. this module is designed to be a nut shell guide to ec and as a way to enable test driven development.
-  
+
 Notes
 -----
 * The decorators task, arg and group are available as __builtins__, when the script is launched using ec.
@@ -15,7 +15,7 @@ from ec.types import regex
 @arg('arg2', type=int) # configure the arg named 'arg2'.
 def task1(arg1, arg3=3, arg2=2):
   r"""A simple task, at the root of the script.
-  
+
     * Note that the order of input collection will follow the order of configuration (in this case arg1 and then arg2).
     * Any unconfigured args will be collected after the collection of the configured args (hence arg3 will be collected as the last arg).
     * Since a name isn't specified in @task, the name of the task, *simple* will be used as the name of this task.
@@ -32,32 +32,32 @@ class intro:
   @arg('arg1', desc='Some string')
   def renamed_task(arg1):
     r"""A task within a group.
-    
+
       * This task can be accessed as intro/simple.
       * Notice the missing **self** arg.
       * @task.name, **simple** will be the name of this task, not the function name **renamed_task**.
     """
     intro.log('%s, from %s.' % (arg1, intro.name))
-    
+
   @task
   def wrapper():
     r"""Calls nut_shell.simple with some arguments, the args that aren't provided will be collected.
     """
     call(simple, arg1=1, arg2=2)
-    
+
   @task
   def get():
     r"""Get user input through utils.get.
     """
     print get(desc='Email id', type=regex.email)
-    
+
   def log(message):
     r"""A helper method.
     """
     print message
-    
+
   name = 'intro' # Groups could even have variables.
-  
+
 # importing other modules
 import simple
 member(simple) # member() is used to expose imported members as the children of the current module

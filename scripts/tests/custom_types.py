@@ -27,4 +27,3 @@ from ec.types.adv import invert
 def t(arg):
   "A task to test the custom type under development."
   print arg
-  

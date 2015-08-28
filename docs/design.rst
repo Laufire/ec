@@ -2,7 +2,7 @@ Design
 =======
 
 		**ec** is a module launcher. It's a simpler and better implementation of commander. It is designed to shed some feature creep and to provide a better UX.
-		
+
 Design Goals
 ------------
 * A minimalistic design.

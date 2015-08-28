@@ -13,14 +13,14 @@ def launch_ec(argStr='', input='', flag=''):
   """Launches the targets dir.
   """
   command = 'ec tests/targets'
-    
+
   if flag:
     command += ' %s' % flag
-    
+
   if argStr:
-    
+
     command += ' simple/%s' % argStr
-    
+
   return shell_exec(command, input=input)
 
 
@@ -37,18 +37,18 @@ class TestDirGroupOnLaunchers(unittest.TestCase):
 
   def tearDown(self):
     pass
-    
+
   def test_entry_point_launch(self):
     Result = shell_exec('ec tests/targets simple/task1 arg1=1')
-    
+
     self.checkResult(Result,
       Result['code'] == 0,
       Result['out'].strip().find('1 2') == 0,
     )
-    
+
   def test_module_launch(self):
     Result = shell_exec('python -m ec tests/targets simple/task1 arg1=1')
-    
+
     self.checkResult(Result,
       Result['code'] == 0,
       Result['out'].strip().find('1 2') == 0,
