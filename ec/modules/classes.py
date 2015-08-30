@@ -253,5 +253,5 @@ def _getFuncArgs(func):
   return Args
 
 # Cross dependencies
-from exposed import get, static
-from helpers import err, ismodule, validateName
+from exposed import get
+from helpers import validateName

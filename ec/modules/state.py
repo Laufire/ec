@@ -7,8 +7,6 @@ The global state for ec.
     The module should not depend on other modules, in order to avoid cross dependency issues.
 """
 
-from collections import OrderedDict
-
 Settings = {}
 
 main_module_name = '__main__'

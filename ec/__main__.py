@@ -45,7 +45,7 @@ def main():
           member(Module)
 
     else:
-      show_usage()  
+      show_usage()
 
 def show_usage():
   print 'Usage:\n\t$ ec (script / dir) [flag] [command] [args]'

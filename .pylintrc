@@ -9,8 +9,8 @@ dummy-variables-rqx = dummy.*$
 
 [MESSAGES CONTROL]
 # C101: Line too long (The c1* errors need to be reconsidered)
+# C0103: Invalid name (we have different naming conventions)
 # C0111: Missing docstring
-# C0103: Invalid name
 # C0301: Line too long
 # C0303: Trailing whitespace (pylint seems to miss read empty line on indented levels)
 # C0325: Unnecessary parens after %r keyword (asserts are written as functions)
@@ -21,7 +21,7 @@ dummy-variables-rqx = dummy.*$
 # E0611: No name '' in module '' (pylint can't process the module win32 and related and related modules)
 # E1101: Module '' has no '' member (pylint can't process the module win32 and related and related modules)
 # E1103: Instance of '...' has no '...' member (buggy: some types could not be inferred)
-# E1120: No value passed for parameter '...' in function call (pylint can't comprehend decorators)
+# E1120: No value passed for parameter '...' in function call (pylint fails to comprehend decorators)
 # E1121: Too many positional arguments for function call
 # F0401: Unable to import '' (pylint can't process the module win32 and related and related modules)
 # I0011: Locally disabling ...
@@ -44,7 +44,7 @@ dummy-variables-rqx = dummy.*$
 # W0611: Unused import Command (Several modules have cross dependencies that have to be imported at the end of the module)
 # W0614: Unused import from wildcard import
 # W0621: Redefining name from outer scope (the implementation is buggy, it doesn't consider the global statement)
-# W0622: Redefining built-in 'type' (skipped because some names are chosen for redability) 
+# W0622: Redefining built-in 'type' (skipped because some names are chosen for redability)
 # W0633: Attempting to unpack a non-sequence defined at line %d (Buggy)
 # W0702: No exception type(s) specified
 # W0703: Catching too general exception
@@ -52,11 +52,11 @@ dummy-variables-rqx = dummy.*$
 
 # Note: disable can't have inline comments
 disable =
-	C0111, C0103, C0301, C0303, C0325, C0330, C1001,
+	C0103, C0111, C0301, C0325, C0330, C1001,
 	I0011,
 	E0211, E0213, E1103, E1120,
 	R0201, R0401, R0801, R0903, R0923,
-	W0232,W0311, W0403, W0603, W0611, W0621, W0622,
+	W0232, W0311, W0403, W0603, W0621, W0622,
 
 
 [REPORTS]

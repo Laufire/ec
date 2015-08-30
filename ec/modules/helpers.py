@@ -103,17 +103,17 @@ def getFullName(Module):
   return '%s%s' % (('%s.' % pkg) if pkg else '', Module.__name__)
 
 # inspect helpers
-def isunderlying(object):
-  return isinstance(object, (FunctionType, ClassType, ModuleType))
+def isunderlying(obj):
+  return isinstance(obj, (FunctionType, ClassType, ModuleType))
 
-def isclass(object):
-  return isinstance(object, ClassType)
+def isclass(obj):
+  return isinstance(obj, ClassType)
 
-def ismodule(object):
-  return isinstance(object, ModuleType)
+def ismodule(obj):
+  return isinstance(obj, ModuleType)
 
-def isfunction(object):
-  return isinstance(object, FunctionType)
+def isfunction(obj):
+  return isinstance(obj, FunctionType)
 
 # Helpers
 def list2dict(lst, splitter='='):

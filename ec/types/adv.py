@@ -5,7 +5,7 @@ Advanced types.
 """
 import shlex
 
-from ..modules.classes import CustomType, HandledException
+from ..modules.classes import CustomType
 from ..modules.helpers import getDigestableArgs, getTypeStr
 
 class t2t(CustomType):

@@ -53,4 +53,3 @@ def static(cls):
 
 # Cross dependencies
 from helpers import err, getAutoDesc
-from classes import CustomType

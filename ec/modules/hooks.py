@@ -2,7 +2,7 @@ import __builtin__
 import sys
 
 import state
-from helpers import getCallingModule, getFullName
+from helpers import getCallingModule
 import core
 
 # State
@@ -24,22 +24,22 @@ def hookIntoImport():
       core.processModule(module_name)
       core.resetActiveModuleToNext()
 
-  def getModuleFullName(Module, globals):
+  def getModuleFullName(Module, Globals):
 
     module_name = Module.__name__
 
     if '.' in module_name:
       return module_name
 
-    if not globals:
+    if not Globals:
       return module_name
 
-    pkg_name = globals.get("__name__")
+    pkg_name = Globals.get("__name__")
 
     if not pkg_name:
       return module_name
 
-    if globals.has_key("__path__"):
+    if Globals.has_key("__path__"):
       return '%s.%s' % (pkg_name, module_name)
 
     last_dot_pos = pkg_name.rfind('.')

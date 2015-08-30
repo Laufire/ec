@@ -2,13 +2,12 @@ r"""
 Handles the execution and the resolution of the tasks.
 """
 import sys
-from os import path
 import traceback
 from collections import OrderedDict
 
 import state
 from state import Settings, ModulesQ, ModuleMembers, ExitHooks
-from helpers import err, getDigestableArgs, isfunction, isclass, ismodule, isunderlying, getFullName
+from helpers import getDigestableArgs, isclass, isunderlying
 
 # State
 BaseGroup = None

@@ -1,11 +1,9 @@
 r"""
 A module to handle the shell mode.
 """
-import shlex
-
 from state import Settings
-from core import execCommand, BaseGroup
-from classes import HandledException, Group
+from core import execCommand
+from classes import HandledException
 from helpers import err, split, exit
 
 def init():

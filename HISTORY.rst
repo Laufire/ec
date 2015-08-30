@@ -266,9 +266,12 @@ Log
 	* 1830	Dusted the docs. The docs now use tabs for indention.
 	* 2015	Extended linting to the tests and the scripts.
 
-* 15027
+* 150827
 
 	* 0510	Bug fixed: Initial type_str generation was buggy.
 	* 0510	types.multi updated.
 	* 1250	Trimmed trailing spaces and unified the line-endings to **lf**.
-	
+
+* 150830
+
+	* 1525	Tightened the linting.

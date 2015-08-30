@@ -9,8 +9,7 @@ import shlex
 from modules import core
 from modules.core import _execCommand, getDescendant, processPendingModules
 from modules import hooks
-from modules.state import ModuleMembers
-from modules.classes import Task, Group, HandledException
+from modules.classes import Task, Group
 from modules.helpers import getCallingModule, isfunction
 
 __all__ = ['setBase', 'resolve', 'call', 'force_config', 'add']
@@ -22,7 +21,7 @@ def setBase(Underlying):
   Args:
     Underlying (Group): The Group set as the base, from which all the commands are resolved.
   """
-  core.processPendingModules()
+  processPendingModules()
   core.BaseGroup = Underlying.__ec_member__
 
 def resolve(route):

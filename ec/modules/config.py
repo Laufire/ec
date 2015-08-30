@@ -1,11 +1,9 @@
 r"""
 Provides the decorators and functions for the configuration of the args, tasks, groups and modules.
 """
-import sys
-
 import state
-from state import Settings, ExitHooks
-from classes import Task, Group, HandledException
+from state import ExitHooks
+from classes import Task, Group
 from helpers import getCallingModule
 from helpers import isclass
 from exposed import static

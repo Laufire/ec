@@ -4,11 +4,10 @@ Helpers tasks for the shell mode.
 import os
 import sys
 
-from ec.ec import task, arg, group, module
+from ec.ec import task, module
 
 from state import Settings
 import core
-from core import processModule
 from helpers import err, getRouteHelp
 
 module(desc='Shell mode Tasks.')

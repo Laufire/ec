@@ -18,7 +18,7 @@ def init(argv):
     else:
       print help_text
 
-  else:      
+  else:
     try:
       execCommand(argv, flag == '-p')
       # Check: Should the dispatch mode log the return value? It isn't logging it now to keep the console from excess output.

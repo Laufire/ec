@@ -3,7 +3,7 @@ path
 ====
 Types for handling paths.
 """
-from os import path, sep
+from os import path
 
 from ..modules.classes import CustomType
 
@@ -14,7 +14,7 @@ class PathBase(CustomType):
     func (callable): The function to process the value.
     ret : The expected return value from func. The values that ail the expectation are invalid.
     **Config (kwargs): Configuration for the custom type.
-  """  
+  """
   def __init__(self, func, ret=True, **Config):
     CustomType.__init__(self, **Config)
 

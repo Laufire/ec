@@ -4,9 +4,7 @@ ec
 
 The main module, that allows the configuration of the importing script.
 """
-import sys
-
-from modules.state import Settings, ModulesQ
+from modules.state import Settings
 from modules.helpers import getCallingModule
 from modules.config import task, arg, group, module, member, exit_hook
 from modules import hooks
