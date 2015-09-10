@@ -4,7 +4,7 @@ allied
 
 A script to test allied features.
 """
-from ec.ec import task, arg, group, call, module, settings, exit_hook
+from ec.ec import task, exit_hook
 
 @task(alias='t1')
 def task1(arg1):

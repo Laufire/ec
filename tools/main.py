@@ -1,6 +1,6 @@
 import os
 
-from ec.ec import task, arg, group, module, settings
+from ec.ec import task, arg, group
 from ec.types.basics import yn
 from ec.types import path as path_type
 
@@ -108,7 +108,7 @@ class pkg:
 
       print 'dist done!'
 
-    except Exception :
+    except Exception: #pylint: disable=W0703
       err(Result['err'], Result['code'])
 
 

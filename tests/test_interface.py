@@ -2,7 +2,7 @@ r"""
 Tests ec.interface.
 
 Note:
-  This test might fail when tested over the devlopment dir (or its symlinks), hence it should be run on the installed package.  
+  This test might fail when tested over the devlopment dir (or its symlinks), hence it should be run on the installed package.
 """
 import unittest
 

@@ -4,7 +4,7 @@ simple
 
 A simple testing target script.
 """
-from ec.ec import task, arg, group, call, module, settings
+from ec.ec import task, arg, group
 
 @task(alias='t1')
 @arg(type=int, desc='Value for arg1')

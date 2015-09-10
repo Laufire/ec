@@ -14,7 +14,7 @@ from test_dispatch import TestDispatch
 class TestModuleLaunch(TestDispatch): #pylint: disable=R0801
   def launch_ec(self, argStr='', input='', flag=''):
     r"""Dispatches command to ec (loaded as a module).
-    """  
+    """
     command = 'python -m ec tests/targets/simple.py'
 
     if flag:

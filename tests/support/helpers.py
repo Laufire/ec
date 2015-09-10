@@ -1,8 +1,6 @@
 import __builtin__
 import shlex
-from subprocess import Popen, STDOUT, PIPE
-
-from ec.modules.classes import HandledException
+from subprocess import Popen, PIPE
 
 # Exports
 __all__ = ['shell_exec', 'RawInputHook']

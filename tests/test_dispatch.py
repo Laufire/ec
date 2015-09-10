@@ -20,7 +20,7 @@ class TestDispatch(unittest.TestCase):
 
   def launch_ec(self, argStr='', input='', flag=''):
     r"""Dispatches command to the target script.
-    """  
+    """
     command = 'python tests/targets/simple.py'
 
     if flag:

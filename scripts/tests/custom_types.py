@@ -1,10 +1,9 @@
-from ec.ec import task, arg, group
+from ec.ec import task, arg
 
 from ec.types.regex import pattern, email
 from ec.types.multi import one_of
 from ec.types.num import between
 from ec.types.basics import yn
-from ec.types.adv import t2t
 
 class types: # the class acts as a namespace to hide the task types from the user
   @task(desc='movie')
