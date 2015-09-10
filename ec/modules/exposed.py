@@ -17,7 +17,9 @@ def get(desc='', type=None, **KwArgs):
     * KwArgs acts as a data container for unexpected attibutes that are used by underlying helpers.
   """
   if not desc:
-    desc = getAutoDesc(KwArgs)
+    desc = '{name}, {type_str}'.format(**KwArgs)
+    if 'default' in KwArgs:
+      desc += ' (%s)' % KwArgs['default']
 
   while True:
     try:
@@ -52,4 +54,4 @@ def static(cls):
   return cls
 
 # Cross dependencies
-from helpers import err, getAutoDesc
+from helpers import err

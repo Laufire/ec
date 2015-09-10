@@ -72,7 +72,7 @@ class Task(Member):
 
     return OrderedArgs
 
-  def __config_arg__(self, ArgConfig): #pylint: disable=R0201
+  def __config_arg__(self, ArgConfig):
     r"""Reconfigures an argument based on its configuration.
     """
     _type = ArgConfig.get('type')
@@ -84,8 +84,11 @@ class Task(Member):
       else:
         ArgConfig['type_str'] = _type.__name__ if isinstance(_type, type) else 'unspecified type'
 
+        if 'default' in ArgConfig:
+          ArgConfig['type_str'] += ' (%s)' % ArgConfig['default']
+
     else:
-      ArgConfig['type_str'] = 'str'
+      ArgConfig['type_str'] = 'str (%s)' % ArgConfig['default'] if 'default' in ArgConfig else ''
 
     return ArgConfig
 
@@ -185,14 +188,11 @@ class CustomType:
   """
   def __init__(self, **Config):
     self._Config = Config
-
-    if not hasattr(self, 'str'):
-      self.str = Config['type_str'] if 'type_str' in Config else 'custom type'
+    self.str = Config['type_str'] if 'type_str' in Config else 'custom type'
 
   def __str__(self):
     r"""Used to represent the type as a string, in messages and queries.
     """
-
     return getattr(self, 'str', 'custom type')
 
   def __ec_config__(self, ArgConfig):
@@ -206,14 +206,11 @@ class CustomType:
 
     Notes:
 
-      * CustomTypes could override this method to modify the configuration of the calling arg. When overriding it should be ensured that the Config has a name and a type_str.
-      * This method is called by Task.__config_arg__.
+      * This method is called by Task.__config_arg__ to allow CustomTypes to modify the configuration of the calling arg.
       * This is the signature method used for duck typing CustomType.
       * With custom implementations the method should set the key 'type_str', as well as return the modified ArgConfig.
     """
-
-    if not 'type_str' in ArgConfig:
-      ArgConfig['type_str'] = self.str
+    ArgConfig['type_str'] = self.str
 
     return ArgConfig
 

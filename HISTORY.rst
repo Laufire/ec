@@ -275,3 +275,8 @@ Log
 * 150830
 
 	* 1525	Tightened the linting.
+
+* 150910
+
+	* 1600	Bug fixed: Description generation on custom types was buggy.
+	* 1700	Spent an hour recovering the files from an Unknown reversal of the repo to an unknown historic state.

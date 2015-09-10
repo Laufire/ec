@@ -3,6 +3,10 @@ ToDo
 
 Tasks
 -----
+* Enable the passing of commands to the shel through stdin (Ex: *echo clear | ec .*). There's some issue with reverting to the shell, when commands are passed from a tty (though stdin).
+
+* Fix: Couldn't exit while loading modules.
+
 * Check for the availability of a TTY brfore entering shell mode.
 
 * Support positional args. With the following guide lines.
