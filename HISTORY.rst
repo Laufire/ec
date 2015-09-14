@@ -1,6 +1,6 @@
 History
 =======
-v0.2.3 (2015-08-06 1555 +0530)
+v0.2.4 (2015-09-14 1935 +0530)
 ------------------------------
 
 Log
@@ -280,3 +280,7 @@ Log
 
 	* 1600	Bug fixed: Description generation on custom types was buggy.
 	* 1700	Spent an hour recovering the files from an Unknown reversal of the repo to an unknown historic state.
+
+* 150913
+
+	* 1935	v0.2.7 released.
