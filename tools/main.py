@@ -115,7 +115,7 @@ class pkg:
   @task(desc='Uploads the package to PyPI.')
   def upload():
 
-    assert(run('python setup.py sdist upload') == 0)
+    assert(run('python setup.py sdist upload && python setup.py bdist_wheel upload', shell=True) == 0)
 
 
   @task(desc='Tests the deployed package (from PyPI).')

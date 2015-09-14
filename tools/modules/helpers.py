@@ -6,10 +6,10 @@ from subprocess import Popen, PIPE
 from shutil import rmtree as _rmtree
 import win32file
 
-def shell_exec(command, path='.'): # from gitapi.py
+def shell_exec(command, **kwargs): # from gitapi.py
   """Excecutes the given command silently.
   """
-  proc = Popen(shlex.split(command), stdout=PIPE, stderr=PIPE, cwd=path)
+  proc = Popen(shlex.split(command), stdout=PIPE, stderr=PIPE, **kwargs)
 
   out, err = [x.decode("utf-8") for x in  proc.communicate()]
 

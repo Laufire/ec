@@ -284,3 +284,4 @@ Log
 * 150913
 
 	* 1935	v0.2.7 released.
+	* 2235	tools\main\pkg\upload now uploads a wheel too.
