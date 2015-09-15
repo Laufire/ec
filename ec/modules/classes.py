@@ -10,7 +10,6 @@ class Member():
   """
   def __init__(self, Underlying, Config):
     __ec_member__ = getattr(Underlying, '__ec_member__', None)
-
     if 'name' in Config:
       validateName(Config['name'])
 
@@ -63,34 +62,14 @@ class Task(Member):
       FuncArg['name'] = argName
       FuncArg.update(Arg) # prefer Args config over the values given while defining the function.
 
-      OrderedArgs[argName] = self.__config_arg__(FuncArg)
+      OrderedArgs[argName] = reconfigArg(FuncArg)
       del FuncArgs[argName]
 
     for name, Config in FuncArgs.iteritems(): # process the unconfigured arguments
       Config['name'] = name
-      OrderedArgs[name] = self.__config_arg__(Config)
+      OrderedArgs[name] = reconfigArg(Config)
 
     return OrderedArgs
-
-  def __config_arg__(self, ArgConfig):
-    r"""Reconfigures an argument based on its configuration.
-    """
-    _type = ArgConfig.get('type')
-
-    if _type:
-      if hasattr(_type, '__ec_config__'): # pass the ArgConfig to the CustomType
-        _type.__ec_config__(ArgConfig)
-
-      else:
-        ArgConfig['type_str'] = _type.__name__ if isinstance(_type, type) else 'unspecified type'
-
-        if 'default' in ArgConfig:
-          ArgConfig['type_str'] += ' (%s)' % ArgConfig['default']
-
-    else:
-      ArgConfig['type_str'] = 'str (%s)' % ArgConfig['default'] if 'default' in ArgConfig else ''
-
-    return ArgConfig
 
   def __confirm_known_args__(self, InArgs):
     r"""Confirms that only known args are passed to the underlying.
@@ -153,7 +132,7 @@ class Task(Member):
 
     for name, Arg in self.Args.items():
       if not name in KwArgs:
-        KwArgs[name] = get(**Arg)
+        KwArgs[name] = gatherInput(**Arg)
 
       else:
         _type = Arg.get('type')
@@ -161,7 +140,7 @@ class Task(Member):
           KwArgs[name] = _type(KwArgs[name]) if _type else KwArgs[name]
 
         except (ValueError, TypeError):
-          KwArgs[name] = get(**Arg)
+          KwArgs[name] = gatherInput(**Arg)
 
     return self.Underlying(**KwArgs)
 
@@ -206,11 +185,16 @@ class CustomType:
 
     Notes:
 
-      * This method is called by Task.__config_arg__ to allow CustomTypes to modify the configuration of the calling arg.
+      * This method allows CustomTypes to modify the configuration of the calling arg.
       * This is the signature method used for duck typing CustomType.
       * With custom implementations the method should set the key 'type_str', as well as return the modified ArgConfig.
     """
-    ArgConfig['type_str'] = self.str
+    type_str = self.str
+
+    if 'default' in ArgConfig:
+      type_str += ' (%s)' % ArgConfig['default']
+
+    ArgConfig['type_str'] = type_str
 
     return ArgConfig
 
@@ -250,5 +234,4 @@ def _getFuncArgs(func):
   return Args
 
 # Cross dependencies
-from exposed import get
-from helpers import validateName
+from helpers import validateName, gatherInput, reconfigArg

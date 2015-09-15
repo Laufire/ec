@@ -150,24 +150,70 @@ def listMemberHelps(TargetGroup):
 def getGroupHelp(_Group):
   return '\n\n'.join([('%s:  %s' % (name, desc))[:60] for name, desc in listMemberHelps(_Group)]) # ToDo: Better formatting of the help instead of chopping the text.
 
-def getAutoDesc(ArgConfig):
-  desc = '{name}, {type_str}'.format(**ArgConfig)
-
-  if 'default' in ArgConfig:
-    desc += ' (%s)' % ArgConfig['default']
-
-  return desc
-
 def getTypeStr(_type):
   r"""Gets the string representation of the given type.
   """
   if isinstance(_type, CustomType):
-    return _type
+    return str(_type)
 
   if hasattr(_type, '__name__'):
     return _type.__name__
 
   return ''
+
+def reconfigArg(ArgConfig):
+  r"""Reconfigures an argument based on its configuration.
+  """
+  _type = ArgConfig.get('type')
+
+  if _type:
+    if hasattr(_type, '__ec_config__'): # pass the ArgConfig to the CustomType:
+      _type.__ec_config__(ArgConfig)
+
+  if not 'type_str' in ArgConfig:
+    type_str = (_type.__name__ if isinstance(_type, type) else 'unspecified type') if _type else 'str'
+
+    if 'default' in ArgConfig:
+      type_str += ' (%s)' % ArgConfig['default']
+
+    ArgConfig['type_str'] = type_str
+
+  if not 'desc' in ArgConfig:
+    ArgConfig['desc'] = ArgConfig['name']
+
+  return ArgConfig
+
+def getLabel(ArgConfig):
+  type_str = ArgConfig.get('type_str')
+
+  if type_str is None: # Tip: type_str could be set expilcitly to None to avoid the value post-fix to the label
+    return ArgConfig['desc']
+
+  return '{desc}, {type_str}'.format(**ArgConfig)
+
+def gatherInput(**Config):
+  r"""Helps to interactively get user input.
+  """
+  _type = Config.get('type')
+
+  while True:
+    try:
+      got = raw_input('%s: ' % getLabel(Config))
+
+    except EOFError:
+      got = None
+
+    if not got and 'default' in Config:
+      return Config['default']
+
+    try:
+      return _type(got) if _type else got
+
+    except ValueError:
+      err('<invalid value>')
+
+    except TypeError:
+      err('<invalid value>')
 
 def getTaskHelp(_Task):
   r"""Gets help on the given task member.

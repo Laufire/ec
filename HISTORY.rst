@@ -281,7 +281,11 @@ Log
 	* 1600	Bug fixed: Description generation on custom types was buggy.
 	* 1700	Spent an hour recovering the files from an Unknown reversal of the repo to an unknown historic state.
 
-* 150913
+* 150914
 
-	* 1935	v0.2.7 released.
-	* 2235	tools\main\pkg\upload now uploads a wheel too.
+	* 1935	v0.2.4 released.
+	* 2235	tools\\main\\pkg\\upload now uploads a wheel too.
+
+* 150915
+
+	* 1315	Redid the desc generation.

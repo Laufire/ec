@@ -4,12 +4,22 @@ utils
 
 A set of utility functions for the scripts.
 """
-from modules.exposed import get, static
+from modules.exposed import static
 from modules.classes import CustomType
 from modules import core
-from modules.helpers import exit
+from modules.helpers import exit, gatherInput, reconfigArg
 
 __all__ = ['get', 'static', 'custom', 'walk', 'exit']
+
+def get(desc='', type=None, **ArgConfig):
+  r"""Helps to interactively get user input.
+
+  Args:
+    desc (str): The description for input.
+    type (type / CustomType): The type of the input (defaults to None).
+  """
+  ArgConfig.update(desc=desc, type=type)
+  return gatherInput(**reconfigArg(ArgConfig))
 
 class custom(CustomType):
   r"""Helps with creating dynamic CustomTypes on the fly.
