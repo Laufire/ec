@@ -15,7 +15,7 @@ Design Goals
 
 Ideas
 -----
-* Using simple functions,lambdas and callable classes as types, bot for conversion and validation.
+* Using simple functions, lambdas and callable classes as types, both for conversion and validation.
 
 * Nested args, by using tasks as types.
 

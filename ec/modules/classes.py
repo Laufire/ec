@@ -163,7 +163,7 @@ class CustomType:
     type_str (str, optional): The string representation of the type.
 
   Note:
-    Config supports the same keywords as config.arg, with some additions to it. While inheriting the class, these keywords shouldn't be used as variable name.
+    Config supports the same keywords as config.arg, with some additions to it. While inheriting the class, these keywords shouldn't be used as variable names.
   """
   def __init__(self, **Config):
     self._Config = Config

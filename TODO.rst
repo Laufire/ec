@@ -3,6 +3,10 @@ ToDo
 
 Tasks
 -----
+* scripts/tests/custom_types isn't working.
+
+* The help string of multi.one_of isn't rendered properly.
+
 * Enable the passing of commands to the shel through stdin (Ex: *echo clear | ec .*). There's some issue with reverting to the shell, when commands are passed from a tty (though stdin).
 
 * Fix: Couldn't exit while loading modules.

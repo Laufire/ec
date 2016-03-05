@@ -11,7 +11,7 @@ from modules import hooks
 
 # Exports
 __all__ = [
-  'task', 'arg', 'group', 'module', 'member', 'exit_hook',
+  'task', 'arg', 'group', 'module', 'member', 'exit_hook', 'throw',
   'settings', 'call',
 ]
 
@@ -43,6 +43,14 @@ def call(__ec_func__, *Args, **KwArgs):
     * The param name **__ec_func__** is chosen, in order to avoid collision with the **KwArgs**.
   """
   return __ec_func__.__ec_member__.__collect_n_call__(*Args, **KwArgs)
+  
+def throw(e=None):
+  r"""A simple function that throws the passed exception, so that lambdas could be used as custom types.
+  
+  Ex:
+    @arg(type=lambda p: abspath(p) if exists(dirname(path)) else throw(ValueError))
+  """
+  raise e or ValueError()
 
 # Main
 hooks.EcModuleName = __name__

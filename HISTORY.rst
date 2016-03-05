@@ -61,7 +61,7 @@ Log
 	* 1620	Added tools/dist.bat.
 	* 1655	Pushed to github.
 	* 1735	Registered the package at PiPy.
-	* 2145	Shell mode now supports **None** inputs, through the \0 (^z) char.
+	* 2145	Shell mode now supports **None** inputs, through the \\0 (^z) char.
 	* 2005	Command routes are now separated by '/', instead of ' '; in order to closely emulate query strings.
 	* 2005	Dispatch mode now supports **None** inputs, through omitted '=' signs after the arg names. ie: in *task1 a b=1*, the value of **a** will be **None**.
 
@@ -110,16 +110,16 @@ Log
 	* 0500	Added types.path.
 	* 0520	Added types.adv.chain.
 	* 0540	Bug fixed: arg configurations without names weren't processed properly.
-	* 0600	Replaced tools\*.bat with tools\main.py, an ec based script.
+	* 0600	Replaced tools/\*.bat with tools/main.py, an ec based script.
 	* 0645	v0.1.4 released.
 	* 0730	Added types.adv.invert.
 	* 2115	Members are added in an orderly fashion.
 
 * 150710
 
-	* 0105	Added tests\test_dir_group.py.
+	* 0105	Added tests/test_dir_group.py.
 	* 0520	Tried, but failed to make tasks inside groups to be callable, like **group1.task1(...)**. ~2 hrs of tinkering couldn't make the unbound methods into functions.
-	* 0705	Added tests\test_shell.py.
+	* 0705	Added tests/test_shell.py.
 	* 0930	All the methods of the groups are converted to static methods, to facilitate easier calling.
 	* 1945	Introduced modules.exposed.
 	* 1950	Conversion of static methods has been moved from ec.core to ec.modules.exposed. The functionality is now exposed as **utils.static**.
@@ -161,14 +161,14 @@ Log
 	* 0945	Bug fixed: Exiting from exit hook (from the shell mode) caused errors, when stdlib.threading is imported. It took ~5hrs, of which ~4hrs is spent to spot the bug.
 	* 1030	__info__.py removed.
 	* 1535	Bettered import hooking.
-	* 1610	Added tests\test_configuration.py.
-	* 1925	Added tests\test_entry_point_launch.py.
-	* 2100	Added tests\test_module_launch.py.
+	* 1610	Added tests/test_configuration.py.
+	* 1925	Added tests/test_entry_point_launch.py.
+	* 2100	Added tests/test_module_launch.py.
 	* 2200	v0.2.0 released with changes to the API.
 
 * 150718
 
-	* 0220	Bettered tools\main.py
+	* 0220	Bettered tools/main.py
 
 * 150722
 
@@ -284,8 +284,12 @@ Log
 * 150914
 
 	* 1935	v0.2.4 released.
-	* 2235	tools\\main\\pkg\\upload now uploads a wheel too.
+	* 2235	tools/main/pkg/upload now uploads a wheel too.
 
 * 150915
 
 	* 1315	Redid the desc generation.
+
+* 160305
+
+	* 2220	Added ec.throw to allow using lambdas as custom types.

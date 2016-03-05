@@ -15,7 +15,9 @@ class YN(CustomType):
     CustomType.__init__(self, **Config)
 
   def __ec_config__(self, ArgConfig):
-    ArgConfig['type_str'] = '%s%s' % (self.str, (' (%s)' % ('y' if ArgConfig['default'] else 'n')) if 'default' in ArgConfig else '')
+    default = ArgConfig.get('default')
+
+    ArgConfig['type_str'] = '%s%s' % (self.str, (' (%s)' % ('y' if default else 'n' if isinstance(default, bool) else default)) if 'default' in ArgConfig else '')
 
     return ArgConfig
 
