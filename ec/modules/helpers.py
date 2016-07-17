@@ -209,11 +209,11 @@ def gatherInput(**Config):
     try:
       return _type(got) if _type else got
 
-    except ValueError:
-      err('<invalid value>')
+    except ValueError as e:
+      err(str(e) or '<invalid value>')
 
     except TypeError:
-      err('<invalid value>')
+      err(str(e) or '<invalid value>')
 
 def getTaskHelp(_Task):
   r"""Gets help on the given task member.

@@ -33,7 +33,8 @@ isdir = PathBase(path.isdir, type_str='a dir')
 isfile = PathBase(path.isfile, type_str='a file')
 isabs = PathBase(path.isabs, type_str='an absolute path')
 isrelative = PathBase(path.isabs, False, type_str='a relative path')
-ischild = PathBase(path.isabs, False, type_str='a relative path')
+
+# #ToDo: Add isdescendant.
 
 def exists_in(root): # ToDo: Replace this function with a CustomType based class
   return PathBase(lambda val: path.exists(path.join(root, val)), type_str='a path under %s' % root)

@@ -7,11 +7,13 @@ The main module, that allows the configuration of the importing script.
 from modules.state import Settings
 from modules.helpers import getCallingModule
 from modules.config import task, arg, group, module, member, exit_hook
+from modules.classes import CustomType
 from modules import hooks
 
 # Exports
 __all__ = [
-  'task', 'arg', 'group', 'module', 'member', 'exit_hook', 'throw',
+  'task', 'arg', 'group',
+  'module', 'member', 'exit_hook', 'throw', 'make_type',
   'settings', 'call',
 ]
 
@@ -44,14 +46,22 @@ def call(__ec_func__, *Args, **KwArgs):
   """
   return __ec_func__.__ec_member__.__collect_n_call__(*Args, **KwArgs)
   
-def throw(e=None):
+def throw(message=''):
   r"""A simple function that throws the passed exception, so that lambdas could be used as custom types.
   
+  #ToDo: Allow passing readable errors as strings, instead of Exceptions.
+  
   Ex:
-    @arg(type=lambda p: abspath(p) if exists(dirname(path)) else throw(ValueError))
+    @arg(type=lambda p: abspath(p) if exists(dirname(path)) else throw('Error message.'))
   """
-  raise e or ValueError()
+  raise ValueError(message)
 
+def make_type(**Config):
+  CT = CustomType(**Config)
+  CT.__call__ = Config['func']
+  
+  return CT
+  
 # Main
 hooks.EcModuleName = __name__
 

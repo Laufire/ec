@@ -3,9 +3,17 @@ ToDo
 
 Tasks
 -----
+* Replace the setting dev_mode=True, by silent=True, so to show errors by default, thus avoiding confusion during development.
+
+* Add an example for **ec.make_type**. Ex: make_type(func=lambda val: val if val > 1 else throw()).
+
+* List all the exports of the type modules under the __all__ variable for easier reference.
+
+* Think of allowing unspecified \*Args and \*\*KWArgs.
+
 * scripts/tests/custom_types isn't working.
 
-* The help string of multi.one_of isn't rendered properly.
+* Task routing is not done properly on name collisions. For example, consider a script with a group **t** followed by a task with an alias **t**; calling **t/c** will call the task with **t**, rather than the intended **t/c**.
 
 * Enable the passing of commands to the shel through stdin (Ex: *echo clear | ec .*). There's some issue with reverting to the shell, when commands are passed from a tty (though stdin).
 

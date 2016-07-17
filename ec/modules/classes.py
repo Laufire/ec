@@ -121,7 +121,7 @@ class Task(Member):
             KwArgs[name] = _type(KwArgs[name])
 
           except (ValueError, TypeError):
-            raise HandledException('Invalid value for "%s", expected %s; got "%s".' % (name, _type, KwArgs[name]), help_type='task', Member=self)
+            raise HandledException('Invalid value for "%s", expected %s; got "%s".' % (name, Arg.get('type_str', _type), KwArgs[name]), help_type='task', Member=self)
 
     return self.Underlying(**KwArgs)
 

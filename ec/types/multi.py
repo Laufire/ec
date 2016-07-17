@@ -2,17 +2,24 @@
 multi
 =====
 Types for handling lists and list members.
+
+ToDos
+=====
+* Error messages show the types as **custom type**, listing the options would be better.
 """
+
 from ..modules.classes import CustomType
 
 # Check: Escaping the separators.
 
 class multi(CustomType):
-  """Get a list of inputs.
+  """Get a list of inputs, separated by the given separator.
   """
-  def __init__(self, separator=', '):
-    self.str = 'a list of strings separated by \'%s\'' % separator
-    CustomType.__init__(self)
+  def __init__(self, separator=', ', **Config):
+    if not 'type_str' in Config:
+      Config['type_str'] = 'a list of strings separated by \'%s\'' % separator
+    
+    CustomType.__init__(self, **Config)
 
     self.separator = separator
 
@@ -23,7 +30,9 @@ class some_of(CustomType):
   """Get mutilple items from a list of choices.
   """
   def __init__(self, choices, separator=', ', **Config):
-    self.str = 'some of: %s' % separator.join(choices)
+    if not 'type_str' in Config:
+      Config['type_str'] = 'some of: %s' % separator.join(choices)
+    
     CustomType.__init__(self, **Config)
 
     self.choices = choices
@@ -41,7 +50,9 @@ class one_of(CustomType):
   """Get a single item from a list of values.
   """
   def __init__(self, choices, **Config):
-    self.str = 'one of %s' % '/'.join(choices)
+    if not 'type_str' in Config:
+      Config['type_str'] = 'one of %s' % Config.get('sep', ' / ').join(choices)
+      
     CustomType.__init__(self, **Config)
 
     self.choices = choices
@@ -56,9 +67,11 @@ class one_of(CustomType):
 class menu(CustomType):
   """A numbered menu.
   """
-  def __init__(self, choices):
-    self.str = self._get_str(choices)
-    CustomType.__init__(self)
+  def __init__(self, choices, **Config):
+    if not 'type_str' in Config:
+      Config['type_str'] = self._get_str(choices)
+    
+    CustomType.__init__(self, **Config)
 
     self.choices = choices
 

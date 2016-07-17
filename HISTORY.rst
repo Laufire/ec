@@ -293,3 +293,10 @@ Log
 * 160305
 
 	* 2220	Added ec.throw to allow using lambdas as custom types.
+
+* 160717
+
+	* 0835	Fixed: The help string of the types multi.* weren't rendered properly.
+	* 1000	Introduced ec.make_type, to ease the creation of custom types.
+	* 1015	Tuned the error handling of invalid values.
+	
