@@ -35,6 +35,7 @@ isabs = PathBase(path.isabs, type_str='an absolute path')
 isrelative = PathBase(path.isabs, False, type_str='a relative path')
 
 # #ToDo: Add isdescendant.
+# #ToDo: Add isvalid. It seems to be quite complex. Refer: http://stackoverflow.com/questions/9532499/check-whether-a-path-is-valid-in-python-without-creating-a-file-at-the-paths-ta
 
 def exists_in(root): # ToDo: Replace this function with a CustomType based class
   return PathBase(lambda val: path.exists(path.join(root, val)), type_str='a path under %s' % root)

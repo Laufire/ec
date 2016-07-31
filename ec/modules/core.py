@@ -2,7 +2,6 @@ r"""
 Handles the execution and the resolution of the tasks.
 """
 import sys
-import traceback
 from collections import OrderedDict
 
 import state
@@ -12,7 +11,7 @@ from helpers import getDigestableArgs, isclass, isunderlying
 # State
 BaseGroup = None
 mode = None
-is_dev_mode = None
+is_silent = None
 
 def start():
   r"""Starts ec.
@@ -34,8 +33,12 @@ def start():
   global mode
   mode = 'd' if Argv else 's' # dispatch / shell mode
 
-  global is_dev_mode
-  is_dev_mode = Settings.get('dev_mode', False)
+  global is_silent
+  is_silent = Settings.get('silent', False)
+  
+  global should_debug
+  should_debug = Settings.get('debug', False)
+
 
   if mode == 's':
     import shell
@@ -54,7 +57,13 @@ def execCommand(Argv, collect_missing):
     return _execCommand(Argv, collect_missing)
 
   except Exception as e:
-    if is_dev_mode: # log the trace
+    if should_debug:
+      import pdb
+      pdb.post_mortem(sys.exc_info()[2])
+      
+    if not is_silent: # Debug, then log the trace.
+      import traceback
+      
       etype, value, tb = sys.exc_info()
       tb = tb.tb_next.tb_next # remove the ec - calls from the traceback, to make it more understandable
 

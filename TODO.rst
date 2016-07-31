@@ -3,7 +3,11 @@ ToDo
 
 Tasks
 -----
-* Replace the setting dev_mode=True, by silent=True, so to show errors by default, thus avoiding confusion during development.
+* Think of accepting commands through stdin (so to allow pseudo programmes, SSH access etc).
+
+* Merge ec.make_type with ec.utils.CustomType.
+
+* Try merging @arg(type) with make_type(func).
 
 * Add an example for **ec.make_type**. Ex: make_type(func=lambda val: val if val > 1 else throw()).
 
@@ -58,6 +62,8 @@ Tasks
 * More examples. Especially for:
 
 	* Dynamic configuration of CustomTypes.
+	
+* Import possible features from Commander. Or better, build a bride or create a separate library (for the wev interface etc).
 
 Later
 -----

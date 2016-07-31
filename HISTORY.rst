@@ -300,3 +300,7 @@ Log
 	* 1000	Introduced ec.make_type, to ease the creation of custom types.
 	* 1015	Tuned the error handling of invalid values.
 	
+* 160731
+
+	* 0710	The setting, dev_mode=False is now silence=False, so to ease development.
+	* 0710	Introduced as setting, **debug**, to allow he debugging of the scripts during development.
