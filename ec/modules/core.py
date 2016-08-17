@@ -39,7 +39,6 @@ def start():
   global should_debug
   should_debug = Settings.get('debug', False)
 
-
   if mode == 's':
     import shell
     shell.init()
@@ -58,6 +57,7 @@ def execCommand(Argv, collect_missing):
 
   except Exception as e:
     if should_debug:
+      # #ToDo: Have an option to debug through stderr. The issue is, the way to make pdb.post_mortem, to use stderr, like pdb.set_trace is unknown.
       import pdb
       pdb.post_mortem(sys.exc_info()[2])
       

@@ -171,12 +171,7 @@ def reconfigArg(ArgConfig):
       _type.__ec_config__(ArgConfig)
 
   if not 'type_str' in ArgConfig:
-    type_str = (_type.__name__ if isinstance(_type, type) else 'unspecified type') if _type else 'str'
-
-    if 'default' in ArgConfig:
-      type_str += ' (%s)' % ArgConfig['default']
-
-    ArgConfig['type_str'] = type_str
+    ArgConfig['type_str'] = (_type.__name__ if isinstance(_type, type) else 'unspecified type') if _type else 'str'
 
   if not 'desc' in ArgConfig:
     ArgConfig['desc'] = ArgConfig['name']
@@ -184,12 +179,20 @@ def reconfigArg(ArgConfig):
   return ArgConfig
 
 def getLabel(ArgConfig):
-  type_str = ArgConfig.get('type_str')
+  if 'label' in ArgConfig:
+    ret = ArgConfig['label'] # Skip building the label, when one is explicitly given.
+  
+  else:
+    if 'type_str' in ArgConfig:
+      ret = '{desc}, {type_str}'.format(**ArgConfig)
 
-  if type_str is None: # Tip: type_str could be set expilcitly to None to avoid the value post-fix to the label
-    return ArgConfig['desc']
+    else:
+      ret = ArgConfig['desc']
+    
+    if 'default' in ArgConfig:
+      ret += ' (%s)' % ArgConfig['default']
 
-  return '{desc}, {type_str}'.format(**ArgConfig)
+  return '%s%s' % (ArgConfig.get('prefix', ''), ret)
 
 def gatherInput(**Config):
   r"""Helps to interactively get user input.

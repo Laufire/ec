@@ -302,5 +302,9 @@ Log
 	
 * 160731
 
-	* 0710	The setting, dev_mode=False is now silence=False, so to ease development.
+	* 0710	The setting, dev_mode=False is now silent=False, so to ease development.
 	* 0710	Introduced as setting, **debug**, to allow he debugging of the scripts during development.
+
+* 160818
+	* 0152	Introduced ArgConfig.prefix, to help with indentation.
+	* 0212	Introduced ArgConfig.label, to explicitly force the input label.

@@ -10,7 +10,7 @@ from exposed import static
 __all__ = ['task', 'arg', 'group', 'module']
 
 # Helpers
-def wrap(func, with_func): # Check: Is wrapping of the decorator needed? They seem to be unnecesary.
+def wrap(func, with_func):
   r"""Copies the function signature from the wrapped function to the wrapping function.
   """
   func.__name__ = with_func.__name__
@@ -23,7 +23,7 @@ def decorator(func):
   r"""Makes the passed decorators to support optional args.
   """
   def wrapper(__decorated__=None, *Args, **KwArgs):
-    if __decorated__ is None: # some args is available through the decorator
+    if __decorated__ is None: # the decorator has some optional arguments.
       return lambda _func: func(_func, *Args, **KwArgs)
 
     else:
@@ -89,7 +89,7 @@ def group(__decorated__, **Config):
   """
   _Group = Group(__decorated__, Config)
 
-  if isclass(__decorated__): # conver the method of the class to static methods so that they could be accessed like object methods; ir: g1/t1(...).
+  if isclass(__decorated__): # convert the method of the class to static methods so that they could be accessed like object methods; ir: g1/t1(...).
     static(__decorated__)
 
   state.ActiveModuleMemberQ.insert(0, _Group)

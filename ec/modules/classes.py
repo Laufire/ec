@@ -189,12 +189,8 @@ class CustomType:
       * This is the signature method used for duck typing CustomType.
       * With custom implementations the method should set the key 'type_str', as well as return the modified ArgConfig.
     """
-    type_str = self.str
-
-    if 'default' in ArgConfig:
-      type_str += ' (%s)' % ArgConfig['default']
-
-    ArgConfig['type_str'] = type_str
+    if not 'type_str' in ArgConfig:
+      ArgConfig['type_str'] = self.str
 
     return ArgConfig
 

@@ -86,3 +86,5 @@ class invert(CustomType):
       return val
 
     raise ValueError()
+
+# #ToDo: Write a custom-type, named repeat to get an Array. The problem is to find a way design the input pattern for the dispatch mode. A possible solution could be having a separator.

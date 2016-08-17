@@ -3,9 +3,15 @@ ToDo
 
 Tasks
 -----
+* Fix: Nested groups fail to be parsed. Having a single neseted, ordered dictionary could solve the issue, by simplifying the structures (the current structcture of traversing through Members seems to be complicated).
+
+* Try extending the flags silent and debug to utils.get.
+
 * Think of accepting commands through stdin (so to allow pseudo programmes, SSH access etc).
 
 * Merge ec.make_type with ec.utils.CustomType.
+
+* Add a call, named **expose** to expose an existing singletone without configuration.
 
 * Try merging @arg(type) with make_type(func).
 

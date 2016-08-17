@@ -63,7 +63,7 @@ class intro:
 def task2(arg1):
   print arg1
 
-# importing other modules
+# importing other ec modules
 import simple
 member(simple) # member() is used to expose imported members as the children of the current module
 
@@ -73,4 +73,4 @@ def clean_up(): # exit hooks are called when ec exits. There may be more than on
 
 module(desc='A module to test decorator based configuration.') # module is an optional call, used to configure the group that wraps current module.
 
-settings(dev_mode=True) # settings for ec
+settings(silent=False) # settings for ec
