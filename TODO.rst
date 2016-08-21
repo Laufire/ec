@@ -5,6 +5,8 @@ Tasks
 -----
 * Fix: Nested groups fail to be parsed. Having a single neseted, ordered dictionary could solve the issue, by simplifying the structures (the current structcture of traversing through Members seems to be complicated).
 
+* The core is too complicated, simplify it.
+
 * Try extending the flags silent and debug to utils.get.
 
 * Think of accepting commands through stdin (so to allow pseudo programmes, SSH access etc).
