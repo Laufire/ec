@@ -1,0 +1,6 @@
+# turn off auto-crlf
+* -text
+
+# specify files with crlf as the end of line character.
+*.bat text eol=crlf
+*.exe.manifest text eol=crlf

@@ -7,6 +7,7 @@ from classes import Task, Group
 from helpers import getCallingModule
 from helpers import isclass
 from exposed import static
+
 __all__ = ['task', 'arg', 'group', 'module']
 
 # Helpers

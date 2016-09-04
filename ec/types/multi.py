@@ -1,4 +1,4 @@
-"""
+r"""
 multi
 =====
 Types for handling lists and list members.
@@ -18,7 +18,7 @@ class multi(CustomType):
   def __init__(self, separator=', ', **Config):
     if not 'type_str' in Config:
       Config['type_str'] = 'a list of strings separated by \'%s\'' % separator
-    
+
     CustomType.__init__(self, **Config)
 
     self.separator = separator
@@ -32,7 +32,7 @@ class some_of(CustomType):
   def __init__(self, choices, separator=', ', **Config):
     if not 'type_str' in Config:
       Config['type_str'] = 'some of: %s' % separator.join(choices)
-    
+
     CustomType.__init__(self, **Config)
 
     self.choices = choices
@@ -52,7 +52,7 @@ class one_of(CustomType):
   def __init__(self, choices, **Config):
     if not 'type_str' in Config:
       Config['type_str'] = 'one of %s' % Config.get('sep', ' / ').join(choices)
-      
+
     CustomType.__init__(self, **Config)
 
     self.choices = choices
@@ -70,7 +70,7 @@ class menu(CustomType):
   def __init__(self, choices, **Config):
     if not 'type_str' in Config:
       Config['type_str'] = self._get_str(choices)
-    
+
     CustomType.__init__(self, **Config)
 
     self.choices = choices

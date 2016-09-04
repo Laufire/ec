@@ -1,4 +1,4 @@
-"""
+r"""
 basics
 ======
 Basic types, like bool and the likes.

@@ -1,4 +1,4 @@
-"""
+r"""
 adv
 ===
 Advanced types.
@@ -73,7 +73,7 @@ class invert(CustomType):
     @arg(type=invert(exists), type_str="a free path")
   """
   def __init__(self, Type, type_str=None):
-    CustomType.__init__(self, type_str=type_str or 'anything but of type %s' % getTypeStr(Type))
+    CustomType.__init__(self, type_str=type_str or 'anything but, %s' % getTypeStr(Type))
 
     self.Type = Type
 

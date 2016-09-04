@@ -28,8 +28,10 @@ class custom(CustomType):
     validator (callable): Validates the input.
     converter (callable): Converts the input. Defaults to None.
     \*\*Config  (kwargs): The configuration of the CustomType.
+
+  #Later: Think of merging the validator and the converter.
   """
-  def __init__(self, validator, converter=None, **Config):
+  def __init__(self, validator=None, converter=None, **Config):
     CustomType.__init__(self, **Config)
 
     self.validator = validator
@@ -39,7 +41,7 @@ class custom(CustomType):
     if self.converter:
       val = self.converter(val)
 
-    if not self.validator(val):
+    if self.validator and not self.validator(val):
       raise ValueError()
 
     return val

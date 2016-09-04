@@ -11,7 +11,7 @@ Tasks
 
 * Think of accepting commands through stdin (so to allow pseudo programmes, SSH access etc).
 
-* Merge ec.make_type with ec.utils.CustomType.
+* Merge ec.make_type with ec.utils.custom.
 
 * Add a call, named **expose** to expose an existing singletone without configuration.
 
@@ -70,7 +70,7 @@ Tasks
 * More examples. Especially for:
 
 	* Dynamic configuration of CustomTypes.
-	
+
 * Import possible features from Commander. Or better, build a bride or create a separate library (for the wev interface etc).
 
 Later

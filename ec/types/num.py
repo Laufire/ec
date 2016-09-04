@@ -1,4 +1,4 @@
-"""
+r"""
 num
 ====
 Types for handling numbers.

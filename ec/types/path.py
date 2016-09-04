@@ -1,4 +1,4 @@
-"""
+r"""
 path
 ====
 Types for handling paths.
