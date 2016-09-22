@@ -3,6 +3,8 @@ ToDo
 
 Tasks
 -----
+* Fix: String scaping isn't proper, equal signs escaped with slashes weren't properly escaped back.
+
 * Fix: Nested groups fail to be parsed. Having a single neseted, ordered dictionary could solve the issue, by simplifying the structures (the current structcture of traversing through Members seems to be complicated).
 
 * The core is too complicated, simplify it.
