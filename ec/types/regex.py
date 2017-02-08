@@ -26,7 +26,7 @@ class pattern(CustomType):
     return val
 
 # Data
-_host_pattern = r'([\da-z\.-]+)\.([a-z\.]{2,6})'
+_host_pattern = r'([\da-z\.-]+)\.([\da-z\.]{2,6})'
 
 _safe_string_pattern = r'^[a-z0-9_]{3,16}$'
 

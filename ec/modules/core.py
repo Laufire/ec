@@ -11,7 +11,6 @@ from helpers import getDigestableArgs, isclass, isunderlying
 # State
 BaseGroup = None
 mode = None
-is_silent = None
 
 def start():
   r"""Starts ec.
@@ -33,12 +32,6 @@ def start():
   global mode
   mode = 'd' if Argv else 's' # dispatch / shell mode
 
-  global is_silent
-  is_silent = Settings.get('silent', False)
-  
-  global should_debug
-  should_debug = Settings.get('debug', False)
-
   if mode == 's':
     import shell
     shell.init()
@@ -56,14 +49,17 @@ def execCommand(Argv, collect_missing):
     return _execCommand(Argv, collect_missing)
 
   except Exception as e:
-    if should_debug:
+    if Settings['errorHandler']:
+      Settings['errorHandler'](e)
+
+    if Settings['debug']:
       # #ToDo: Have an option to debug through stderr. The issue is, the way to make pdb.post_mortem, to use stderr, like pdb.set_trace is unknown.
       import pdb
       pdb.post_mortem(sys.exc_info()[2])
-      
-    if not is_silent: # Debug, then log the trace.
+
+    if not Settings['silent']: # Debug, then log the trace.
       import traceback
-      
+
       etype, value, tb = sys.exc_info()
       tb = tb.tb_next.tb_next # remove the ec - calls from the traceback, to make it more understandable
 

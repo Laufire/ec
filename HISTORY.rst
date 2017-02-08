@@ -302,7 +302,7 @@ Log
 
 * 160731
 
-	* 0710	The setting, dev_mode=False is now silent=False, so to ease development.
+	* 0710	The setting, dev_mode=True is now silent=False, so to ease development.
 	* 0710	Introduced as setting, **debug**, to allow he debugging of the scripts during development.
 
 * 160818
@@ -313,3 +313,12 @@ Log
 * 160904
 
 	* 0957	Standardized the line endings.
+
+* 161023
+
+	* 1822	Introduced settings.errorHandler.
+
+* 170208
+
+	* 2255	Fixed. Some settings are now dynamic (could be changed at run-time).
+	* 2305	ec.types.path.free is now notExits.

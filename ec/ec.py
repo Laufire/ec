@@ -45,12 +45,12 @@ def call(__ec_func__, *Args, **KwArgs):
     * The param name **__ec_func__** is chosen, in order to avoid collision with the **KwArgs**.
   """
   return __ec_func__.__ec_member__.__collect_n_call__(*Args, **KwArgs)
-  
+
 def throw(message=''):
   r"""A simple function that throws the passed exception, so that lambdas could be used as custom types.
-  
+
   #ToDo: Allow passing readable errors as strings, instead of Exceptions.
-  
+
   Ex:
     @arg(type=lambda p: abspath(p) if exists(dirname(path)) else throw('Error message.'))
   """
@@ -59,9 +59,9 @@ def throw(message=''):
 def make_type(**Config):
   CT = CustomType(**Config)
   CT.__call__ = Config['func']
-  
+
   return CT
-  
+
 # Main
 hooks.EcModuleName = __name__
 

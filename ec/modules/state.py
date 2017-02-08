@@ -7,7 +7,12 @@ The global state for ec.
     The module should not depend on other modules, in order to avoid cross dependency issues.
 """
 
-Settings = {}
+Settings = {
+
+  'silent': None,
+  'debug': None,
+  'errorHandler': None,
+}
 
 main_module_name = '__main__'
 
