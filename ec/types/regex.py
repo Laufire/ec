@@ -11,11 +11,13 @@ from ..modules.classes import CustomType
 class pattern(CustomType):
   r"""Get inputs that fit a specific pattern.
   """
-  def __init__(self, pattern, flags=0, **Config):
+  def __init__(self, pattern, flags=0, converter=None, **Config):
     self.exp = re.compile(pattern, flags)
 
     if not 'type_str' in Config:
       Config['type_str'] = 'a string matching the pattern \'%s\'' % self.exp.pattern
+
+    self.converter = converter
 
     CustomType.__init__(self, **Config)
 
@@ -23,7 +25,9 @@ class pattern(CustomType):
     if not self.exp.match(val):
       raise ValueError()
 
-    return val
+    converter = self.converter
+
+    return converter(val) if converter else val
 
 # Data
 _host_pattern = r'([\da-z\.-]+)\.([\da-z\.]{2,6})'
@@ -37,7 +41,7 @@ hex = pattern(r'^[a-fA-F0-9-]+$', type_str='hex')
 
 host = pattern(r'^%s$' % _host_pattern, type_str='host')
 
-number = pattern(r'^[0-9]+$', type_str='number') # a positive integer
+number = pattern(r'^[0-9]+$', type_str='number', converter=int) # a positive integer
 
 password = pattern(r'^.+$', type_str='password, a non-empty, spaceless string')
 

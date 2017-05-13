@@ -28,7 +28,9 @@ class PathBase(CustomType):
     raise ValueError()
 
 exists = PathBase(path.exists, type_str='an existing path')
-free = PathBase(path.exists, False, type_str='a free path')
+notExists = PathBase(path.exists, False, type_str='a non-existent path')
+free = PathBase(lambda x: not path.exists(x) and path.exists(path.dirname(x)), True, type_str='a free path')
+parentExists = PathBase(lambda x: path.exists(path.dirname(x)), True, type_str='a path with an existing parent')
 isdir = PathBase(path.isdir, type_str='a dir')
 isfile = PathBase(path.isfile, type_str='a file')
 isabs = PathBase(path.isabs, type_str='an absolute path')

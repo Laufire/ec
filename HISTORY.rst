@@ -322,3 +322,11 @@ Log
 
 	* 2255	Fixed. Some settings are now dynamic (could be changed at run-time).
 	* 2305	ec.types.path.free is now notExits.
+
+* 170213
+
+	* 0000	Lost an unknown (but a minor) amount of uncommited changes, through the removal of files from a linked deployment.
+
+* 170513
+
+	* 2105	ec.types.regex now has inbuilt type conversions.
