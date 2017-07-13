@@ -330,3 +330,13 @@ Log
 * 170513
 
 	* 2105	ec.types.regex now has inbuilt type conversions.
+
+* 170713
+
+	* 1503	Introduced the option interface.call.silent, which could be turned of to enable debugging etc.
+	* 1507	Introduced tools.injectDelegator. A module to inject the generic call delegator script into the importing module.
+	* 2150	Bug fixes to the delegator. It wasn't handling multiple arguments well.
+
+* 170715
+
+	* 0605	Changed the delegators module separator from a period (.) to a forward slash (/), to be inline with the command line separator.

@@ -7,7 +7,7 @@ Allows the importing of ec, as a module.
 import shlex
 
 from modules import core
-from modules.core import _execCommand, getDescendant, processPendingModules
+from modules.core import _execCommand, execCommand, getDescendant, processPendingModules
 from modules import hooks
 from modules.classes import Task, Group
 from modules.helpers import getCallingModule, isfunction
@@ -35,7 +35,7 @@ def resolve(route):
   """
   return getDescendant(core.BaseGroup, shlex.split(route))
 
-def call(command, collect_missing=False):
+def call(command, collect_missing=False, silent=True):
   r"""Calls a task, as if it were called from the command line.
 
   Args:
@@ -45,7 +45,7 @@ def call(command, collect_missing=False):
   Returns:
     The return value of the called command.
   """
-  return _execCommand(shlex.split(command), collect_missing)
+  return (_execCommand if silent else execCommand)(shlex.split(command), collect_missing)
 
 
 def force_config():
@@ -72,6 +72,7 @@ def add(TargetGroup, NewMember, Config=None, Args=None):
   ParentMembers[Member.Config['name']] = Member
 
   alias = Member.Config.get('alias')
+
   if alias:
     ParentMembers[alias] = Member
 

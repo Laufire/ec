@@ -4,11 +4,15 @@ ToDo
 Tasks
 -----
 
+* Simplify the structure, so that it would be understood easily.
+
+* Fix: Nested groups aren't working as expected.
+
 * Fix: Strings couldn't be set as as default values (as the empty string passed to skip the argument is considered as a valid input).
 
 * The alias c/pb, resolves to the task c, if there's one.
 
-* Fix: String scaping isn't proper, equal signs escaped with slashes weren't properly escaped back.
+* Fix: String escaping isn't proper, equal signs escaped with slashes weren't properly escaped back.
 
 * Fix: Nested groups fail to be parsed. Having a single neseted, ordered dictionary could solve the issue, by simplifying the structures (the current structcture of traversing through Members seems to be complicated).
 

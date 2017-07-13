@@ -9,3 +9,5 @@ import simple # the ec-ed script
 interface.setBase(simple)
 
 interface.call('task1 arg2=1', True)
+
+# #Pending: Add example for other interface calls.
