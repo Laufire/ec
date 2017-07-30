@@ -63,7 +63,6 @@ class one_of(CustomType):
 
     return val
 
-
 class menu(CustomType):
   """A numbered menu.
   """

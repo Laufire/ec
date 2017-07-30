@@ -4,6 +4,8 @@ ToDo
 Tasks
 -----
 
+* Document the use of delegates in converting non-ec packages into ec-ed ones.
+
 * Simplify the structure, so that it would be understood easily.
 
 * Fix: Nested groups aren't working as expected.
@@ -16,15 +18,13 @@ Tasks
 
 * Fix: Nested groups fail to be parsed. Having a single neseted, ordered dictionary could solve the issue, by simplifying the structures (the current structcture of traversing through Members seems to be complicated).
 
-* Think of providing type checks as functions, so that they could be used for validation inside the function body. This also could be used to lignten the loads.
+* Think of providing type checks as functions, so that they could be used for validation inside the function body. This also could be used to lighten the loads.
+
+* Raise vaule errors (with the proper description), for the first missing, required parameter. As of now, these are raised only when the parameter is of a wrong type.
 
 * Think of lazy intialization types to reduce, load times.
 
-* The core is too complicated, simplify it.
-
 * Try extending the flags silent and debug to utils.get.
-
-* Think of accepting commands through stdin (so to allow pseudo programmes, SSH access etc).
 
 * Merge ec.make_type with ec.utils.custom.
 
@@ -41,8 +41,6 @@ Tasks
 * scripts/tests/custom_types isn't working.
 
 * Task routing is not done properly on name collisions. For example, consider a script with a group **t** followed by a task with an alias **t**; calling **t/c** will call the task with **t**, rather than the intended **t/c**.
-
-* Enable the passing of commands to the shel through stdin (Ex: *echo clear | ec .*). There's some issue with reverting to the shell, when commands are passed from a tty (though stdin).
 
 * Fix: Couldn't exit while loading modules.
 
@@ -147,4 +145,5 @@ Check
 
 Later
 -----
+
 * Externally adding params to modules that weren't designed for ec.

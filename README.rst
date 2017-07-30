@@ -90,6 +90,15 @@ From the command-line enter
 
 	>^Z # exit the shell
 
+**Utilizing STDIN:**
+
+From the command-line enter
+
+.. code:: bash
+
+	$ echo 1 2 | xargs python simple.py task1 # Dispatch a command with args passed through STDIN and converted to args using xargs.
+	$ echo -e "1\n2" | python simple.py -p task1 # Dispatch a command and with partial args and pass the rest through STDIN.
+	$ echo task1 1 2 | python simple.py # Feeding the shell with complete commands through stdin.
 
 Detailed docs could be found at `PyDocs <http://pythonhosted.org/ec/>`_.
 

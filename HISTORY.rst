@@ -340,3 +340,12 @@ Log
 * 170715
 
 	* 0605	Changed the delegators module separator from a period (.) to a forward slash (/), to be inline with the command line separator.
+
+* 170730
+
+	* 1332	Bug fixed: Exceptions didn't set an exit_code for the process.
+
+* 170731
+
+	* 0200	Introduced Settings.prompt, to set the prompt of the interactive mode.
+	* 0217	Commands and args could now be passed through STDIN.

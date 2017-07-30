@@ -26,10 +26,9 @@ def exit(exit_code=0):
   """
   core.processExitHooks()
 
-  if state.isExitHooked and not hasattr(sys, 'exitfunc'): # the function is called from the exit hook
+  if state.isExitHooked and not hasattr(sys, 'exitfunc'): # The function is called from the exit hook
     sys.stderr.flush()
     sys.stdout.flush()
-    os._exit(exit_code) #pylint: disable=W0212
 
   sys.exit(exit_code)
 
@@ -181,14 +180,14 @@ def reconfigArg(ArgConfig):
 def getLabel(ArgConfig):
   if 'label' in ArgConfig:
     ret = ArgConfig['label'] # Skip building the label, when one is explicitly given.
-  
+
   else:
     if 'type_str' in ArgConfig:
       ret = '{desc}, {type_str}'.format(**ArgConfig)
 
     else:
       ret = ArgConfig['desc']
-    
+
     if 'default' in ArgConfig:
       ret += ' (%s)' % ArgConfig['default']
 

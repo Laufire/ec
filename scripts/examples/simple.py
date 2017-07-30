@@ -4,7 +4,7 @@ from ec.ec import task, arg, group
 @arg(type=int, desc='Value for arg1') # add an argument with a type and a description
 @arg(type=int)
 def task1(arg1, arg2=1):
-  print arg1, arg2
+  print arg1 + arg2
 
 @group(desc='A group with some tasks') # define a group
 class group1:
