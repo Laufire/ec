@@ -349,3 +349,8 @@ Log
 
 	* 0200	Introduced Settings.prompt, to set the prompt of the interactive mode.
 	* 0217	Commands and args could now be passed through STDIN.
+
+* 170823
+
+	* 1611	dispath now prints the return value of the call to stdout.
+	* 2204	Like invalid arguments, now, missing arguments too logs expected type in the error message.

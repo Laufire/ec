@@ -29,6 +29,7 @@ def exit(exit_code=0):
   if state.isExitHooked and not hasattr(sys, 'exitfunc'): # The function is called from the exit hook
     sys.stderr.flush()
     sys.stdout.flush()
+    os._exit(exit_code) #pylint: disable=W0212
 
   sys.exit(exit_code)
 

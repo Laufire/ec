@@ -20,8 +20,11 @@ def init(argv):
 
   else:
     try:
-      execCommand(argv, flag == '-p')
+      ret = execCommand(argv, flag == '-p')
       # Check: Should the dispatch mode log the return value? It isn't logging it now to keep the console from excess output.
+
+      if ret is not None:
+        print ret
 
     except HandledException as e:
       Member = e.Info.get('Member')

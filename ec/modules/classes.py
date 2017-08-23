@@ -3,6 +3,7 @@ All the classes of ec.
 """
 from collections import OrderedDict
 
+# Classes
 class Member():
   r"""The base class for the classes Task and Group.
 
@@ -113,7 +114,8 @@ class Task(Member):
           KwArgs[name] = default
 
         else:
-          raise HandledException('Missing argument: %s.' % name, Member=self)
+          type_str = Arg.get('type_str')
+          raise HandledException('Missing argument: "%s"%s.' % (name, (', expected %s' % type_str) if type_str else ''), Member=self)
 
       else:
         if _type:
