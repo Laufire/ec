@@ -354,3 +354,7 @@ Log
 
 	* 1611	dispath now prints the return value of the call to stdout.
 	* 2204	Like invalid arguments, now, missing arguments too logs expected type in the error message.
+
+* 181126
+
+	* 1613	Relaxed dependency versions, to mitigate package confilcts.
