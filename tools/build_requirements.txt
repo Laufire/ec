@@ -6,7 +6,7 @@ docutils==0.12
 ec==0.2.3
 eccontrib-sphinxdoc==0.0.1
 glob2==0.4.1
-Jinja2==2.7.3
+Jinja2==2.11.3
 logilab-common==1.0.2
 MarkupSafe==0.23
 pockets==0.2.4
